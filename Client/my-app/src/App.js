@@ -16,10 +16,15 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const menu = (
   <Menu>
-    <Menu.Item key="0">เข้าสู่ระบบ</Menu.Item>
+    <Menu.Item key="0"><Link to="/GlassShop/Login">เข้าสู่ระบบ</Link></Menu.Item>
+  </Menu>
+);
+
+const menu1 = (
+  <Menu>
     <Menu.Item key="1">ตั้งค่าบัญชีผู้ใช้งาน</Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="3">ออกจากระบบ</Menu.Item>
+    <Menu.Item key="3" onClick={() => { localStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
 );
 
@@ -41,7 +46,8 @@ function App() {
                     <HeaderMenu />
                   </Col>
                   <Col>
-                    <Dropdown overlay={menu} trigger={["click"]}>
+                    <Dropdown overlay={localStorage.getItem('userdata')?menu1:menu} trigger={["click"]}
+                      >
                       <a onClick={(e) => e.preventDefault()}>
                         <Avatar icon={<UserOutlined />} size={50} />
                         <span
@@ -50,7 +56,7 @@ function App() {
                             color: "white",
                           }}
                         >
-                          Test
+                          {localStorage.getItem('userdata')}
                         </span>
                       </a>
                     </Dropdown>
