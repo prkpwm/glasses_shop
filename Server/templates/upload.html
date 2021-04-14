@@ -18,14 +18,15 @@
                 };
                 reader.readAsDataURL(input.files[0]);
             }
+        
         }
     </script>
 </head>
    <body>
-      <form action = "http://localhost:5000/uploader" method = "POST" 
+      <form action = "/uploader" method = "POST" 
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" onchange="readURL(this);" /><br/>
-         <img id="blah" src="#" alt="your image" /><br/>
+         <input type = "file" name = "file" onchange="readURL(this);" /><br/><br/>
+         <img id="blah" src="#" alt="your image" /><br/><br/>
          <input type = "submit"/>
       </form>   
    </body>
