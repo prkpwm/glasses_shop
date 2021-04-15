@@ -135,11 +135,11 @@ def process():
           if angle < 160:
               return 'triangle shape.'
       if ovalsimilarity < 10:
-          return 'diamond shape. '
+          return 'diamond shape.'
       if line4 > line2:
           if angle < 160:
               return 'rectangular.'
           else:
-              return 'oblong.'
+              return 'oval.'
       return "ERROR!"
 
