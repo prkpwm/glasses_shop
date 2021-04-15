@@ -8,7 +8,7 @@ const blue = {
   color: "#FFFFFF",
 };
 
-var testcard =<Col className="gutter-row" span={6}>
+var testcard =<Col className="gutter-row" xs={24} md={12} xl={6}>
 <div style={style} >
   <img
     src="http://localhost:3000/img/dumpGlasses.png"
