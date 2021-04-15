@@ -27,7 +27,7 @@ def upload_file():
       fs = AI.faceshape.process()
       for i,face_shape in enumerate(face_shapes):
          if fs==face_shape:
-            return "<h1> Your face shape is "+face_shape+"</h1></br><h3> Glasses recommended for you is  "+glasses_recomments[i]+"</h3>"
+            return """<h1> Your face shape is """+face_shape+"""</h1></br><h3> Glasses recommended for you is  """+glasses_recomments[i]  #+"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassShop/Shopping"> </iframe>"""
 
 @app.route('/getinfo/<table>')
 def getinfo(table):
@@ -50,15 +50,28 @@ def insert_userinfo():
    else:
       return "Unsuccess"
       
-
-@app.route('/insert_userinfo/', methods=['GET', 'POST'])
-def insert_userinfo():
+@app.route('/insert_orderinfo/', methods=['GET', 'POST'])
+def insert_orderinfo():
    if request.method == "POST":
       details = request.form
-      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      cursor.execute("""SELECT COUNT(id) FROM orderinfo""")
       maxid = cursor.fetchone() 
-      sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-      val = (maxid[0], details['username'], details['pwd'], details['firstname'], details['lastname'], details['email'], details['phone'], details['address'])
+      sql = "INSERT INTO userinfo (orderid, date, status, tracking, userid) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], details['date'], details['status'], details['tracking'], details['userid'])
+      cursor.execute(sql, val)
+      con.commit()
+      return "Success"
+   else:
+      return "Unsuccess"
+
+@app.route('/insert_iteminfo/', methods=['GET', 'POST'])
+def insert_iteminfo():
+   if request.method == "POST":
+      details = request.form
+      cursor.execute("""SELECT COUNT(id) FROM iteminfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (GID, name, price, path, typeid) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], details['name'], details['price'], details['path'], details['typeid'])
       cursor.execute(sql, val)
       con.commit()
       return "Success"
