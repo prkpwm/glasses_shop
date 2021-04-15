@@ -32,10 +32,6 @@ function GenItem() {
     setallcard(card);
     console.log(allcard);
   };
-  useEffect(() => {
-    let card = allcard;
-    setallcard(card);
- }, [allcard])
   return (
     <div>
       <Button type="primary" onClick={() => {addcard();}}>
