@@ -1,0 +1,20 @@
+.Con-text-head{
+    text-align: center;
+    font-weight:bold;
+}
+.Con-container{
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+.Con-styleimg{ 
+    background: #d9d9d9;  
+    width: 200px; 
+    height:200px;
+}
+
+.Con-styletext{ 
+    background: #ffffff;
+    width: 200px;
+    height:200px;
+}
