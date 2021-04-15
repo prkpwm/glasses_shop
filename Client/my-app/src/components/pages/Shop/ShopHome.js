@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Row, Col, Breadcrumb ,Card} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import GenItem from './GenItem'

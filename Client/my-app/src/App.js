@@ -9,9 +9,10 @@ import AIhome from "./components/pages/AI/AIhome.js";
 import Home from "./components/pages/Home/Home";
 import ShopHome from "./components/pages/Shop/ShopHome";
 import ContactusHome from "./components/pages/Contactus/ContactusHome";
-import { Layout, Row, Col, Avatar, Space, Menu, Dropdown } from "antd";
+import Mycarthome from "./components/pages/Mycart/Mycarthome";
+import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined,ShoppingCartOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 
 const menu = (
@@ -46,10 +47,16 @@ function App() {
                     <HeaderMenu />
                   </Col>
                   <Col>
+                  <Space>
+                  <Link to="/GlassShop/Mycart">
+                  <Avatar shape="square"  style={{color:"white",backgroundColor:"transparent"}}
+                  icon={ < ShoppingCartOutlined style={{fontSize:20}}/>} size={30} />
+                   
+                    </Link>
                     <Dropdown overlay={localStorage.getItem('userdata')?menu1:menu} trigger={["click"]}
                       >
                       <a onClick={(e) => e.preventDefault()}>
-                        <Avatar icon={<UserOutlined />} size={50} />
+                        <Avatar icon={<UserOutlined />} size={40} />
                         <span
                           style={{
                             padding: 10,
@@ -60,6 +67,7 @@ function App() {
                         </span>
                       </a>
                     </Dropdown>
+                    </Space>
                   </Col>
                 </Space>
               </Row>
@@ -83,6 +91,7 @@ function App() {
             <Route exact path="/GlassShop/Home" component={Home} />
             <Route exact path="/GlassShop/Shopping" component={ShopHome} />
             <Route exact path="/GlassShop/Contact" component={ContactusHome} />
+            <Route exact path="/GlassShop/Mycart" component={Mycarthome} />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
