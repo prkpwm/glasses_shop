@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html") 
+    return render_template("add.html") 
 
 @app.route('/upload')
 def upload():
@@ -36,5 +36,35 @@ def getinfo(table):
    data = cursor.fetchall() 
    return str(data)
 
+@app.route('/insert_userinfo/', methods=['GET', 'POST'])
+def insert_userinfo():
+   if request.method == "POST":
+      details = request.form
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (maxid[0], details['username'], details['pwd'], details['firstname'], details['lastname'], details['email'], details['phone'], details['address'])
+      cursor.execute(sql, val)
+      con.commit()
+      return "Success"
+   else:
+      return "Unsuccess"
+      
+
+@app.route('/insert_userinfo/', methods=['GET', 'POST'])
+def insert_userinfo():
+   if request.method == "POST":
+      details = request.form
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (maxid[0], details['username'], details['pwd'], details['firstname'], details['lastname'], details['email'], details['phone'], details['address'])
+      cursor.execute(sql, val)
+      con.commit()
+      return "Success"
+   else:
+      return "Unsuccess"
+
+      
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8080)
