@@ -13,7 +13,7 @@ import Mycarthome from "./components/pages/Mycart/Mycarthome";
 import Profile from "./components/pages/UserInfo/Profile";
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
-import { UserOutlined,ShoppingCartOutlined } from "@ant-design/icons";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 
 const menu = (
@@ -25,7 +25,7 @@ const menu = (
 const menu1 = (
   <Menu>
     <Menu.Item key="1">
-              <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
+      <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3" onClick={() => { localStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
@@ -40,12 +40,12 @@ function App() {
             <Col style={{ color: "white" }}>
               <Link to="/GlassesShop/Home">
 
-              <img
-                src="http://localhost:3000/logo2.png"
-                alt="glasses!!"
-                width="80"
-                height="80"
-              />
+                <img
+                  src="http://localhost:3000/logo2.png"
+                  alt="glasses!!"
+                  width="80"
+                  height="80"
+                />
               </Link>
             </Col>
             <Col>
@@ -55,26 +55,29 @@ function App() {
                     <HeaderMenu />
                   </Col>
                   <Col>
-                  <Space>
-                  <Link to="/GlassesShop/Mycart">
-                  <Avatar shape="square"  style={{color:"white",backgroundColor:"transparent"}}
-                  icon={ < ShoppingCartOutlined style={{fontSize:20}}/>} size={30} />
-                   
-                    </Link>
-                    <Dropdown overlay={localStorage.getItem('userdata')?menu1:menu} trigger={["click"]}
+                    <Space>
+                      <Link to="/GlassesShop/Mycart">
+                        <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
+                          icon={< ShoppingCartOutlined style={{ fontSize: 20 }} />} size={30} />
+
+                      </Link>
+
+                      <Dropdown overlay={localStorage.getItem('userdata') ? menu1 : menu} trigger={["click"]}
                       >
-                      <a onClick={(e) => e.preventDefault()}>
-                        <Avatar icon={<UserOutlined />} size={40} />
-                        <span
-                          style={{
-                            padding: 10,
-                            color: "white",
-                          }}
-                        >
-                          {localStorage.getItem('userdata')}
-                        </span>
-                      </a>
-                    </Dropdown>
+
+                        <a onClick={(e) => e.preventDefault()}>
+
+                          <Avatar icon={<UserOutlined />} size={40} />
+                          <span
+                            style={{
+                              padding: 10,
+                              color: "white",
+                            }}
+                          >
+                            {localStorage.getItem('userdata')}
+                          </span>
+                        </a>
+                      </Dropdown>
                     </Space>
                   </Col>
                 </Space>

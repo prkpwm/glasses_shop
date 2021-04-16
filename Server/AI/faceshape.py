@@ -5,9 +5,11 @@ import numpy as np  # for mathematical calculations
 import cv2  # for face detection and other image operations
 import dlib  # for detection of facial landmarks ex:nose,jawline,eyes
 from sklearn.cluster import KMeans  # for clustering
+import os
+
 
 def process():
-  imagepath = "img.png"
+  imagepath = "static/img.png"
   face_cascade_path = "AI/haarcascade_frontalface_default.xml"
   predictor_path = "AI/shape_predictor_68_face_landmarks.dat"
   faceCascade = cv2.CascadeClassifier(face_cascade_path)

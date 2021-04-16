@@ -23,15 +23,36 @@ def adduser():
 def upload():
    return render_template('upload.html')
 	
-@app.route('/uploader', methods = ['GET', 'POST'])
+@app.route('/uploader/', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
       f = request.files['file']
-      f.save(secure_filename("img.png"))
+      f.save("static/img.png")
       fs = AI.faceshape.process()
       for i,face_shape in enumerate(face_shapes):
          if fs==face_shape:
-            return """<h1> Your face shape is """+face_shape+"""</h1></br><h3> Glasses recommended for you is  """+glasses_recomments[i]  #+"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassesShop/Shopping"> </iframe>"""
+            return """
+            <head>
+               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+               <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+               <style>
+                  h1 {
+                     font-family: "Sofia", sans-serif;
+                     text-shadow: 3px 3px 3px #ababab;
+                  }            
+                  h3 {
+                     font-family: "Audiowide", sans-serif;
+                     text-shadow: 1px 1px 1px #ababab;
+                  }
+                  img {
+                     max-width: 15%;
+                     min-width: 7%;
+                     height: auto;
+                  }
+               </style>
+            </head>
+            <img src="/static/img.png" alt="img">
+            <h1> Your face shape is """+face_shape+"""</h1><h3> Glasses recommended for you is  """+glasses_recomments[i]  #+"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassesShop/Shopping"> </iframe>"""
 
 @app.route('/getinfo/<table>')
 def getinfo(table):
