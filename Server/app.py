@@ -36,6 +36,19 @@ def getinfo(table):
    data = cursor.fetchall() 
    return str(data)
 
+@app.route('/login_verify/', methods=['GET', 'POST'])
+def login_userinfo():
+   if request.method == "POST":
+      details = request.form
+      cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
+      confirm = cursor.fetchone() 
+      if confirm:
+         return "correct"
+      else:
+         return "incorrect"
+   return "Error"
+
+
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
 def insert_userinfo():
    if request.method == "POST":
