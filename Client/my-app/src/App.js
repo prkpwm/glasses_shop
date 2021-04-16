@@ -39,7 +39,13 @@ function App() {
           <Row style={{ justifyContent: "space-between" }}>
             <Col style={{ color: "white" }}>
               <Link to="/GlassesShop/Home">
-                Glasses Shop(หารูปแปะ คลิกแล้วไปหน้า Home)
+
+              <img
+                src="http://localhost:3000/logo2.png"
+                alt="glasses!!"
+                width="80"
+                height="80"
+              />
               </Link>
             </Col>
             <Col>
