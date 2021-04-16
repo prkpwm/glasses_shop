@@ -10,6 +10,7 @@ import Home from "./components/pages/Home/Home";
 import ShopHome from "./components/pages/Shop/ShopHome";
 import ContactusHome from "./components/pages/Contactus/ContactusHome";
 import Mycarthome from "./components/pages/Mycart/Mycarthome";
+import Profile from "./components/pages/UserInfo/Profile";
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined,ShoppingCartOutlined } from "@ant-design/icons";
@@ -23,7 +24,8 @@ const menu = (
 
 const menu1 = (
   <Menu>
-    <Menu.Item key="1">ตั้งค่าบัญชีผู้ใช้งาน</Menu.Item>
+    <Menu.Item key="1">
+              <Link to="/GlassShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3" onClick={() => { localStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
@@ -92,6 +94,7 @@ function App() {
             <Route exact path="/GlassShop/Shopping" component={ShopHome} />
             <Route exact path="/GlassShop/Contact" component={ContactusHome} />
             <Route exact path="/GlassShop/Mycart" component={Mycarthome} />
+            <Route exact path="/GlassShop/Profile" component={Profile} />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
