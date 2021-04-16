@@ -13,7 +13,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("add.html") 
+    return render_template("login.html") 
+
+@app.route("/adduser")
+def adduser():
+    return render_template("adduser.html") 
 
 @app.route('/upload')
 def upload():
@@ -40,9 +44,11 @@ def getinfo(table):
 def verify():
    if request.method == "POST":
       details = request.form
+      print("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       confirm = cursor.fetchone() 
-      if confirm:
+      print(confirm[0])
+      if confirm[0]:
          return "correct"
       else:
          return "incorrect"
