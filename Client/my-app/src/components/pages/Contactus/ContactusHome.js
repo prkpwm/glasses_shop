@@ -1,6 +1,8 @@
 import React from 'react'
 import './ContactUs.css'
 import { Row, Col } from 'antd';
+import photo1 from '../Contactus/iconFemale.png';
+import photo2 from '../Contactus/iconMen.png';
 
 function ContactusHome() {
     return (
@@ -11,16 +13,24 @@ function ContactusHome() {
             <div>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={6}>
-                        <div class="Con-styleimg">img</div>
+                        <div class="Con-styleimg-miow" >
+                            <div><img src={photo1} width="180px" height="180px"></img></div>
+                        </div>
                     </Col>
                     <Col className="gutter-row" span={6}>
-                        <div class="Con-styleimg">img</div>
+                    <div class="Con-styleimg-not" >
+                            <div><img src={photo2} width="180px" height="180px"></img></div>
+                        </div>
                     </Col>
                     <Col className="gutter-row" span={6}>
-                        <div class="Con-styleimg">img</div>
+                    <div class="Con-styleimg-master" >
+                            <div><img src={photo2} width="180px" height="180px"></img></div>
+                        </div>
                     </Col>
                     <Col className="gutter-row" span={6}>
-                        <div class="Con-styleimg">img</div>
+                    <div class="Con-styleimg-aum" >
+                            <div><img src={photo1} width="180px" height="180px"></img></div>
+                        </div>
                     </Col>
                 </Row>
                 <br></br>
