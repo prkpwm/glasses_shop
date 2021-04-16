@@ -31,7 +31,7 @@ def upload_file():
       fs = AI.faceshape.process()
       for i,face_shape in enumerate(face_shapes):
          if fs==face_shape:
-            return """<h1> Your face shape is """+face_shape+"""</h1></br><h3> Glasses recommended for you is  """+glasses_recomments[i]  #+"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassShop/Shopping"> </iframe>"""
+            return """<h1> Your face shape is """+face_shape+"""</h1></br><h3> Glasses recommended for you is  """+glasses_recomments[i]  #+"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassesShop/Shopping"> </iframe>"""
 
 @app.route('/getinfo/<table>')
 def getinfo(table):
@@ -44,10 +44,8 @@ def getinfo(table):
 def verify():
    if request.method == "POST":
       details = request.form
-      print("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       confirm = cursor.fetchone() 
-      print(confirm[0])
       if confirm[0]:
          return "correct"
       else:

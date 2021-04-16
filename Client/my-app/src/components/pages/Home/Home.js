@@ -17,7 +17,7 @@ function Home() {
               borderRadius: 20,
             }}
           >
-            Glass Shop
+            Glasses Shop
           </Card>
         </Col>
       </Row>

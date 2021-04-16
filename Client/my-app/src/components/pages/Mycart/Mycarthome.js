@@ -48,7 +48,7 @@ function Mycarthome() {
                 )}
             />
             <br />
-            <Link to="/GlassShop/Shopping" style={{ fontSize: 20, color: "green" }}>เลือกซื้อแว่นต่อ</Link>
+            <Link to="/GlassesShop/Shopping" style={{ fontSize: 20, color: "green" }}>เลือกซื้อแว่นต่อ</Link>
             <br /><br />
 
             <Card style={{ backgroundColor: "#DCDCDC", fontSize: 30, width: "60%", marginLeft: "20%" }}>

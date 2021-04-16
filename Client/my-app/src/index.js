@@ -13,7 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route exact path="/GlassShop/Login" component={Login} />
+        <Route exact path="/GlassesShop/Login" component={Login} />
         <App />
       </Switch>
     </Router>

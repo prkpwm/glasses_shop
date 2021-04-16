@@ -18,14 +18,14 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const menu = (
   <Menu>
-    <Menu.Item key="0"><Link to="/GlassShop/Login">เข้าสู่ระบบ</Link></Menu.Item>
+    <Menu.Item key="0"><Link to="/GlassesShop/Login">เข้าสู่ระบบ</Link></Menu.Item>
   </Menu>
 );
 
 const menu1 = (
   <Menu>
     <Menu.Item key="1">
-              <Link to="/GlassShop/Profile">โปรไฟล์</Link></Menu.Item>
+              <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3" onClick={() => { localStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
@@ -38,8 +38,8 @@ function App() {
         <Header>
           <Row style={{ justifyContent: "space-between" }}>
             <Col style={{ color: "white" }}>
-              <Link to="/GlassShop/Home">
-                Glass Shop(หารูปแปะ คลิกแล้วไปหน้า Home)
+              <Link to="/GlassesShop/Home">
+                Glasses Shop(หารูปแปะ คลิกแล้วไปหน้า Home)
               </Link>
             </Col>
             <Col>
@@ -50,7 +50,7 @@ function App() {
                   </Col>
                   <Col>
                   <Space>
-                  <Link to="/GlassShop/Mycart">
+                  <Link to="/GlassesShop/Mycart">
                   <Avatar shape="square"  style={{color:"white",backgroundColor:"transparent"}}
                   icon={ < ShoppingCartOutlined style={{fontSize:20}}/>} size={30} />
                    
@@ -87,18 +87,18 @@ function App() {
         >
           <div>
             <Route exact path="/">
-              <Redirect to="/GlassShop/Home" />
+              <Redirect to="/GlassesShop/Home" />
             </Route>
-            <Route exact path="/GlassShop/AI" component={AIhome} />
-            <Route exact path="/GlassShop/Home" component={Home} />
-            <Route exact path="/GlassShop/Shopping" component={ShopHome} />
-            <Route exact path="/GlassShop/Contact" component={ContactusHome} />
-            <Route exact path="/GlassShop/Mycart" component={Mycarthome} />
-            <Route exact path="/GlassShop/Profile" component={Profile} />
+            <Route exact path="/GlassesShop/AI" component={AIhome} />
+            <Route exact path="/GlassesShop/Home" component={Home} />
+            <Route exact path="/GlassesShop/Shopping" component={ShopHome} />
+            <Route exact path="/GlassesShop/Contact" component={ContactusHome} />
+            <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
+            <Route exact path="/GlassesShop/Profile" component={Profile} />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          2021 © power by Glass Shop Group
+          2021 © power by Glasses Shop Group
         </Footer>
       </Layout>
     </div>
