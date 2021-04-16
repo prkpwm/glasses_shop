@@ -49,14 +49,9 @@ function Profile() {
                                 </Col>
 
                                 <Form.Item >
-                                    {editform?<Button type="dashed" onClick={() =>{seteditform(!editform)}}>
-                                        Edit
-                                     </Button>:
-                                     <Button type="danger" onClick={() =>{seteditform(!editform)}}>
-                                        Cancel
+                                    <Button type={editform?"dashed":"danger"} onClick={() =>{seteditform(!editform)}}>
+                                    {editform?"Edit":"Cancel"}
                                      </Button>
-                                     }
-                                    
                                     <Button type="primary" htmlType="submit">
                                         Submit
                                     </Button>
