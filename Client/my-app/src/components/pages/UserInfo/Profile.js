@@ -3,6 +3,7 @@ import { Row, Col, Card, Avatar, Divider, Button, Modal } from "antd";
 import Profileinfo from './Profileinfo'
 function Profile() {
     const [showmodaladdpic, setshowmodaladdpic] = useState(false);
+    const [dataprofilepic, setdataprofilepic] = useState();
 
     const showModal = () => {
         setshowmodaladdpic(true);
@@ -15,6 +16,10 @@ function Profile() {
     const handleCancel = () => {
         setshowmodaladdpic(false);
     };
+    const onChangeHandler = (event)=>{
+        console.log(event.target.files[0])
+        setdataprofilepic(event.target.files[0])
+    }
     return (
         <div>
             <Card style={{ backgroundColor: "#DCDCDC", borderRadius: 20, fontSize: 25 }}>
@@ -37,9 +42,7 @@ function Profile() {
 
 
             <Modal title="อัพโหลดรูปภาพ" visible={showmodaladdpic} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+            <input type="file" name="file" onChange={onChangeHandler}/>
       </Modal>
 
         </div>

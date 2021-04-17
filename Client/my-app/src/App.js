@@ -67,7 +67,7 @@ function App() {
 
                         <a onClick={(e) => e.preventDefault()}>
 
-                          <Avatar icon={<UserOutlined />} size={40} />
+                          <Avatar src="/img/Userprofile/UserpicID_1.jpg" size={40} />
                           <span
                             style={{
                               padding: 10,
