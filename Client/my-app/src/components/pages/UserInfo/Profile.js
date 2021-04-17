@@ -1,66 +1,47 @@
-import React, { useState} from "react";
-import { Row, Col, Card, Avatar, Divider, Form, Input, Button } from "antd";
-
+import React, { useState } from "react";
+import { Row, Col, Card, Avatar, Divider, Button, Modal } from "antd";
+import Profileinfo from './Profileinfo'
 function Profile() {
-    const [editform, seteditform] = useState(true);
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const [showmodaladdpic, setshowmodaladdpic] = useState(false);
+
+    const showModal = () => {
+        setshowmodaladdpic(true);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+    const handleOk = () => {
+        setshowmodaladdpic(false);
+    };
+
+    const handleCancel = () => {
+        setshowmodaladdpic(false);
     };
     return (
         <div>
             <Card style={{ backgroundColor: "#DCDCDC", borderRadius: 20, fontSize: 25 }}>
                 <Row>
                     <Col span={4} style={{ textAlign: "center" }}>
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" size={100} />
+                        <Avatar src="/img/Userprofile/UserpicID_1.jpg" size={100} />
                         <br /><br />
-                        <Button shape="round" type="primary">Upload</Button>
+                        <Button shape="round" type="primary" onClick={showModal}>อัพโหลด</Button>
                     </Col>
                     <Col span={1}>
                         <Divider type="vertical" style={{ backgroundColor: "black", height: "100%" }} />
                     </Col>
                     <Col span={18}>
-                        <Form
-                            name="basic"
-                            initialValues={{ Name: "สมชาย", Surname: "อยู่ดี" }}
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
-                        >
-                            <Row>
-                                <Col span={11}>
-                                    <Form.Item
-                                        label="ชื่อ"
-                                        name="Name"
-                                    >
-                                        <Input disabled={editform} />
-                                    </Form.Item>
-                                </Col>
-                                <Col span={1} />
-                                <Col span={11}>
-                                    <Form.Item
-                                        label="นามสกุล"
-                                        name="Surname"
-                                    >
-                                        <Input disabled={editform} />
-                                    </Form.Item>
-                                </Col>
-
-                                <Form.Item >
-                                    <Button type={editform?"dashed":"danger"} onClick={() =>{seteditform(!editform)}}>
-                                    {editform?"Edit":"Cancel"}
-                                     </Button>
-                                    <Button type="primary" htmlType="submit">
-                                        Submit
-                                    </Button>
-                                </Form.Item>
-                            </Row>
-                        </Form>
+                        <Profileinfo />
                     </Col>
                 </Row>
             </Card>
+
+
+
+
+            <Modal title="อัพโหลดรูปภาพ" visible={showmodaladdpic} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+
         </div>
     )
 }
