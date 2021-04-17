@@ -10,6 +10,7 @@ import Home from "./components/pages/Home/Home";
 import ShopHome from "./components/pages/Shop/ShopHome";
 import ContactusHome from "./components/pages/Contactus/ContactusHome";
 import Mycarthome from "./components/pages/Mycart/Mycarthome";
+import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
@@ -104,6 +105,7 @@ function App() {
             <Route exact path="/GlassesShop/Contact" component={ContactusHome} />
             <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
             <Route exact path="/GlassesShop/Profile" component={Profile} />
+            <Route exact path="/GlassesShop/Pay" component={Pay} />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

@@ -53,7 +53,7 @@ function Mycarthome() {
 
             <Card style={{ backgroundColor: "#DCDCDC", fontSize: 30, width: "60%", marginLeft: "20%" }}>
                 ยอดชำระ ฿1000<br />
-                <Button>ไปหน้าชำระเงิน</Button>
+                <Button> <Link to="/GlassesShop/Pay">ไปหน้าชำระเงิน</Link></Button>
             </Card>
             <br />
             <div style={{ fontSize: 30 }}>แว่นที่มักจะซื้อด้วยกัน</div>
