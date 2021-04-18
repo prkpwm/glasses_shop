@@ -4,6 +4,7 @@ import AI.faceshape
 import mysql.connector
 import json
 from flask import jsonify
+import time
 
 face_shapes = ['squared shape.','round shape.','triangle shape.','diamond shape.','rectangular.','oval.']
 glasses_recomments = ["Oval, Round and Large","Rectangle, Square and Oval","Rectangle, Oval and Horn","Rectangle, Oval and Horn","Rectangle, Square and Oval","Rectangle, Oval, Square, Round, Large and Horn"]
@@ -28,8 +29,9 @@ def upload():
 def upload_file():
    if request.method == 'POST':
       f = request.files['file']
-      f.save("static/img.png")
-      fs = AI.faceshape.process()
+      path_name = time.time()
+      f.save("static/%s.png"%path_name)
+      fs = AI.faceshape.process(path_name)
       for i,face_shape in enumerate(face_shapes):
          if fs==face_shape:
             return """

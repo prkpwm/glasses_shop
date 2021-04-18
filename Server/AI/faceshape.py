@@ -8,8 +8,8 @@ from sklearn.cluster import KMeans  # for clustering
 import os
 
 
-def process():
-  imagepath = "static/img.png"
+def process(path_name):
+  imagepath = "static/%s.png"%path_name
   face_cascade_path = "AI/haarcascade_frontalface_default.xml"
   predictor_path = "AI/shape_predictor_68_face_landmarks.dat"
   faceCascade = cv2.CascadeClassifier(face_cascade_path)
