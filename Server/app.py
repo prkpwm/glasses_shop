@@ -66,19 +66,21 @@ def getinfo(table):
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
+   massage = ""
    if request.method == "POST":
       details = request.form
       cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       confirm = cursor.fetchone() 
       if confirm[0]:
-         return "correct"
+         massage =  "correct"
       else:
-         return "incorrect"
-   return "Error"
+         massage = "incorrect"
+   return jsonify(massage)
 
 
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
 def insert_userinfo():
+   massage = ""
    if request.method == "POST":
       details = request.form
       cursor.execute("""SELECT COUNT(id) FROM userinfo""")
@@ -87,12 +89,14 @@ def insert_userinfo():
       val = (maxid[0], details['username'], details['pwd'], details['firstname'], details['lastname'], details['email'], details['phone'], details['address'])
       cursor.execute(sql, val)
       con.commit()
-      return "Success"
+      massage = "Success"
    else:
-      return "Unsuccess"
+      massage = "Unsuccess"
+   return jsonify(massage)
       
 @app.route('/insert_orderinfo/', methods=['GET', 'POST'])
 def insert_orderinfo():
+   massage = ""
    if request.method == "POST":
       details = request.form
       cursor.execute("""SELECT COUNT(id) FROM orderinfo""")
@@ -101,12 +105,14 @@ def insert_orderinfo():
       val = (maxid[0], details['date'], details['status'], details['tracking'], details['userid'])
       cursor.execute(sql, val)
       con.commit()
-      return "Success"
+      massage = "Success"
    else:
-      return "Unsuccess"
+      massage = "Unsuccess"
+   return jsonify(massage)
 
 @app.route('/insert_iteminfo/', methods=['GET', 'POST'])
 def insert_iteminfo():
+   massage = ""
    if request.method == "POST":
       details = request.form
       cursor.execute("""SELECT COUNT(id) FROM iteminfo""")
@@ -115,9 +121,10 @@ def insert_iteminfo():
       val = (maxid[0], details['name'], details['price'], details['path'], details['typeid'])
       cursor.execute(sql, val)
       con.commit()
-      return "Success"
+      massage = "Success"
    else:
-      return "Unsuccess"
+      massage = "Unsuccess"
+   return jsonify(massage)
 
       
 if __name__ == '__main__':

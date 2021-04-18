@@ -23,13 +23,9 @@ export default class PersonList extends React.Component {
       })
   }
 
-  loadinfo() {
-
-  }
   render() {
     return (
       <div>
-
         <Row gutter={[16, 24]}>
           {
             this.state.datas.map(data =>
@@ -46,14 +42,12 @@ export default class PersonList extends React.Component {
                   <p style={fontRight}>{data[2]} ฿</p>
                   <button type="button" style={blue}>
                     Add to cart
-  </button>
+                  </button>
                 </div>
               </Col>
             )
           }
         </Row>
-
-
       </div>
 
     )
