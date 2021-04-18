@@ -5,7 +5,6 @@
         rel="stylesheet" type="text/css" />
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
 
@@ -19,7 +18,7 @@
                     $('#blah')
                         .attr('src', e.target.result)
                         .width(150)
-                        .height(200);
+                        .height(auto);
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -27,11 +26,11 @@
     </script>
 </head>
 
-<body>
+<body >
     <form action="/uploader" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" onchange="readURL(this);return -1" /><br /><br />
         <img id="blah" src="#" alt="your image" /><br /><br />
-        <input type="submit" />
+        <input type="submit"/>
     </form>
 </body>
 
