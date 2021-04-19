@@ -3,37 +3,35 @@ import { Form, Input, Button, Row, Col, Card, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from 'axios';
 
+
+
 function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
     console.log(values);
     console.log("User:", values.User);
     console.log("Password:", values.Password);
-    let message  = ""
-    await axios.post("http://ec2-18-136-102-109.ap-southeast-1.compute.amazonaws.com:8080/verify", { username: values.User, pwd: values.Password })
-    .then(response => {
-      message = response
-      console.log("response: ", response)
-    })
-    
+    let body = { username:values.User, pwd:values.Password  };
+    let message = ""
+    await axios.get("/verify",  { params: { body } })
+      .then(response => {
+        message = response.data
+        console.log("response: ", message)
+      })
     if (message == "correct") {
-        Loginfinish(values);
+      Loginfinish(values);
     } else {
       console.log("login fail");
       setisLoginFail({ status: "error", word: "invalid id or password" });
     }
+   
+
   };
   const Loginfinish = (values) => {
-    if(values.remember==true){
-      localStorage.setItem('userdata',values.User);
-      localStorage.setItem('isLogin', 'true')
-    }
-    else{
-      sessionStorage.setItem('userdata', values.User);
-      localStorage.setItem('isLogin', 'false')
-    }
-      console.log(values)
-      window.location.replace("/")
+    console.log(values)
+    localStorage.setItem('userdata', values.User);
+    localStorage.setItem('isLogin', 'true')
+    window.location.replace("/")
   }
 
   //   const onFinishFailed = (errorInfo) => {
@@ -62,6 +60,7 @@ function Login() {
             <Form
               name="normal_login"
               className="login-form"
+              action="/verify" enctype="multipart/form-data" method="POST"
               initialValues={{ remember: true }}
               onFinish={onFinish}
             >
@@ -98,6 +97,7 @@ function Login() {
                   title="Eight or more characters"
                 />
               </Form.Item>
+
               <Form.Item>
                 <Form.Item name="remember" valuePropName="checked" noStyle>
                   <Checkbox>Remember me</Checkbox>
@@ -117,7 +117,8 @@ function Login() {
             </Form>
             <div style={{ textAlign: "left" }}>
               {/* {Logintype=="Login ด้วย adAccount"?<Button type="danger" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย CSM")}>CSM</Button>
-             :<Button type="primary" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย adAccount")}>adAccount</Button>
+             :<Button type="primar
+             y" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย adAccount")}>adAccount</Button>
             } */}
             </div>
           </Card>
