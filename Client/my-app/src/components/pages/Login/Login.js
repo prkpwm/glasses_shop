@@ -11,7 +11,7 @@ function Login() {
     console.log("User:", values.User);
     console.log("Password:", values.Password);
     let message = ""
-    await axios.post("/verify", { username: 'admin', pwd: '123456' })
+    await axios.post("/verify", { username: values.User, pwd: values.Password })
       .then(response => {
         message = response
         console.log("response: ", response)

@@ -14,12 +14,10 @@ cors = CORS(app, resources={
     }
 })
 
-
 face_shapes = ['squared shape.','round shape.','triangle shape.','diamond shape.','rectangular.','oval.']
 glasses_recomments = ["Oval, Round and Large","Rectangle, Square and Oval","Rectangle, Oval and Horn","Rectangle, Oval and Horn","Rectangle, Square and Oval","Rectangle, Oval, Square, Round, Large and Horn"]
 con = mysql.connector.connect(user='sql6406291', password='Aq4R8lC4Ae',host='sql6.freemysqlhosting.net',database='sql6406291')
 cursor = con.cursor()
-
 
 @app.route("/")
 def home():
