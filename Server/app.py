@@ -6,12 +6,12 @@ import json
 from flask import jsonify
 import time
 
+app = Flask(__name__)
+
 face_shapes = ['squared shape.','round shape.','triangle shape.','diamond shape.','rectangular.','oval.']
 glasses_recomments = ["Oval, Round and Large","Rectangle, Square and Oval","Rectangle, Oval and Horn","Rectangle, Oval and Horn","Rectangle, Square and Oval","Rectangle, Oval, Square, Round, Large and Horn"]
 con = mysql.connector.connect(user='sql6406291', password='Aq4R8lC4Ae',host='sql6.freemysqlhosting.net',database='sql6406291')
 cursor = con.cursor()
-
-app = Flask(__name__)
 
 @app.route("/")
 def home():
@@ -66,15 +66,17 @@ def getinfo(table):
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
-   massage = ""
+   massage = "404"
    if request.method == "POST":
       details = request.form
+      print(details)
       cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
       confirm = cursor.fetchone() 
       if confirm[0]:
          massage =  "correct"
       else:
          massage = "incorrect"
+   print(request.form)
    return jsonify(massage)
 
 

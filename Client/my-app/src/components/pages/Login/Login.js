@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Card, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import axios from 'axios';
 
 function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
     console.log("User:", values.User);
     console.log("Password:", values.Password);
-    if (values.User == "Admin" && values.Password == "12345678") {
+    let message  = ""
+    await axios.post("http://ec2-18-136-102-109.ap-southeast-1.compute.amazonaws.com:8080/verify", { username: values.User, pwd: values.Password })
+    .then(response => {
+      message = response
+      console.log("response: ", response)
+    })
+    
+    if (message == "correct") {
         Loginfinish(values);
     } else {
       console.log("login fail");

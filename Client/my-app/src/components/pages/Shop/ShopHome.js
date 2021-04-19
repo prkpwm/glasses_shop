@@ -3,6 +3,7 @@ import { Row, Col, Breadcrumb ,Card} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import GenItem from './GenItem'
 import Paging from './Paging'
+
 const style = { background: '#0092ff', padding: '8px 0',height:'250px' };
 
 function genCol(){
