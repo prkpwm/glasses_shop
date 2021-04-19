@@ -28,10 +28,16 @@ function Login() {
 
   };
   const Loginfinish = (values) => {
-    console.log(values)
-    localStorage.setItem('userdata', values.User);
-    localStorage.setItem('isLogin', 'true')
-    window.location.replace("/")
+    if(values.remember==true){
+      localStorage.setItem('userdata',values.User);
+      localStorage.setItem('isLogin', 'true')
+    }
+    else{
+      sessionStorage.setItem('userdata', values.User);
+      localStorage.setItem('isLogin', 'false')
+    }
+      console.log(values)
+      window.location.replace("/")
   }
 
   //   const onFinishFailed = (errorInfo) => {
