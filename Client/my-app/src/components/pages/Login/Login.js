@@ -68,6 +68,8 @@ function Login() {
                   style={{ padding: 10, borderRadius: 25 }}
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
+                  pattern="^[A-Za-z].*"
+                  title="Start with A-Z or a-z"
                 />
               </Form.Item>
               <Form.Item
@@ -84,6 +86,8 @@ function Login() {
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
                   placeholder="Password"
+                  pattern=".{8,}"
+                  title="Eight or more characters"
                 />
               </Form.Item>
               <Form.Item>
