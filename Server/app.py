@@ -1,17 +1,25 @@
 from flask import Flask,render_template, request
 from werkzeug.utils import secure_filename
-import AI.faceshape
+#import AI.faceshape
 import mysql.connector
 import json
 from flask import jsonify
 import time
-
+from flask_cors import CORS,cross_origin
 app = Flask(__name__)
+CORS(app)
+cors = CORS(app, resources={
+    r"/*": {
+       "origins": "*"
+    }
+})
+
 
 face_shapes = ['squared shape.','round shape.','triangle shape.','diamond shape.','rectangular.','oval.']
 glasses_recomments = ["Oval, Round and Large","Rectangle, Square and Oval","Rectangle, Oval and Horn","Rectangle, Oval and Horn","Rectangle, Square and Oval","Rectangle, Oval, Square, Round, Large and Horn"]
 con = mysql.connector.connect(user='sql6406291', password='Aq4R8lC4Ae',host='sql6.freemysqlhosting.net',database='sql6406291')
 cursor = con.cursor()
+
 
 @app.route("/")
 def home():
@@ -67,6 +75,7 @@ def getinfo(table):
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"
+   print(request)
    if request.method == "POST":
       details = request.form
       print(details)
@@ -130,4 +139,4 @@ def insert_iteminfo():
 
       
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8080)
+    app.run(host="0.0.0.0",port=8080)
