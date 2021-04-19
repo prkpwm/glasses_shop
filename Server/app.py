@@ -1,6 +1,6 @@
 from flask import Flask,render_template, request
 from werkzeug.utils import secure_filename
-#import AI.faceshape
+import AI.faceshape
 import mysql.connector
 import json
 from flask import jsonify
