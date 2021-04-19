@@ -15,7 +15,7 @@ export default class PersonList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8080/getinfo/iteminfo")
+    axios.get("http://ec2-18-136-102-109.ap-southeast-1.compute.amazonaws.com:8080/getinfo/iteminfo")
       .then(res => {
         const datas = res.data;
         console.log(datas)
