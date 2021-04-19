@@ -73,17 +73,14 @@ def getinfo(table):
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"
-   print(request)
-   if request.method == "POST":
-      details = request.form
-      print(details)
-      cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
+   body = json.loads(request.args.get('body'))
+   if request.method == "GET":
+      cursor.execute("select COUNT(id) from userinfo where username=\"" + body.get('username')+"\"and pwd=\""+ body.get('pwd')+"\"")
       confirm = cursor.fetchone() 
       if confirm[0]:
          massage =  "correct"
       else:
          massage = "incorrect"
-   print(request.form)
    return jsonify(massage)
 
 

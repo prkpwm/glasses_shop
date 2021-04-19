@@ -10,11 +10,12 @@ function Login() {
   const onFinish = async (values) => {
     console.log("User:", values.User);
     console.log("Password:", values.Password);
+    let body = { username:values.User, pwd:values.Password  };
     let message = ""
-    await axios.post("/verify", { username: values.User, pwd: values.Password })
+    await axios.get("/verify",  { params: { body } })
       .then(response => {
-        message = response
-        console.log("response: ", response)
+        message = response.data
+        console.log("response: ", message)
       })
     if (message == "correct") {
       Loginfinish(values);
