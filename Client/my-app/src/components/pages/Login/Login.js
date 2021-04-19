@@ -8,6 +8,7 @@ import axios from 'axios';
 function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
+    console.log(values);
     console.log("User:", values.User);
     console.log("Password:", values.Password);
     let body = { username:values.User, pwd:values.Password  };
@@ -27,10 +28,16 @@ function Login() {
 
   };
   const Loginfinish = (values) => {
-    console.log(values)
-    localStorage.setItem('userdata', values.User);
-    localStorage.setItem('isLogin', 'true')
-    window.location.replace("/")
+    if(values.remember==true){
+      localStorage.setItem('userdata',values.User);
+      localStorage.setItem('isLogin', 'true')
+    }
+    else{
+      sessionStorage.setItem('userdata', values.User);
+      localStorage.setItem('isLogin', 'false')
+    }
+      console.log(values)
+      window.location.replace("/")
   }
 
   //   const onFinishFailed = (errorInfo) => {
@@ -74,6 +81,8 @@ function Login() {
                   style={{ padding: 10, borderRadius: 25 }}
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
+                  pattern="^[A-Za-z].*"
+                  title="Start with A-Z or a-z"
                 />
               </Form.Item>
               <Form.Item
@@ -90,6 +99,8 @@ function Login() {
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
                   placeholder="Password"
+                  pattern=".{8,}"
+                  title="Eight or more characters"
                 />
               </Form.Item>
 
