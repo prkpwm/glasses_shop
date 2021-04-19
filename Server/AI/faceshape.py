@@ -126,7 +126,7 @@ def process(path_name):
   alpha = alpha1-alpha0
   angle = abs(degrees(alpha))
   angle = 180-angle
-
+  print(similarity,angle,line1,line2,line3,line4)
   for i in range(1):
       if similarity < 10:
           if angle < 160:
