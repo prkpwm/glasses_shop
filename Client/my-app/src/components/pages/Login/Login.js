@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
+    console.log(values);
     console.log("User:", values.User);
     console.log("Password:", values.Password);
     if (values.User == "Admin" && values.Password == "12345678") {
@@ -15,9 +16,15 @@ function Login() {
     }
   };
   const Loginfinish = (values) => {
-      console.log(values)
+    if(values.remember==true){
       localStorage.setItem('userdata',values.User);
       localStorage.setItem('isLogin', 'true')
+    }
+    else{
+      sessionStorage.setItem('userdata', values.User);
+      localStorage.setItem('isLogin', 'false')
+    }
+      console.log(values)
       window.location.replace("/")
   }
 

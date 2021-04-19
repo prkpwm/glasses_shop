@@ -63,7 +63,8 @@ function App() {
 
                       </Link>
 
-                      <Dropdown overlay={localStorage.getItem('userdata') ? menu1 : menu} trigger={["click"]}
+                      <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
+                       ? menu1 : menu} trigger={["click"]}
                       >
 
                         <a onClick={(e) => e.preventDefault()}>
@@ -75,7 +76,7 @@ function App() {
                               color: "white",
                             }}
                           >
-                            {localStorage.getItem('userdata')}
+                            {localStorage.getItem('isLogin')=="true"?localStorage.getItem('userdata'):sessionStorage.getItem('userdata')}
                           </span>
                         </a>
                       </Dropdown>
