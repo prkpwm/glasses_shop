@@ -68,8 +68,10 @@ function App() {
                       >
 
                         <a onClick={(e) => e.preventDefault()}>
-
-                          <Avatar src="/img/Userprofile/UserpicID_1.jpg" size={40} />
+                          {localStorage.getItem('userdata') || sessionStorage.getItem('userdata')?
+                         <Avatar src={"/img/Userprofile/UserpicID_1.jpg"} size={40} /> :
+                         <Avatar icon={<UserOutlined size={40}/>} />
+                         }
                           <span
                             style={{
                               padding: 10,
