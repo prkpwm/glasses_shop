@@ -64,21 +64,21 @@ function App() {
                       </Link>
 
                       <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
-                       ? menu1 : menu} trigger={["click"]}
+                        ? menu1 : menu} trigger={["click"]}
                       >
 
                         <a onClick={(e) => e.preventDefault()}>
-                          {localStorage.getItem('userdata') || sessionStorage.getItem('userdata')?
-                         <Avatar src={"/img/Userprofile/UserpicID_1.jpg"} size={40} /> :
-                         <Avatar icon={<UserOutlined size={40}/>} />
-                         }
+                          {localStorage.getItem('userdata') || sessionStorage.getItem('userdata') ?
+                            <Avatar src={"/img/Userprofile/UserpicID_1.jpg"} size={40} /> :
+                            <Avatar icon={<UserOutlined size={40} />} />
+                          }
                           <span
                             style={{
                               padding: 10,
                               color: "white",
                             }}
                           >
-                            {localStorage.getItem('isLogin')=="true"?localStorage.getItem('userdata'):sessionStorage.getItem('userdata')}
+                            {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
                           </span>
                         </a>
                       </Dropdown>
@@ -111,9 +111,15 @@ function App() {
             <Route exact path="/GlassesShop/Pay" component={Pay} />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        <footer style={{
+          textAlign: "center",
+          padding: " 24px 50px",
+          color: "rgba(0, 0, 0, 0.85)",
+          fontSize: 14,
+          backgroundColor: "#f0f2f5"
+        }}>
           2021 © power by Glasses Shop Group
-        </Footer>
+        </footer>
       </Layout>
     </div>
   );
