@@ -114,7 +114,6 @@ def insert_userinfo():
       massage = "Success"
    elif request.method == "GET":
       body = json.loads(request.args.get('body'))
-      print(body)
       cursor.execute("""SELECT COUNT(id) FROM userinfo""")
       maxid = cursor.fetchone() 
       sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -138,6 +137,15 @@ def insert_orderinfo():
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (orderid, date, status, tracking, userid) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('date'), body.get('status'), body.get('tracking'), body.get('userid'))
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
    else:
       massage = "Unsuccess"
    return jsonify(massage)
@@ -150,7 +158,16 @@ def insert_history():
       cursor.execute("""SELECT COUNT(id) FROM history""")
       maxid = cursor.fetchone() 
       sql = "INSERT INTO history (id,item,price	,oderid,	GID) VALUES (%s, %s, %s, %s, %s)"
-      val = (maxid[0], details['item'], details['price'], details['oderid'], details['GID'])
+      val = (maxid[0], details['item'], details['price'], details['oderid'],details['GID'])
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO history (id,item,price	,oderid,	GID) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('id'), body.get('item'), body.get('oderid'), body.get('GID'))
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
