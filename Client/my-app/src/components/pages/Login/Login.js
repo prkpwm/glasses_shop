@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Card, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 
 
@@ -121,7 +122,9 @@ function Login() {
                 {/* Or <a href="">register now!</a> */}
               </Form.Item>
             </Form>
-            <div style={{ textAlign: "left" }}>
+            <div style={{ textAlign: "center" }}>
+                <span>หากยังไม่สมัครบัญชี Glass Shop โปรด  </span>
+                <Button shape="round"><Link to="/GlassesShop/Register">สมัครสมาชิก</Link></Button>
               {/* {Logintype=="Login ด้วย adAccount"?<Button type="danger" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย CSM")}>CSM</Button>
              :<Button type="primar
              y" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย adAccount")}>adAccount</Button>

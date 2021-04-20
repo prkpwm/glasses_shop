@@ -95,7 +95,6 @@ def verify():
 
    return jsonify(massage)
 
-
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
 def insert_userinfo():
    massage = ""
@@ -120,7 +119,7 @@ def insert_userinfo():
    else:
       massage = "Unsuccess"
    return jsonify(massage)
-      
+   
 @app.route('/insert_orderinfo/', methods=['GET', 'POST'])
 def insert_orderinfo():
    massage = ""
