@@ -75,14 +75,24 @@ def getinfo(table):
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"
-   body = json.loads(request.args.get('body'))
+   
    if request.method == "GET":
+      body = json.loads(request.args.get('body'))
       cursor.execute("select COUNT(id) from userinfo where username=\"" + body.get('username')+"\"and pwd=\""+ body.get('pwd')+"\"")
       confirm = cursor.fetchone() 
       if confirm[0]:
          massage =  "correct"
       else:
          massage = "incorrect"
+   elif request.method == "POST":
+      details = request.form
+      cursor.execute("select COUNT(id) from userinfo where username=\"" + details['username']+"\"and pwd=\""+ details['pwd']+"\"")
+      confirm = cursor.fetchone() 
+      if confirm[0]:
+         massage =  "correct"
+      else:
+         massage = "incorrect"
+
    return jsonify(massage)
 
 
@@ -95,6 +105,15 @@ def insert_userinfo():
       maxid = cursor.fetchone() 
       sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
       val = (maxid[0], details['username'], details['pwd'], details['firstname'], details['lastname'], details['email'], details['phone'], details['address'])
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
