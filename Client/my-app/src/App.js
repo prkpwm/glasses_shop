@@ -12,6 +12,7 @@ import ContactusHome from "./components/pages/Contactus/ContactusHome";
 import Mycarthome from "./components/pages/Mycart/Mycarthome";
 import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
+import RegisterHome from "./components/pages/Register/RegisterHome";
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -20,6 +21,7 @@ const { Header, Footer, Sider, Content } = Layout;
 const menu = (
   <Menu>
     <Menu.Item key="0"><Link to="/GlassesShop/Login">เข้าสู่ระบบ</Link></Menu.Item>
+    <Menu.Item key="1"><Link to="/GlassesShop/Register">สมัครสมาชิก</Link></Menu.Item>
   </Menu>
 );
 
@@ -109,6 +111,7 @@ function App() {
             <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
             <Route exact path="/GlassesShop/Profile" component={Profile} />
             <Route exact path="/GlassesShop/Pay" component={Pay} />
+            <Route exact path="/GlassesShop/Register" component={RegisterHome} />
           </div>
         </Content>
         <footer style={{
