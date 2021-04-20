@@ -63,8 +63,8 @@ function RegisterHome() {
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
                             placeholder="Username"
-                            pattern="^[A-Za-z].*"
-                            title="Start with A-Z or a-z"
+                            pattern="^[A-Za-z]{6,}$"
+                            title="Six or more characters. Contains with A-Z or a-z"
                         />
                     </Form.Item>
 
@@ -79,8 +79,8 @@ function RegisterHome() {
                             style={{ padding: 10, borderRadius: 25 }}
                             type="password"
                             placeholder="Password"
-                            pattern=".{8,}"
-                            title="Eight or more characters"
+                            pattern="^[A-Za-z0-9]{8,}$"
+                            title="Eight or more characters. Contains with A-Z ,a-z or 0-9"
                         />
                     </Form.Item>
 
@@ -108,7 +108,9 @@ function RegisterHome() {
                     >
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
+                            pattern="^[A-Za-zก-๏]{3,}$"
                             placeholder="Firstname"
+                            title="English and Thai only "
                         />
                     </Form.Item>
 
@@ -121,7 +123,9 @@ function RegisterHome() {
                     >
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
+                            pattern="^[A-Za-zก-๏]{3,}$"
                             placeholder="Lastname"
+                            title="English and Thai only"
                         />
                     </Form.Item>
 
@@ -135,6 +139,7 @@ function RegisterHome() {
                     >
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
+                            pattern="^[a-zA-Z0-9\.]{1,}@[a-zA-Z\.]{1,}.[a-zA-Z0-9]{1,4}$"
                             placeholder="E-mail"
                         />
                     </Form.Item>
@@ -148,7 +153,8 @@ function RegisterHome() {
                     >
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
-                            placeholder="Phone ระบุเฉพาะตัวเลข"
+                            pattern="^[0-9]{10}$"
+                            placeholder="ระบุเฉพาะตัวเลข"
                         />
                     </Form.Item>
 
@@ -161,6 +167,7 @@ function RegisterHome() {
                     >
                         <TextArea rows={4}
                             style={{ padding: 10, borderRadius: 25 }}
+                            pattern="^.{1,}$"
                             placeholder="Address"
                         />
                     </Form.Item>
