@@ -85,7 +85,6 @@ def verify():
          massage = "incorrect"
    return jsonify(massage)
 
-
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
 def insert_userinfo():
    massage = ""
@@ -98,10 +97,19 @@ def insert_userinfo():
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
    else:
       massage = "Unsuccess"
    return jsonify(massage)
-      
+   
 @app.route('/insert_orderinfo/', methods=['GET', 'POST'])
 def insert_orderinfo():
    massage = ""
