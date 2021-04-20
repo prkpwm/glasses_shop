@@ -72,6 +72,13 @@ def getinfo(table):
    data = cursor.fetchall() 
    return jsonify(data)
 
+@app.route('/sortitem/<table>/<column>/<order>')
+def sortitem(table,column,order):
+   sql = ("select * from " + str(table) + " ORDER BY " + column +" "+ order)
+   cursor.execute(sql)
+   data = cursor.fetchall() 
+   return jsonify(data)
+
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"

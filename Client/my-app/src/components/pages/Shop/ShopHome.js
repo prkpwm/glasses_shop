@@ -52,7 +52,7 @@ function ShopHome() {
                         </select>
                     </div>
                     <div id="listItem" style={{ textAlign: 'center' }}>
-                         <GenItem/>
+                         <GenItem />
                     </div>
                     <div id="pagination" style={{paddingTop:"25px",textAlign:"center"}}>
                         <Paging/>
