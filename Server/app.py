@@ -109,10 +109,11 @@ def insert_userinfo():
       massage = "Success"
    elif request.method == "GET":
       body = json.loads(request.args.get('body'))
+      print(body)
       cursor.execute("""SELECT COUNT(id) FROM userinfo""")
       maxid = cursor.fetchone() 
       sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-      val = (maxid[0], body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
+      val = (maxid[0]+1, body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"

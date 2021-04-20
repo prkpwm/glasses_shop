@@ -12,15 +12,19 @@ function RegisterHome() {
     const onFinish = async (values) => {
         console.log(values);
         if (values.Password == values.RetypePassword) {
-            await axios.post('/insert_userinfo/',
+            let body = {
+                "username": values.Username,
+                "pwd": values.Password,
+                "firstname": values.Firstname,
+                "lastname": values.Lastname,
+                "email": values.Email,
+                "phone": values.Phone,
+                "address": values.Address,
+            };
+            let message = ""
+            await axios.get('/insert_userinfo',
                 {
-                    "username": values.Username,
-                    "pwd": values.Password,
-                    "firstname": values.Firstname,
-                    "lastname": values.Lastname,
-                    "email": values.Email,
-                    "phone": values.Phone,
-                    "address": values.Address,
+                    params: { body }
                 }).then(response => {
                     console.log("response: ", response)
                 })
@@ -48,7 +52,7 @@ function RegisterHome() {
                 <Divider />
                 <Form
                     name="normal_login"
-                    action="/verify" enctype="multipart/form-data" method="POST"
+                    action="/insert_userinfo" enctype="multipart/form-data" method="POST"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
                     labelCol={{ md: { span: 24 }, lg: { span: 8 }, xl: { span: 6 } }}
