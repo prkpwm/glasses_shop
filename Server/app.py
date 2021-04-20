@@ -72,8 +72,8 @@ def getinfo(table):
    data = cursor.fetchall() 
    return jsonify(data)
 
-@app.route('/sortitem/<table>/<column>/<order>')
-def sortitem(table,column,order):
+@app.route('/sortitem/<table>/<column>/<order>')  
+def sortitem(table,column,order): # order(ASC,DESC)
    sql = ("select * from " + str(table) + " ORDER BY " + column +" "+ order)
    cursor.execute(sql)
    data = cursor.fetchall() 
@@ -82,7 +82,6 @@ def sortitem(table,column,order):
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"
-   
    if request.method == "GET":
       body = json.loads(request.args.get('body'))
       cursor.execute("select COUNT(id) from userinfo where username=\"" + body.get('username')+"\"and pwd=\""+ body.get('pwd')+"\"")
@@ -99,7 +98,6 @@ def verify():
          massage =  "correct"
       else:
          massage = "incorrect"
-
    return jsonify(massage)
 
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
@@ -144,15 +142,15 @@ def insert_orderinfo():
       massage = "Unsuccess"
    return jsonify(massage)
 
-@app.route('/insert_iteminfo/', methods=['GET', 'POST'])
-def insert_iteminfo():
+@app.route('/insert_history/', methods=['GET', 'POST'])
+def insert_history():
    massage = ""
    if request.method == "POST":
       details = request.form
-      cursor.execute("""SELECT COUNT(id) FROM iteminfo""")
+      cursor.execute("""SELECT COUNT(id) FROM history""")
       maxid = cursor.fetchone() 
-      sql = "INSERT INTO userinfo (GID, name, price, path, typeid) VALUES (%s, %s, %s, %s, %s)"
-      val = (maxid[0], details['name'], details['price'], details['path'], details['typeid'])
+      sql = "INSERT INTO history (id,item,price	,oderid,	GID) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], details['item'], details['price'], details['oderid'], details['GID'])
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
