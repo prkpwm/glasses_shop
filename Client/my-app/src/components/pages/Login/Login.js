@@ -19,8 +19,8 @@ function Login() {
         message = response.data
         console.log("response: ", message)
       })
-    if (message == "correct") {
-      Loginfinish(values);
+    if (message != "404") {
+      Loginfinish(values,message);
     } else {
       console.log("login fail");
       setisLoginFail({ status: "error", word: "invalid id or password" });
@@ -28,13 +28,15 @@ function Login() {
    
 
   };
-  const Loginfinish = (values) => {
+  const Loginfinish = (values,uid) => {
     if(values.remember==true){
       localStorage.setItem('userdata',values.User);
+      localStorage.setItem('uid',uid);
       localStorage.setItem('isLogin', 'true')
     }
     else{
       sessionStorage.setItem('userdata', values.User);
+      sessionStorage.setItem('uid',uid);
       localStorage.setItem('isLogin', 'false')
     }
       console.log(values)
@@ -82,7 +84,7 @@ function Login() {
                   style={{ padding: 10, borderRadius: 25 }}
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
-                  pattern="^[A-Za-z]{6,}$"
+                  pattern="^[A-Za-z]{5,}$"
                   title="Start with A-Z or a-z"
                 />
               </Form.Item>

@@ -93,22 +93,24 @@ def verify():
     massage = "404"
     if request.method == "GET":
         body = json.loads(request.args.get('body'))
-        cursor.execute("select COUNT(id) from userinfo where username=\"" +
+        cursor.execute("select id from userinfo where username=\"" +
                        body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
         confirm = cursor.fetchone()
-        if confirm[0]:
-            massage = "correct"
+        if confirm[0] is not None:
+            massage = confirm[0]
         else:
-            massage = "incorrect"
+            massage = "404"
     elif request.method == "POST":
         details = request.form
-        cursor.execute("select COUNT(id) from userinfo where username=\"" +
+        cursor.execute("select id from userinfo where username=\"" +
                        details['username']+"\"and pwd=\"" + details['pwd']+"\"")
         confirm = cursor.fetchone()
-        if confirm[0]:
-            massage = "correct"
+        if confirm[0] is not None:
+            massage = confirm[0]
+            
         else:
-            massage = "incorrect"
+            massage = "404"
+    print(massage)
     return jsonify(massage)
 
 

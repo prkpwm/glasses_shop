@@ -49,7 +49,6 @@ export default class PersonList extends React.Component {
           }
         </Row>
       </div>
-
     )
   }
 }
