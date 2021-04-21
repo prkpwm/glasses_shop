@@ -4,43 +4,40 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
-
+var Crypto = require('crypto-js')
 
 function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
-    console.log(values);
-    console.log("User:", values.User);
-    console.log("Password:", values.Password);
-    let body = { username:values.User, pwd:values.Password  };
+    let body = { username: values.User, pwd: Crypto.SHA256(values.Password).toString() };
     let message = ""
-    await axios.get("/verify",  { params: { body } })
+    await axios.get("/verify", { params: { body } })
       .then(response => {
         message = response.data
         console.log("response: ", message)
       })
     if (message != "404") {
-      Loginfinish(values,message);
+      Loginfinish(values, message);
     } else {
       console.log("login fail");
       setisLoginFail({ status: "error", word: "invalid id or password" });
     }
-   
+
 
   };
-  const Loginfinish = (values,uid) => {
-    if(values.remember==true){
-      localStorage.setItem('userdata',values.User);
-      localStorage.setItem('uid',uid);
+  const Loginfinish = (values, uid) => {
+    if (values.remember == true) {
+      localStorage.setItem('userdata', values.User);
+      localStorage.setItem('uid', uid);
       localStorage.setItem('isLogin', 'true')
     }
-    else{
+    else {
       sessionStorage.setItem('userdata', values.User);
-      sessionStorage.setItem('uid',uid);
+      sessionStorage.setItem('uid', uid);
       localStorage.setItem('isLogin', 'false')
     }
-      console.log(values)
-      window.location.replace("/")
+    console.log(values)
+    window.location.replace("/")
   }
 
   //   const onFinishFailed = (errorInfo) => {
@@ -125,8 +122,8 @@ function Login() {
               </Form.Item>
             </Form>
             <div style={{ textAlign: "center" }}>
-                <span>หากยังไม่สมัครบัญชี Glass Shop โปรด  </span>
-                <Button shape="round"><Link to="/GlassesShop/Register">สมัครสมาชิก</Link></Button>
+              <span>หากยังไม่สมัครบัญชี Glass Shop โปรด  </span>
+              <Button shape="round"><Link to="/GlassesShop/Register">สมัครสมาชิก</Link></Button>
               {/* {Logintype=="Login ด้วย adAccount"?<Button type="danger" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย CSM")}>CSM</Button>
              :<Button type="primar
              y" style={{fontSize:20,height:"auto"}} onClick={() => setLogintype("Login ด้วย adAccount")}>adAccount</Button>

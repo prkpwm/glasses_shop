@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Row, Col, Card, Checkbox, Divider, notification } from "antd";
 import axios from 'axios';
-
+var Crypto = require('crypto-js')
 const { TextArea } = Input;
 
 function RegisterHome() {
@@ -15,7 +15,7 @@ function RegisterHome() {
             
     let body = { 
         username: values.Username,
-        pwd: values.Password,
+        pwd: Crypto.SHA256(values.Password).toString(),
         firstname: values.Firstname,
         lastname: values.Lastname,
         email: values.Email,
