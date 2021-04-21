@@ -88,7 +88,7 @@ def sortitem(table, column, order):  # order(ASC,DESC)
     return jsonify(data)
 
 @app.route('/sortitem2/<table>/<column>/<order>')
-def sortitem2(table, column, order,table2):  # order(ASC,DESC)
+def sortitem2(table, column, order):  # order(ASC,DESC)
     sql = ("select * from " + str(table) + " left join itemtype on itemtype.TID = iteminfo.typeid ORDER BY " + column + " " + order)
     cursor.execute(sql)
     data = cursor.fetchall()
