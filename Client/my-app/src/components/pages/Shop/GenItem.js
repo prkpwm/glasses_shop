@@ -15,8 +15,18 @@ export default class PersonList extends React.Component {
     datas: [[]]
   }
 
+  // componentDidMount() {
+  //   axios.get("/getinfo/iteminfo")
+  //     .then(res => {
+  //       const datas = res.data;
+  //       console.log(datas)
+  //       this.setState({ datas });
+  //     })
+  // }
+  
+  //Default sortby price min-max
   componentDidMount() {
-    axios.get("/getinfo/iteminfo")
+    axios.get("/sortitem/iteminfo/price/asc")
       .then(res => {
         const datas = res.data;
         console.log(datas)
@@ -25,8 +35,20 @@ export default class PersonList extends React.Component {
   }
 
   render() {
+    const onChangeHandler = (event) => {
+      var sortby = document.getElementById("sortby").value;
+      console.log(sortby)
+    }
     return (
       <div>
+        <div style={{ textAlign: "right", paddingBottom: "20px" }}>
+          <select id="sortby" name="sortby" onChange={onChangeHandler}>
+            <option id="0">Sort by price (min-max)</option>
+            <option id="1">Sort by price (max-min)</option>
+            <option id="2">Sort by Name</option>
+            <option id="3">Sort by Group</option>
+          </select>
+        </div>
         <Row gutter={[16, 24]}>
           {
             this.state.datas.map(data =>
