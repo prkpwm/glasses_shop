@@ -12,19 +12,22 @@ function RegisterHome() {
     const onFinish = async (values) => {
         console.log(values);
         if (values.Password == values.RetypePassword) {
-            
-    let body = { 
-        username: values.Username,
-        pwd: Crypto.SHA256(values.Password).toString(),
-        firstname: values.Firstname,
-        lastname: values.Lastname,
-        email: values.Email,
-        phone: values.Phone,
-        address: values.Address,  };
-            await axios.get('/insert_userinfo/',  { params: { body } })
-            .then(response => {
-                console.log("response: ", response)
-            })
+
+            let body = {
+                username: values.Username,
+                pwd: Crypto.SHA256(values.Password).toString(),
+                firstname: values.Firstname,
+                lastname: values.Lastname,
+                email: values.Email,
+                phone: values.Phone,
+                address: values.Address,
+                dob: values.Birthday,
+                sex: values.gender,
+            };
+            await axios.get('/insert_userinfo/', { params: { body } })
+                .then(response => {
+                    console.log("response: ", response)
+                })
         }
         else {
             return notification["error"]({
@@ -129,7 +132,36 @@ function RegisterHome() {
                             title="English and Thai only"
                         />
                     </Form.Item>
-
+                    <Form.Item
+                        name="Birthday"
+                        label={<span style={{ fontSize: 14 }}>Birthday</span>}
+                        rules={[
+                            { required: true, message: "Please select your Birthday" },
+                        ]}
+                    >
+                        <Input
+                            type="date"
+                            style={{ padding: 10, borderRadius: 25 }}
+                            placeholder="Birthday"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        style={{ fontSize: 14, textAlign: 'left' }}
+                        name="gender"
+                        label={<span style={{ fontSize: 14 }}>Gender</span>}
+                        rules={[
+                            { required: true, message: "Please input your E-Gender!" },
+                        ]}
+                    >
+                        <span >&nbsp;
+                            <Input
+                                type="radio" id="male" name="gender" value="male"
+                            />  male &nbsp;&nbsp;&nbsp;
+                            <Input
+                                type="radio" id="female" name="gender" value="female"
+                            /> female
+                        </span>
+                    </Form.Item>
 
                     <Form.Item
                         name="Email"
