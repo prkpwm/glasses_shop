@@ -12,22 +12,19 @@ function RegisterHome() {
     const onFinish = async (values) => {
         console.log(values);
         if (values.Password == values.RetypePassword) {
-            let body = {
-                "username": values.Username,
-                "pwd": values.Password,
-                "firstname": values.Firstname,
-                "lastname": values.Lastname,
-                "email": values.Email,
-                "phone": values.Phone,
-                "address": values.Address,
-            };
-            let message = ""
-            await axios.get('/insert_userinfo',
-                {
-                    params: { body }
-                }).then(response => {
-                    console.log("response: ", response)
-                })
+            
+    let body = { 
+        username: values.Username,
+        pwd: values.Password,
+        firstname: values.Firstname,
+        lastname: values.Lastname,
+        email: values.Email,
+        phone: values.Phone,
+        address: values.Address,  };
+            await axios.get('/insert_userinfo/',  { params: { body } })
+            .then(response => {
+                console.log("response: ", response)
+            })
         }
         else {
             return notification["error"]({
