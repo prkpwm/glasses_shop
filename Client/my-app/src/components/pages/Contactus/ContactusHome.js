@@ -90,51 +90,44 @@ function ContactusHome() {
             <br></br>
             <div>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col className="gutter-row" span={6}>
+                    <Col className="gutter-row" span={6} xs={24} md={12} xl={6}>
                         <div class="Con-styleimg-miow" >
                             <div><img src={photo1} width="180px" height="180px"></img></div>
                         </div>
-                    </Col>
-                    <Col className="gutter-row" span={6}>
-                    <div class="Con-styleimg-not" >
-                            <div><img src={photo2} width="180px" height="180px"></img></div>
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" span={6}>
-                    <div class="Con-styleimg-master" >
-                            <div><img src={photo2} width="180px" height="180px"></img></div>
-                        </div>
-                    </Col>
-                    <Col className="gutter-row" span={6}>
-                    <div class="Con-styleimg-aum" >
-                            <div><img src={photo1} width="180px" height="180px"></img></div>
-                        </div>
-                    </Col>
-                </Row>
-                <br></br>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col className="gutter-row" span={6}>
+                        <br></br>
                         <div class="Con-styletext">
                             <p>นางสาว ภาสินี เพชรสม</p>
                             <p>6004062610093</p>
                             <p>sec.1</p>
                         </div>
                     </Col>
-                    <Col className="gutter-row" span={6}>
+                    <Col className="gutter-row" span={6} xs={24} md={12} xl={6}>
+                        <div class="Con-styleimg-not" >
+                                <div><img src={photo2} width="180px" height="180px"></img></div>
+                        </div>
+                        <br></br>
                         <div class="Con-styletext">
                             <p>นาย นพกร อรพรตระกูล</p>
                             <p>6004062620030</p>
                             <p>sec.1</p>
                         </div>
                     </Col>
-                    <Col className="gutter-row" span={6}>
+                    <Col className="gutter-row" span={6} xs={24} md={12} xl={6}>
+                        <div class="Con-styleimg-master" >
+                            <div><img src={photo2} width="180px" height="180px"></img></div>
+                        </div>
+                        <br></br>
                         <div class="Con-styletext">
                             <p>นาย ภาคภูมิ ศรีเสน</p>
                             <p> 6004062620048</p>
                             <p>sec.1</p>
                         </div>
                     </Col>
-                    <Col className="gutter-row" span={6}>
+                    <Col className="gutter-row" span={6} xs={24} md={12} xl={6}>
+                        <div class="Con-styleimg-aum" >
+                            <div><img src={photo1} width="180px" height="180px"></img></div>
+                        </div>
+                        <br></br>
                         <div class="Con-styletext">
                             <p>นางสาว ประวีณา ดวงจันทร์</p>
                             <p>6004062616334</p>
@@ -142,6 +135,7 @@ function ContactusHome() {
                         </div>
                     </Col>
                 </Row>
+                
             </div>
            
         </div>

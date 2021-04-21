@@ -1,40 +1,136 @@
-.Con-text-head{
-    text-align: center;
-    font-weight:bold;
+/* mobile */
+@media only screen and (min-width: 400px) { 
+    .Con-text-head{
+        text-align: center;
+        font-weight:bold;
+    }
+    .Con-container{
+        text-align: center;
+        width: 80%;
+        margin: auto;
+    }
+    /* STYLE-Img */
+    .Con-styleimg-miow{
+        background-color: #FF9A8B;
+        background-image: linear-gradient(90deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
+        width: 200px; 
+        height: 200px;
+        margin: auto;
+    }
+    .Con-styleimg-not{
+        background-color: #0093E9;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+        width: 200px; 
+        height: 200px;
+        margin: auto;
+    }
+    .Con-styleimg-master{
+        background-color: #21D4FD;
+        background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+        width: 200px; 
+        height: 200px;
+        margin: auto;
+    }
+    .Con-styleimg-aum{
+        background-color: #FBAB7E;
+        background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+        width: 200px; 
+        height: 200px;
+        margin: auto;
+    }
+    /* STYLE-Text */
+    .Con-styletext{ 
+        background: #ffffff;
+        width: 200px;
+        height: 100px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
 }
-.Con-container{
-    text-align: center;
-    width: 80%;
-    margin: auto;
+/* i-pad */
+@media only screen and (min-width: 768px) {
+
+    .Con-text-head{
+        text-align: center;
+        font-weight:bold;
+    }
+    .Con-container{
+        text-align: center;
+        width: 80%;
+        margin: auto;
+    }
+    /* STYLE-Img */
+    .Con-styleimg-miow{
+        background-color: #FF9A8B;
+        background-image: linear-gradient(90deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-not{
+        background-color: #0093E9;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-master{
+        background-color: #21D4FD;
+        background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-aum{
+        background-color: #FBAB7E;
+        background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    /* STYLE-Text */
+    .Con-styletext{ 
+        background: #ffffff;
+        width: 200px;
+        height: 100px;
+    }
 }
-/* STYLE-Img */
-.Con-styleimg-miow{
-    background-color: #FF9A8B;
-    background-image: linear-gradient(90deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
-    width: 200px; 
-    height: 200px;
-}
-.Con-styleimg-not{
-    background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-    width: 200px; 
-    height: 200px;
-}
-.Con-styleimg-master{
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-    width: 200px; 
-    height: 200px;
-}
-.Con-styleimg-aum{
-    background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-    width: 200px; 
-    height: 200px;
-}
-/* STYLE-Text */
-.Con-styletext{ 
-    background: #ffffff;
-    width: 200px;
-    height:200px;
+/* Desktop */
+@media only screen and (max-width: 767px) {
+    .Con-text-head{
+        text-align: center;
+        font-weight:bold;
+    }
+    .Con-container{
+        text-align: center;
+        width: 80%;
+        margin: auto;
+    }
+    /* STYLE-Img */
+    .Con-styleimg-miow{
+        background-color: #FF9A8B;
+        background-image: linear-gradient(90deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-not{
+        background-color: #0093E9;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-master{
+        background-color: #21D4FD;
+        background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    .Con-styleimg-aum{
+        background-color: #FBAB7E;
+        background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+        width: 200px; 
+        height: 200px;
+    }
+    /* STYLE-Text */
+    .Con-styletext{ 
+        background: #ffffff;
+        width: 200px;
+        height: 100px;
+    }
 }
