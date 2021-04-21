@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col, Button, Card } from "antd";
 const { Meta } = Card;
@@ -10,37 +10,24 @@ const blue = {
   color: "#FFFFFF",
 };
 
-export default class PersonList extends React.Component {
-  state = {
-    datas: [[]]
-  }
 
-  // componentDidMount() {
-  //   axios.get("/getinfo/iteminfo")
-  //     .then(res => {
-  //       const datas = res.data;
-  //       console.log(datas)
-  //       this.setState({ datas });
-  //     })
-  // }
-  
-  //Default sortby price min-max
-  componentDidMount() {
+function GenItem() {
+  const [datas, setdatas] = useState([[]]);
+  useEffect(() => {
     axios.get("/sortitem/iteminfo/price/asc")
       .then(res => {
         const datas = res.data;
         console.log(datas)
-        this.setState({ datas });
+        setdatas(datas)
       })
+  }, [])
+  
+  const onChangeHandler = (event) => {
+    var sortby = document.getElementById("sortby").value;
+    console.log(sortby)
   }
-
-  render() {
-    const onChangeHandler = (event) => {
-      var sortby = document.getElementById("sortby").value;
-      console.log(sortby)
-    }
-    return (
-      <div>
+  return (
+    <div>
         <div style={{ textAlign: "right", paddingBottom: "20px" }}>
           <select id="sortby" name="sortby" onChange={onChangeHandler}>
             <option id="0">Sort by price (min-max)</option>
@@ -51,7 +38,7 @@ export default class PersonList extends React.Component {
         </div>
         <Row gutter={[16, 24]}>
           {
-            this.state.datas.map(data =>
+            datas.map(data =>
               <Col className="gutter-row" xs={24} md={12} xl={6}>
                 <Card
                   hoverable
@@ -67,6 +54,7 @@ export default class PersonList extends React.Component {
           }
         </Row>
       </div>
-    )
-  }
+  )
 }
+
+export default GenItem
