@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Button, Card } from "antd";
+import { Row, Col, Button, Card, Select } from "antd";
 const { Meta } = Card;
+const { Option } = Select;
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
 const fontRight = { textAlign: "right" };
 const blue = {
@@ -21,39 +22,66 @@ function GenItem() {
         setdatas(datas)
       })
   }, [])
-  
+
+
   const onChangeHandler = (event) => {
-    var sortby = document.getElementById("sortby").value;
-    console.log(sortby)
+
+   console.log(event);
+    var column ;
+    var order ;
+    switch (Number(event)) {
+      case 0:
+        column = "price"
+        order = "asc"
+        break;
+      case 1:
+        column = "price"
+        order = "desc"
+        break;
+      case 2:
+        column = "name"
+        order = "asc"
+        break;
+      case 3:
+        column = "typeid"
+        order = "desc"
+      default:
+    }
+    axios.get("/sortitem/iteminfo/"+column+"/"+order)
+      .then(res => {
+        const datas = res.data;
+        console.log(datas)
+        setdatas(datas)
+      })
   }
   return (
     <div>
-        <div style={{ textAlign: "right", paddingBottom: "20px" }}>
-          <select id="sortby" name="sortby" onChange={onChangeHandler}>
-            <option id="0">Sort by price (min-max)</option>
-            <option id="1">Sort by price (max-min)</option>
-            <option id="2">Sort by Name</option>
-            <option id="3">Sort by Group</option>
-          </select>
-        </div>
-        <Row gutter={[16, 24]}>
-          {
-            datas.map(data =>
-              <Col className="gutter-row" xs={24} md={12} xl={6}>
-                <Card
-                  hoverable
-                  cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}>
-                  <Meta title={data[1]} description="www.instagram.com" />
-                  <p style={fontRight}>{data[2]} ฿</p>
-                  <Button type="button" style={blue}>
-                    Add to cart
-                  </Button>
-                </Card>
-              </Col>
-            )
-          }
-        </Row>
+      <div style={{ textAlign: "right", paddingBottom: "20px" }}>
+        <Select id="sortby" name="sortby" style={{ width: "250px" }} defaultValue="0" onChange={onChangeHandler}>
+          <Option value="0">Sort by price (min-max)</Option>
+          <Option value="1">Sort by price (max-min)</Option>
+          <Option value="2">Sort by Name</Option>
+          <Option value="3">Sort by Group</Option>
+        </Select>
       </div>
+      <Row gutter={[16, 24]}>
+        {
+          datas.map(data =>
+            <Col className="gutter-row" xs={24} md={12} xl={6}>
+              <Card
+                hoverable
+                cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}>
+                <Meta title={data[1]} description="www.instagram.com" />
+                <p style={fontRight}>{data[2]} ฿</p>
+                <Button type="button" style={blue}>
+                  Add to cart
+                  </Button>
+              </Card>
+            </Col>
+          )
+        }
+      </Row>
+    </div>
   )
 }
 

@@ -5,7 +5,6 @@ import GenItem from './GenItem'
 import Paging from './Paging'
 
 function ShopHome() {
-    
 
     return (
         <div>
