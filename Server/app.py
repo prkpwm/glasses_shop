@@ -72,10 +72,16 @@ def getinfo(table):
    data = cursor.fetchall() 
    return jsonify(data)
 
+@app.route('/sortitem/<table>/<column>/<order>')  
+def sortitem(table,column,order): # order(ASC,DESC)
+   sql = ("select * from " + str(table) + " ORDER BY " + column +" "+ order)
+   cursor.execute(sql)
+   data = cursor.fetchall() 
+   return jsonify(data)
+
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
    massage = "404"
-   
    if request.method == "GET":
       body = json.loads(request.args.get('body'))
       cursor.execute("select COUNT(id) from userinfo where username=\"" + body.get('username')+"\"and pwd=\""+ body.get('pwd')+"\"")
@@ -92,7 +98,6 @@ def verify():
          massage =  "correct"
       else:
          massage = "incorrect"
-
    return jsonify(massage)
 
 @app.route('/insert_userinfo/', methods=['GET', 'POST'])
@@ -112,7 +117,7 @@ def insert_userinfo():
       cursor.execute("""SELECT COUNT(id) FROM userinfo""")
       maxid = cursor.fetchone() 
       sql = "INSERT INTO userinfo (id, username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-      val = (maxid[0], body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
+      val = (maxid[0]+1, body.get('username'), body.get('pwd'), body.get('firstname'), body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
@@ -132,19 +137,37 @@ def insert_orderinfo():
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO userinfo (orderid, date, status, tracking, userid) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('date'), body.get('status'), body.get('tracking'), body.get('userid'))
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
    else:
       massage = "Unsuccess"
    return jsonify(massage)
 
-@app.route('/insert_iteminfo/', methods=['GET', 'POST'])
-def insert_iteminfo():
+@app.route('/insert_history/', methods=['GET', 'POST'])
+def insert_history():
    massage = ""
    if request.method == "POST":
       details = request.form
-      cursor.execute("""SELECT COUNT(id) FROM iteminfo""")
+      cursor.execute("""SELECT COUNT(id) FROM history""")
       maxid = cursor.fetchone() 
-      sql = "INSERT INTO userinfo (GID, name, price, path, typeid) VALUES (%s, %s, %s, %s, %s)"
-      val = (maxid[0], details['name'], details['price'], details['path'], details['typeid'])
+      sql = "INSERT INTO history (id,item,price	,oderid,	GID) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], details['item'], details['price'], details['oderid'],details['GID'])
+      cursor.execute(sql, val)
+      con.commit()
+      massage = "Success"
+   elif request.method == "GET":
+      body = json.loads(request.args.get('body'))
+      cursor.execute("""SELECT COUNT(id) FROM userinfo""")
+      maxid = cursor.fetchone() 
+      sql = "INSERT INTO history (id,item,price	,oderid,	GID) VALUES (%s, %s, %s, %s, %s)"
+      val = (maxid[0], body.get('id'), body.get('item'), body.get('oderid'), body.get('GID'))
       cursor.execute(sql, val)
       con.commit()
       massage = "Success"
