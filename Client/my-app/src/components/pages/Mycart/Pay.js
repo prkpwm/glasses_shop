@@ -21,6 +21,18 @@ function Pay() {
             <Card style={{borderRadius:20,marginTop:20}}>
                 <Radio value={2}>True Wallet</Radio >
             </Card>
+            <Card style={{borderRadius:20,marginTop:20}}>
+                <Radio value={3}>บัตรเครดิต/บัตรเดบิต</Radio >
+            </Card>
+            <Card style={{borderRadius:20,marginTop:20}}>
+                <Radio value={4}>โอนเงินเข้าบัญชีพร้อมเพย์/ธนาคาร</Radio >
+            </Card>
+            <Card style={{borderRadius:20,marginTop:20}}>
+                <Radio value={5}>แสกน QR พร้อมเพย์</Radio >
+            </Card>
+            <Card style={{borderRadius:20,marginTop:20}}>
+                <Radio value={6}>PayPal</Radio >
+            </Card>
             </Radio.Group>
             </Col>
             <Col span={1}/>
