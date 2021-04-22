@@ -79,6 +79,14 @@ def getinfo(table):
     data = cursor.fetchall()
     return jsonify(data)
 
+@app.route('/getinfobyid/<table>/<column>/<value>')
+def getinfobyid(table,column,value):
+    sql = ("select * from " + str(table) + " where " + column + " = " + value)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
 
 @app.route('/sortitem/<table>/<column>/<order>')
 def sortitem(table, column, order):  # order(ASC,DESC)
