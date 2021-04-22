@@ -8,7 +8,8 @@ function HeaderMenu() {
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} style={{textAlign:"right"}}>
         <Menu.Item key="1"><Link to="/GlassesShop/AI">AI</Link></Menu.Item>
         <Menu.Item key="2"><Link to="/GlassesShop/Shopping">Shop</Link></Menu.Item>
-        <Menu.Item key="3"><Link to="/GlassesShop/Contact">Contact Us</Link></Menu.Item>
+        <Menu.Item key="3"><Link to="/GlassesShop/Analysis">Dashboard</Link></Menu.Item>
+        <Menu.Item key="4"><Link to="/GlassesShop/Contact">Contact Us</Link></Menu.Item>
       </Menu>
     </div>
   );

@@ -13,6 +13,7 @@ import Mycarthome from "./components/pages/Mycart/Mycarthome";
 import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
+import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -107,6 +108,7 @@ function App() {
             <Route exact path="/GlassesShop/AI" component={AIhome} />
             <Route exact path="/GlassesShop/Home" component={Home} />
             <Route exact path="/GlassesShop/Shopping" component={ShopHome} />
+            <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} />
             <Route exact path="/GlassesShop/Contact" component={ContactusHome} />
             <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
             <Route exact path="/GlassesShop/Profile" component={Profile} />
