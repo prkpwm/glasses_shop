@@ -1,2 +1,2 @@
-call activate web2
+call activate web
 call python app.py

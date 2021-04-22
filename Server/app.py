@@ -6,7 +6,7 @@ import json
 from flask import jsonify
 import time
 from flask_cors import CORS, cross_origin
-
+from mysql.connector import errors
 
 app = Flask(__name__)
 CORS(app)
@@ -79,13 +79,13 @@ def getinfo(table):
     data = cursor.fetchall()
     return jsonify(data)
 
+
 @app.route('/getinfobyid/<table>/<column>/<value>')
-def getinfobyid(table,column,value):
+def getinfobyid(table, column, value):
     sql = ("select * from " + str(table) + " where " + column + " = " + value)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
-
 
 
 @app.route('/sortitem/<table>/<column>/<order>')
@@ -95,12 +95,15 @@ def sortitem(table, column, order):  # order(ASC,DESC)
     data = cursor.fetchall()
     return jsonify(data)
 
+
 @app.route('/sortitem2/<table>/<column>/<order>')
 def sortitem2(table, column, order):  # order(ASC,DESC)
-    sql = ("select * from " + str(table) + " left join itemtype on itemtype.TID = iteminfo.typeid ORDER BY " + column + " " + order)
+    sql = ("select * from " + str(table) +
+           " left join itemtype on itemtype.TID = iteminfo.typeid ORDER BY " + column + " " + order)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
+
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
@@ -121,7 +124,7 @@ def verify():
         confirm = cursor.fetchone()
         if confirm[0] is not None:
             massage = confirm[0]
-            
+
         else:
             massage = "404"
     print(massage)
@@ -133,19 +136,29 @@ def insert_userinfo():
     massage = ""
     if request.method == "POST":
         details = request.form
-        sql = "INSERT INTO userinfo ( username, pwd, firstname, lastname, email, phone, address) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO userinfo ( username, pwd, firstname, lastname, email, phone, address ,sex ,dob) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         val = (details['username'], details['pwd'], details['firstname'],
-               details['lastname'], details['email'], details['phone'], details['address'])
+               details['lastname'], details['email'], details['phone'], details['address'], details['sex'])
         cursor.execute(sql, val)
-        con.commit()
+        try:
+            cursor.execute(sql, val)
+            con.commit()
+        except (errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+            return jsonify(e)
+        
         massage = "Success"
     elif request.method == "GET":
         body = json.loads(request.args.get('body'))
-        sql = "INSERT INTO userinfo (username, pwd, firstname, lastname, email, phone, address) VALUES ( %s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO userinfo (username, pwd, firstname, lastname, email, phone, address ,sex,dob) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         val = (body.get('username'), body.get('pwd'), body.get('firstname'),
-               body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'))
+               body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'), body.get('sex'), body.get('dob'))
         cursor.execute(sql, val)
-        con.commit()
+        try:
+            cursor.execute(sql, val)
+            con.commit()
+        except (errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+            return jsonify(e)
+        
         massage = "Success"
     else:
         massage = "Unsuccess"
@@ -158,14 +171,14 @@ def insert_orderinfo():
     if request.method == "POST":
         details = request.form
         sql = "INSERT INTO userinfo (status, tracking, userid) VALUES (%s, %s, %s)"
-        val = (details['status'],details['tracking'], details['userid'])
+        val = (details['status'], details['tracking'], details['userid'])
         cursor.execute(sql, val)
         con.commit()
         massage = "Success"
     elif request.method == "GET":
         body = json.loads(request.args.get('body'))
         sql = "INSERT INTO userinfo (status, tracking, userid) VALUES ( %s, %s, %s)"
-        val = (body.get('status'),body.get('tracking'), body.get('userid'))
+        val = (body.get('status'), body.get('tracking'), body.get('userid'))
         cursor.execute(sql, val)
         con.commit()
         massage = "Success"
