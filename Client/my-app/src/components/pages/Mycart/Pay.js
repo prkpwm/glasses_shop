@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Radio  } from "antd";
 
 function Pay() {
+    const [value, setValue] = React.useState(1);
+    const onChange = e => {
+        console.log('radio checked', e.target.value);
+        setValue(e.target.value);
+      };
     return (
         <div >
         <div style={{ fontSize: 30,textAlign:"center" }}>ชำระเงิน</div><br/><br/>
@@ -9,12 +14,14 @@ function Pay() {
             <Col span={6}/>
             <Col span={6}>
             เลือกช่องทางการชำระเงิน<br/><br/>
+            <Radio.Group onChange={onChange} value={value}>
             <Card style={{borderRadius:20}}>
-                <Radio>ชำระเงินปลายทาง</Radio >
-            </Card><br/>
-            <Card style={{borderRadius:20}}>
-                <Radio>True Wallet</Radio >
+                <Radio value={1}>ชำระเงินปลายทาง</Radio >
             </Card>
+            <Card style={{borderRadius:20,marginTop:20}}>
+                <Radio value={2}>True Wallet</Radio >
+            </Card>
+            </Radio.Group>
             </Col>
             <Col span={1}/>
             <Col span={6}>

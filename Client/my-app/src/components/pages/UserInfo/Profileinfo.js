@@ -37,7 +37,6 @@ function Profileinfo() {
             })
     }, [])
     useEffect(() => {
-        console.log("sdfdsf")
         form.setFieldsValue(datainitform)
     }, [form, datainitform])
 
