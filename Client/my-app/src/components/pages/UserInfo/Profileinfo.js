@@ -8,9 +8,15 @@ const { TextArea } = Input;
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
 
-
     useEffect(() => {
-        axios.get("/getinfobyid/userinfo/id/1")
+        var id = ""
+        if(localStorage.getItem('isLogin')=="true"){
+            id=localStorage.getItem('uid')
+        }
+        else{
+            id=sessionStorage.getItem('uid')
+        }
+        axios.get("/getinfobyid/userinfo/id/"+id)
             .then(res => {
                 const datas = res.data;
                 console.log(datas)
