@@ -69,7 +69,7 @@ def upload_file():
                   }
                </style>
             </head>
-            <img src="/static/"""+str(path_name)+""".png" alt="img">
+            <img src="/static/pred/"""+str(path_name)+""".png" alt="img">
             <h1> Your face shape is """+face_shape+"""</h1><h3> Glasses recommended for you is  """+glasses_recomments[i]  # +"""</h3> <iframe width="1820" height="400" scrolling="off" src="http://localhost:3000/GlassesShop/Shopping"> </iframe>"""
 
 
