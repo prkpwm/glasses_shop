@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Row, Col, Card, Checkbox, Divider, notification } from "antd";
+import { Form, Input, Button, Row, Col, Card, Checkbox, Divider, notification, message } from "antd";
 import axios from 'axios';
 var Crypto = require('crypto-js')
 const { TextArea } = Input;
@@ -10,7 +10,7 @@ function RegisterHome() {
     }, [])
 
     const onFinish = async (values) => {
-        console.log(values);
+
         if (values.Password == values.RetypePassword) {
 
             let body = {
@@ -24,10 +24,23 @@ function RegisterHome() {
                 dob: values.Birthday,
                 sex: values.gender,
             };
+            let message = ""
             await axios.get('/insert_userinfo/', { params: { body } })
                 .then(response => {
+                    message = response.data
                     console.log("response: ", response)
+
                 })
+                .catch(err => console.log(err));
+            if (message == "Success"){
+                window.location.replace("Login")
+            }
+            else{
+                return notification["error"]({
+                    message: 'Username unavailable',
+                });
+            }
+                
         }
         else {
             return notification["error"]({
@@ -67,7 +80,7 @@ function RegisterHome() {
                         <Input
                             style={{ padding: 10, borderRadius: 25 }}
                             placeholder="Username"
-                            pattern="^[A-Za-z]{6,}$"
+                            pattern="^[A-Za-z0-9]{6,}$"
                             title="Six or more characters. Contains with A-Z or a-z"
                         />
                     </Form.Item>
@@ -155,10 +168,10 @@ function RegisterHome() {
                     >
                         <span >&nbsp;
                             <Input
-                                type="radio" id="male" name="gender" value="male"
+                                type="radio" id="male"  value="male"
                             />  male &nbsp;&nbsp;&nbsp;
                             <Input
-                                type="radio" id="female" name="gender" value="female"
+                                type="radio" id="female"value="female"
                             /> female
                         </span>
                     </Form.Item>
