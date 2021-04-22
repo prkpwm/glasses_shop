@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form, Input, Button, Select,DatePicker } from "antd";
 var dayjs = require('dayjs')
 const { Option } = Select;
+const { TextArea } = Input;
 
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
@@ -15,12 +16,13 @@ function Profileinfo() {
         <div>
             <Form
                 name="basic"
-                initialValues={{ Name: "สมชาย", Surname: "อยู่ดี",Birthday:daynpmjs(new Date()),Gender:"Male" }}
+                initialValues={{ Name: "สมชาย", Surname: "อยู่ดี",Birthday:dayjs('2020-06-09'),Gender:"Male"
+            ,Email:"test@gmail.com",Phone:"0869574599",Address:"xxxxxxxxxxxxxxxxxxxxxxxxxxx" }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
                 <Row>
-                    <Col span={11}>
+                    <Col span={7}>
                         <Form.Item
                             label="ชื่อ"
                             name="Name"
@@ -29,7 +31,7 @@ function Profileinfo() {
                         </Form.Item>
                     </Col>
                     <Col span={1} />
-                    <Col span={11}>
+                    <Col span={7}>
                         <Form.Item
                             label="นามสกุล"
                             name="Surname"
@@ -37,10 +39,34 @@ function Profileinfo() {
                             <Input disabled={editform} />
                         </Form.Item>
                     </Col>
+                    <Col span={1} />
+                    <Col span={7}>
+                        <Form.Item
+                            label="โทรศัพท์"
+                            name="Phone"
+                        >
+                            <Input disabled={editform} pattern="^[0-9]{10}$"/>
+                        </Form.Item>
+                    </Col>
                 </Row>
 
                 <Row>
-                    <Col span={11}>
+                    
+                <Col span={10}>
+                        <Form.Item
+                            label="E-mail"
+                            name="Email"
+                            rules={[
+                                { required: true, message: "Please input your E-mail!" },
+                            ]}
+                        >
+                        <Input  disabled={editform}
+                            pattern="^[a-zA-Z0-9\.]{1,}@[a-zA-Z\.]{1,}.[a-zA-Z0-9]{1,4}$"
+                        />
+                        </Form.Item>
+                    </Col>
+                    <Col span={1} />
+                    <Col span={5}>
                         <Form.Item
                             label="วันเกิด"
                             name="Birthday"
@@ -49,7 +75,7 @@ function Profileinfo() {
                         </Form.Item>
                     </Col>
                     <Col span={1} />
-                    <Col span={11}>
+                    <Col span={5}>
                         <Form.Item
                             label="เพศ"
                             name="Gender"
@@ -61,6 +87,23 @@ function Profileinfo() {
                         </Form.Item>
                     </Col>
                 </Row>
+                <Row>
+                    <Col span={24}>
+
+                    <Form.Item
+                        name="Address"
+                        label="ที่อยู่"
+                        rules={[
+                            { required: true, message: "Please input your Address" },
+                        ]}
+                    >
+                        <TextArea rows={4} disabled={editform}
+                            pattern="^.{1,}$"
+                        />
+                    </Form.Item>
+
+                    </Col>
+                    </Row>
 
                 <Form.Item >
                     <Button type={editform ? "dashed" : "danger"} onClick={() => { seteditform(!editform) }}>
