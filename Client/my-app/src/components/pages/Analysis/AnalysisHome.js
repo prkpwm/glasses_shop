@@ -6,6 +6,7 @@ function Analysis() {
 
     return (
         <div>
+            {}
             <div>
                 <Row>
                     <Col span={8}><PieCharted /></Col>

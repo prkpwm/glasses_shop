@@ -20,8 +20,8 @@ cors = CORS(app, resources={
 face_shapes = ['square', 'round', 'heart', 'oblong', 'oval']
 glasses_recomments = ["Oval, Round and Large", "Rectangle, Square and Oval", "Rectangle, Oval and Horn",
                       "Rectangle, Square and Oval", "Rectangle, Oval, Square, Round, Large and Horn"]
-con = mysql.connector.connect(user='sql6406291', password='Aq4R8lC4Ae',
-                              host='sql6.freemysqlhosting.net', database='sql6406291')
+con = mysql.connector.connect(user='root', password='',
+                              host='127.0.0.1', database='glasses_shop')
 cursor = con.cursor()
 
 
@@ -146,7 +146,7 @@ def verify():
     massage = "404"
     if request.method == "GET":
         body = json.loads(request.args.get('body'))
-        cursor.execute("select id,path from userinfo where username=\"" +body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
+        cursor.execute("select id,path,role from userinfo where username=\"" +body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
         confirm = cursor.fetchone()
         if confirm is not None:
             massage = confirm
@@ -154,7 +154,7 @@ def verify():
             massage = "404"
     elif request.method == "POST":
         details = request.form
-        cursor.execute("select id,path from userinfo where username=\"" +
+        cursor.execute("select id,path,role from userinfo where username=\"" +
                        details['username']+"\"and pwd=\"" + details['pwd']+"\"")
         confirm = cursor.fetchone()
         if confirm is not None:

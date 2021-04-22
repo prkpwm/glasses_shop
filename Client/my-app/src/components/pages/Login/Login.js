@@ -30,12 +30,14 @@ function Login() {
       localStorage.setItem('userdata', values.User);
       localStorage.setItem('uid', message[0]);
       localStorage.setItem('path', message[1]);
+      localStorage.setItem('role', message[2]);
       localStorage.setItem('isLogin', 'true')
     }
     else {
       sessionStorage.setItem('userdata', values.User);
       sessionStorage.setItem('uid', message[0]);
-      localStorage.setItem('path', message[1]);
+      sessionStorage.setItem('path', message[1]);
+      sessionStorage.setItem('role', message[2]);
       localStorage.setItem('isLogin', 'false')
     }
     console.log(values)

@@ -62,7 +62,7 @@ function App() {
                     <Space>
                       <Link to="/GlassesShop/Mycart">
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
-                          icon={< ShoppingCartOutlined style={{ fontSize: 20 }} />} size={30} />
+                          icon={< ShoppingCartOutlined style={{ fontSize: 30 ,Align: "justify"}} />} size={50}/>
 
                       </Link>
 
