@@ -9,7 +9,7 @@ model = dlib.face_recognition_model_v1('AI/dlib_face_recognition_resnet_model_v1
 FACE_DESC, FACE_NAME = pickle.load(open('AI/trainset.pk', 'rb'))
 
 def process(path_name):
-    img = cv2.imread("static/%s.png"%path_name)
+    img = cv2.imread("static/pred/%s.png"%path_name)
     dets = detector(img, 1)
     for k, d in enumerate(dets):
         shape = sp(img, d)

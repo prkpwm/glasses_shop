@@ -72,7 +72,7 @@ function App() {
 
                         <a onClick={(e) => e.preventDefault()}>
                           {localStorage.getItem('userdata') || sessionStorage.getItem('userdata') ?
-                            <Avatar src={"/img/Userprofile/UserpicID_1.jpg"} size={40} /> :
+                            <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={40} /> :
                             <Avatar icon={<UserOutlined size={40} />} />
                           }
                           <span

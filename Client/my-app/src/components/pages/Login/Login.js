@@ -25,15 +25,17 @@ function Login() {
 
 
   };
-  const Loginfinish = (values, uid) => {
+  const Loginfinish = (values, message) => {
     if (values.remember == true) {
       localStorage.setItem('userdata', values.User);
-      localStorage.setItem('uid', uid);
+      localStorage.setItem('uid', message[0]);
+      localStorage.setItem('path', message[1]);
       localStorage.setItem('isLogin', 'true')
     }
     else {
       sessionStorage.setItem('userdata', values.User);
-      sessionStorage.setItem('uid', uid);
+      sessionStorage.setItem('uid', message[0]);
+      localStorage.setItem('path', message[1]);
       localStorage.setItem('isLogin', 'false')
     }
     console.log(values)

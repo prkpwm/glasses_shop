@@ -18,15 +18,21 @@ function Profile() {
     };
     const onChangeHandler = (event)=>{
         console.log(event.target.files[0])
+
         setdataprofilepic(event.target.files[0])
     }
+
+    const loadimge = (path) => {
+
+    }
+
+
     return (
         <div>
             <Card style={{ backgroundColor: "#DCDCDC", borderRadius: 20, fontSize: 25 }}>
                 <Row>
                     <Col span={4} style={{ textAlign: "center" }}>
-                        <Avatar src="/img/Userprofile/UserpicID_1.jpg" size={100} />
-                        <br /><br />
+                        <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={100} />
                         <Button shape="round" type="primary" onClick={showModal}>อัพโหลด</Button>
                     </Col>
                     <Col span={1}>
@@ -41,7 +47,11 @@ function Profile() {
 
 
             <Modal title="อัพโหลดรูปภาพ" visible={showmodaladdpic} onOk={handleOk} onCancel={handleCancel}>
-            <input type="file" name="file" onChange={onChangeHandler}/>
+            
+            <form action={"/saveimages/"+localStorage.getItem('uid')} method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" onChange={onChangeHandler}/>
+                <input type="submit"/>
+            </form>
       </Modal>
 
         </div>

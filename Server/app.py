@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import AI.det
 import mysql.connector
 import json
-from flask import jsonify
+from flask import jsonify,send_file,redirect
 import time
 from flask_cors import CORS, cross_origin
 from mysql.connector import errors
@@ -44,7 +44,7 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         path_name = time.time()
-        f.save("static/%s.png" % path_name)
+        f.save("static/pred/%s.png" % path_name)
         fs = AI.det.process(path_name)
         for i, face_shape in enumerate(face_shapes):
             if fs == face_shape:
@@ -116,25 +116,35 @@ def sortitem2(table, column, order):  # order(ASC,DESC)
     return jsonify(data)
 
 
+@app.route('/loadimages/<image_path>')
+def loadimages(image_path):  # order(ASC,DESC)
+    return send_file("static/StockImage/"+image_path, mimetype='image/jpg')
+
+@app.route('/saveimages/<uid>', methods=['GET', 'POST'])
+def saveimages(uid):
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save("static/StockImage/%s.jpg" % uid)
+        return redirect("http://localhost:3000/GlassesShop/Profile", code=302)
+
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
     massage = "404"
     if request.method == "GET":
         body = json.loads(request.args.get('body'))
-        cursor.execute("select id from userinfo where username=\"" +
-                       body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
+        cursor.execute("select id,path from userinfo where username=\"" +body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
         confirm = cursor.fetchone()
         if confirm[0] is not None:
-            massage = confirm[0]
+            massage = confirm
         else:
             massage = "404"
     elif request.method == "POST":
         details = request.form
-        cursor.execute("select id from userinfo where username=\"" +
+        cursor.execute("select id,path from userinfo where username=\"" +
                        details['username']+"\"and pwd=\"" + details['pwd']+"\"")
         confirm = cursor.fetchone()
         if confirm[0] is not None:
-            massage = confirm[0]
+            massage = confirm
 
         else:
             massage = "404"
