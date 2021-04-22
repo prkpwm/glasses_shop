@@ -83,7 +83,7 @@ function Login() {
                   style={{ padding: 10, borderRadius: 25 }}
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
-                  pattern="^[A-Za-z]{5,}$"
+                  pattern="^[A-Za-z0-9]{5,}$"
                   title="Start with A-Z or a-z"
                 />
               </Form.Item>

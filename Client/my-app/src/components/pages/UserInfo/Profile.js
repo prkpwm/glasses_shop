@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Card, Avatar, Divider, Button, Modal } from "antd";
 import Profileinfo from './Profileinfo'
+import axios from 'axios';
 function Profile() {
     const [showmodaladdpic, setshowmodaladdpic] = useState(false);
     const [dataprofilepic, setdataprofilepic] = useState();
@@ -18,14 +19,14 @@ function Profile() {
     };
     const onChangeHandler = (event)=>{
         console.log(event.target.files[0])
-
         setdataprofilepic(event.target.files[0])
+        let body = {uid : localStorage.getItem('uid')}
+        axios.get("/get_image_path", { params: { body } })
+        .then(response => {
+          localStorage.setItem('path',response.data);
+          console.log("response: ", response.data)
+        })
     }
-
-    const loadimge = (path) => {
-
-    }
-
 
     return (
         <div>

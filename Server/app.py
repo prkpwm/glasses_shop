@@ -6,7 +6,8 @@ import json
 from flask import jsonify,send_file,redirect
 import time
 from flask_cors import CORS, cross_origin
-from mysql.connector import errors
+from mysql.connector import errors 
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -118,14 +119,27 @@ def sortitem2(table, column, order):  # order(ASC,DESC)
 
 @app.route('/loadimages/<image_path>')
 def loadimages(image_path):  # order(ASC,DESC)
-    return send_file("static/StockImage/"+image_path, mimetype='image/jpg')
+    return send_file("static/StockImage/"+image_path+".png", mimetype='image/png')
 
 @app.route('/saveimages/<uid>', methods=['GET', 'POST'])
 def saveimages(uid):
     if request.method == 'POST':
         f = request.files['file']
-        f.save("static/StockImage/%s.jpg" % uid)
+        path = time.time()
+        f.save("static/StockImage/%s.png" % path)
+        sql = cursor.execute("UPDATE userinfo SET path = "+str(path)+" WHERE id = " +uid)
+        cursor.execute(sql)
+        con.commit()
         return redirect("http://localhost:3000/GlassesShop/Profile", code=302)
+
+@app.route('/get_image_path/', methods=['GET', 'POST'])
+def getimagepath():
+    body = json.loads(request.args.get('body'))
+    sql = ("select path from userinfo where id = " + body.get('uid'))
+    cursor.execute(sql)
+    data = cursor.fetchone()
+    return jsonify(data)
+
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
@@ -134,7 +148,7 @@ def verify():
         body = json.loads(request.args.get('body'))
         cursor.execute("select id,path from userinfo where username=\"" +body.get('username')+"\"and pwd=\"" + body.get('pwd')+"\"")
         confirm = cursor.fetchone()
-        if confirm[0] is not None:
+        if confirm is not None:
             massage = confirm
         else:
             massage = "404"
@@ -143,9 +157,8 @@ def verify():
         cursor.execute("select id,path from userinfo where username=\"" +
                        details['username']+"\"and pwd=\"" + details['pwd']+"\"")
         confirm = cursor.fetchone()
-        if confirm[0] is not None:
+        if confirm is not None:
             massage = confirm
-
         else:
             massage = "404"
     print(massage)
