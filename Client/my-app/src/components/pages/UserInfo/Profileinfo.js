@@ -15,7 +15,7 @@ function Profileinfo() {
         <div>
             <Form
                 name="basic"
-                initialValues={{ Name: "สมชาย", Surname: "อยู่ดี",Birthday:dayjs(new Date()),Gender:"Male" }}
+                initialValues={{ Name: "สมชาย", Surname: "อยู่ดี",Birthday:daynpmjs(new Date()),Gender:"Male" }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
