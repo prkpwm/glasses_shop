@@ -14,6 +14,7 @@ const blue = {
 
 function GenItem() {
   const [datas, setdatas] = useState([[]]);
+  
   useEffect(() => {
     axios.get("/sortitem/iteminfo/price/asc")
       .then(res => {
@@ -44,7 +45,7 @@ function GenItem() {
         break;
       case 3:
         column = "typeid"
-        order = "desc"
+        order = "asc"
       default:
     }
     axios.get("/sortitem/iteminfo/"+column+"/"+order)
@@ -71,7 +72,7 @@ function GenItem() {
               <Card
                 hoverable
                 cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}>
-                <Meta title={data[1]} description="www.instagram.com" />
+                <Meta title={data[1]} description={"type : "+data[7]} />
                 <p style={fontRight}>{data[2]} ฿</p>
                 <Button type="button" style={blue}>
                   Add to cart
