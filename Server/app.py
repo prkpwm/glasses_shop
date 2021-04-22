@@ -20,8 +20,8 @@ cors = CORS(app, resources={
 face_shapes = ['square', 'round', 'heart', 'oblong', 'oval']
 glasses_recomments = ["Oval, Round and Large", "Rectangle, Square and Oval", "Rectangle, Oval and Horn",
                       "Rectangle, Square and Oval", "Rectangle, Oval, Square, Round, Large and Horn"]
-con = mysql.connector.connect(user='root', password='',
-                              host='127.0.0.1', database='glasses_shop')
+con = mysql.connector.connect(user='sql6406291', password='Aq4R8lC4Ae',
+                              host='sql6.freemysqlhosting.net', database='sql6406291')
 cursor = con.cursor()
 
 
