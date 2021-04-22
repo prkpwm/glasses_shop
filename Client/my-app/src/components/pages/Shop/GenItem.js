@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Button, Card } from "antd";
+import { Row, Col, Button, Card, Select } from "antd";
+const { Meta } = Card;
+const { Option } = Select;
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
 const fontRight = { textAlign: "right" };
 const blue = {
@@ -9,46 +11,78 @@ const blue = {
   color: "#FFFFFF",
 };
 
-export default class PersonList extends React.Component {
-  state = {
-    datas: [[]]
-  }
 
-  componentDidMount() {
-    axios.get("/getinfo/iteminfo")
+function GenItem() {
+  const [datas, setdatas] = useState([[]]);
+  useEffect(() => {
+    axios.get("/sortitem/iteminfo/price/asc")
       .then(res => {
         const datas = res.data;
         console.log(datas)
-        this.setState({ datas });
+        setdatas(datas)
+      })
+  }, [])
+
+
+  const onChangeHandler = (event) => {
+
+   console.log(event);
+    var column ;
+    var order ;
+    switch (Number(event)) {
+      case 0:
+        column = "price"
+        order = "asc"
+        break;
+      case 1:
+        column = "price"
+        order = "desc"
+        break;
+      case 2:
+        column = "name"
+        order = "asc"
+        break;
+      case 3:
+        column = "typeid"
+        order = "desc"
+      default:
+    }
+    axios.get("/sortitem/iteminfo/"+column+"/"+order)
+      .then(res => {
+        const datas = res.data;
+        console.log(datas)
+        setdatas(datas)
       })
   }
-
-  render() {
-    return (
-      <div>
-        <Row gutter={[16, 24]}>
-          {
-            this.state.datas.map(data =>
-              <Col className="gutter-row" xs={24} md={12} xl={6}>
-                <div style={style} >
-                  <img
-                    src={data[3]}
-                    alt="glasses!!"
-                    width="95%"
-                    height="150"
-                  />
-                  <br />
-                  <a href="#">{data[1]}</a>
-                  <p style={fontRight}>{data[2]} ฿</p>
-                  <button type="button" style={blue}>
-                    Add to cart
-                  </button>
-                </div>
-              </Col>
-            )
-          }
-        </Row>
+  return (
+    <div>
+      <div style={{ textAlign: "right", paddingBottom: "20px" }}>
+        <Select id="sortby" name="sortby" style={{ width: "250px" }} defaultValue="0" onChange={onChangeHandler}>
+          <Option value="0">Sort by price (min-max)</Option>
+          <Option value="1">Sort by price (max-min)</Option>
+          <Option value="2">Sort by Name</Option>
+          <Option value="3">Sort by Group</Option>
+        </Select>
       </div>
-    )
-  }
+      <Row gutter={[16, 24]}>
+        {
+          datas.map(data =>
+            <Col className="gutter-row" xs={24} md={12} xl={6}>
+              <Card
+                hoverable
+                cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}>
+                <Meta title={data[1]} description="www.instagram.com" />
+                <p style={fontRight}>{data[2]} ฿</p>
+                <Button type="button" style={blue}>
+                  Add to cart
+                  </Button>
+              </Card>
+            </Col>
+          )
+        }
+      </Row>
+    </div>
+  )
 }
+
+export default GenItem

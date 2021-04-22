@@ -4,17 +4,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import GenItem from './GenItem'
 import Paging from './Paging'
 
-const style = { background: '#0092ff', padding: '8px 0',height:'250px' };
-
-function genCol(){
-    var list="";
-    for(var i=0;i<8;i++){
-        list+="<Col className=\"gutter-row\" span={6}><div style={style}>col-6</div></Col>"
-    }
-    return (list);
-}
-
 function ShopHome() {
+
     return (
         <div>
             <Row>
@@ -43,14 +34,7 @@ function ShopHome() {
                     <div style={{ fontSize: "30px" }}>
                         Shop
                     </div>
-                    <div style={{ textAlign: "right", paddingBottom: "20px" }}>
-                        <select id="sortby" name="sortby">
-                            <option id="0">Sort by price (min-max)</option>
-                            <option id="1">Sort by price (max-min)</option>
-                            <option id="2">Sort by Name</option>
-                            <option id="3">Sort by Group</option>
-                        </select>
-                    </div>
+                    
                     <div id="listItem" style={{ textAlign: 'center' }}>
                          <GenItem />
                     </div>

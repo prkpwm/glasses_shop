@@ -40,7 +40,6 @@ function Profile() {
 
 
 
-
             <Modal title="อัพโหลดรูปภาพ" visible={showmodaladdpic} onOk={handleOk} onCancel={handleCancel}>
             <input type="file" name="file" onChange={onChangeHandler}/>
       </Modal>
