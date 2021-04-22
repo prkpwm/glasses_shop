@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Radio  } from "antd";
 
 function Pay() {
-    const [value, setValue] = React.useState(1);
+    const [value, setValue] = useState(1);
     const onChange = e => {
         console.log('radio checked', e.target.value);
         setValue(e.target.value);
