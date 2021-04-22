@@ -79,6 +79,14 @@ def getinfo(table):
     data = cursor.fetchall()
     return jsonify(data)
 
+@app.route('/getinfobyid/<table>/<column>/<value>')
+def getinfobyid(table,column,value):
+    sql = ("select * from " + str(table) + " where " + column + " = " + value)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
 
 @app.route('/sortitem/<table>/<column>/<order>')
 def sortitem(table, column, order):  # order(ASC,DESC)
@@ -87,6 +95,12 @@ def sortitem(table, column, order):  # order(ASC,DESC)
     data = cursor.fetchall()
     return jsonify(data)
 
+@app.route('/sortitem2/<table>/<column>/<order>')
+def sortitem2(table, column, order):  # order(ASC,DESC)
+    sql = ("select * from " + str(table) + " left join itemtype on itemtype.TID = iteminfo.typeid ORDER BY " + column + " " + order)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
