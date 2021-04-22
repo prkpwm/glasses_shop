@@ -26,8 +26,12 @@ function Profileinfo() {
                         <Form.Item
                             label="ชื่อ"
                             name="Name"
+                            rules={[
+                                { required: true, message: "Please input your Firstname!" },
+                            ]}
                         >
-                            <Input disabled={editform} />
+                            <Input disabled={editform} 
+                            pattern="^[A-Za-zก-๏]{3,}$"/>
                         </Form.Item>
                     </Col>
                     <Col span={1} />
@@ -35,8 +39,12 @@ function Profileinfo() {
                         <Form.Item
                             label="นามสกุล"
                             name="Surname"
+                            rules={[
+                                { required: true, message: "Please input your Lastname!" },
+                            ]}
                         >
-                            <Input disabled={editform} />
+                            <Input disabled={editform} 
+                            pattern="^[A-Za-zก-๏]{3,}$"/>
                         </Form.Item>
                     </Col>
                     <Col span={1} />
@@ -44,6 +52,9 @@ function Profileinfo() {
                         <Form.Item
                             label="โทรศัพท์"
                             name="Phone"
+                            rules={[
+                                { required: true, message: "Please input your Phone" },
+                            ]}
                         >
                             <Input disabled={editform} pattern="^[0-9]{10}$"/>
                         </Form.Item>
@@ -66,12 +77,15 @@ function Profileinfo() {
                         </Form.Item>
                     </Col>
                     <Col span={1} />
-                    <Col span={5}>
+                    <Col span={6}>
                         <Form.Item
                             label="วันเกิด"
                             name="Birthday"
+                            rules={[
+                                { required: true, message: "Please select your Birthday" },
+                            ]}
                         >
-                            <DatePicker disabled={editform} format={'DD/MM/YYYY'} />
+                            <DatePicker disabled={true} format={'DD/MM/YYYY'} />
                         </Form.Item>
                     </Col>
                     <Col span={1} />
@@ -79,6 +93,9 @@ function Profileinfo() {
                         <Form.Item
                             label="เพศ"
                             name="Gender"
+                            rules={[
+                                { required: true },
+                            ]}
                         >
                             <Select style={{ width: 120 }} disabled={editform} >
                                 <Option value="Male">Male</Option>
@@ -109,9 +126,10 @@ function Profileinfo() {
                     <Button type={editform ? "dashed" : "danger"} onClick={() => { seteditform(!editform) }}>
                         {editform ? "Edit" : "Cancel"}
                     </Button>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                                    </Button>
+                    {editform ?null
+                    :<Button type="primary" htmlType="submit">
+                    Submit
+                                </Button>}
                 </Form.Item>
             </Form>
         </div>
