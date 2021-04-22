@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useForm } from 'react';
 import { Row, Col, Form, Input, Button, Select, DatePicker } from "antd";
 import axios from 'axios';
 var dayjs = require('dayjs')
@@ -7,21 +7,39 @@ const { TextArea } = Input;
 
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
+    const [datas, setdatas] = useState([[]]);
+    const [datainitform, setdatainitform] = useState();
+    const [form] = Form.useForm()
 
-    useEffect(() => {
+    useEffect( () => {
         var id = ""
-        if(localStorage.getItem('isLogin')=="true"){
-            id=localStorage.getItem('uid')
+        if (localStorage.getItem('isLogin') == "true") {
+            id = localStorage.getItem('uid')
         }
-        else{
-            id=sessionStorage.getItem('uid')
+        else {
+            id = sessionStorage.getItem('uid')
         }
-        axios.get("/getinfobyid/userinfo/id/"+id)
+        axios.get("/getinfobyid/userinfo/id/" + id)
             .then(res => {
-                const datas = res.data;
-                console.log(datas)
+                const data = res.data[0];
+                console.log(data)
+                setdatas(data)
+                const datainit = {
+                    Name: data[3],
+                    Surname: data[4],
+                    Email: data[5],
+                    Phone: data[6],
+                    Address: data[7],
+                    Gender: data[8],
+                    Birthday: dayjs(data[9]),
+                }
+                setdatainitform(datainit)
             })
     }, [])
+    useEffect(() => {
+        console.log("sdfdsf")
+        form.setFieldsValue(datainitform)
+    }, [form, datainitform])
 
     const onFinish = (values) => {
         console.log('Success:', values);
@@ -32,11 +50,12 @@ function Profileinfo() {
     return (
         <div>
             <Form
+                form={form}
                 name="basic"
-                initialValues={{
-                    Name: "สมชาย", Surname: "อยู่ดี", Birthday: dayjs('2020-06-09'), Gender: "Male"
-                    , Email: "test@gmail.com", Phone: "0869574599", Address: "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                }}
+                initialValues={datainitform
+                    // Name: datas[3], Surname: datas[4], Birthday: dayjs('2020-06-09'), Gender: "Male"
+                    // , Email: "test@gmail.com", Phone: "0869574599", Address: "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
@@ -117,8 +136,8 @@ function Profileinfo() {
                             ]}
                         >
                             <Select style={{ width: "100%" }} disabled={editform} >
-                                <Option value="Male">Male</Option>
-                                <Option value="Female">Female</Option>
+                                <Option value="male">Male</Option>
+                                <Option value="female">Female</Option>
                             </Select>
                         </Form.Item>
                     </Col>
