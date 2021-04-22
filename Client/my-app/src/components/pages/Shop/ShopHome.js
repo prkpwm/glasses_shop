@@ -3,6 +3,7 @@ import { Row, Col, Breadcrumb ,Card} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import GenItem from './GenItem'
 import Paging from './Paging'
+import Genpopular from './Genpopular'
 
 function ShopHome() {
 
@@ -16,11 +17,12 @@ function ShopHome() {
                             <button type="submit" id="" name="search"><SearchOutlined /></button><br />
                         </form>
                         <div id="pop" style={{paddingLeft:"20px",paddingTop:"20px"}}>
-                            <Card title="Populate" extra={<a href="#">More</a>}>
+                            {/* <Card title="Populate" extra={<a href="#">More</a>}>
                                 <p>Card content</p>
                                 <p>Card content</p>
                                 <p>Card content</p>
-                            </Card>
+                            </Card> */}
+                            <Genpopular />
                         </div>
                     </div>
                 </Col>
