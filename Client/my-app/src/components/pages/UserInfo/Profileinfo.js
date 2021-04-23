@@ -59,7 +59,7 @@ function Profileinfo() {
                 onFinishFailed={onFinishFailed}
             >
                 <Row>
-                    <Col span={7}>
+                    <Col xs={24} md={11} xl={7}>
                         <Form.Item
                             label="ชื่อ"
                             name="Name"
@@ -71,8 +71,8 @@ function Profileinfo() {
                                 pattern="^[A-Za-zก-๏]{3,}$" />
                         </Form.Item>
                     </Col>
-                    <Col span={1} />
-                    <Col span={7}>
+                    <Col xs={0} md={1} xl={1} />
+                    <Col xs={24} md={12} xl={8}>
                         <Form.Item
                             label="นามสกุล"
                             name="Surname"
@@ -84,8 +84,8 @@ function Profileinfo() {
                                 pattern="^[A-Za-zก-๏]{3,}$" />
                         </Form.Item>
                     </Col>
-                    <Col span={1} />
-                    <Col span={7}>
+                    <Col xs={0} md={0} xl={1} />
+                    <Col xs={24} md={12} xl={7}>
                         <Form.Item
                             label="โทรศัพท์"
                             name="Phone"
@@ -100,21 +100,7 @@ function Profileinfo() {
 
                 <Row>
 
-                    <Col span={10}>
-                        <Form.Item
-                            label="E-mail"
-                            name="Email"
-                            rules={[
-                                { required: true, message: "Please input your E-mail!" },
-                            ]}
-                        >
-                            <Input disabled={editform}
-                                pattern="^[a-zA-Z0-9\.]{1,}@[a-zA-Z\.]{1,}.[a-zA-Z0-9]{1,4}$"
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={1} />
-                    <Col span={6}>
+                    <Col xs={12} md={12} xl={6}>
                         <Form.Item
                             label="วันเกิด"
                             name="Birthday"
@@ -125,8 +111,8 @@ function Profileinfo() {
                             <DatePicker disabled={true} format={'DD/MM/YYYY'} />
                         </Form.Item>
                     </Col>
-                    <Col span={1} />
-                    <Col span={5}>
+                    <Col xs={1} md={0} xl={1} />
+                    <Col xs={10} md={8} xl={4}>
                         <Form.Item
                             label="เพศ"
                             name="Gender"
@@ -138,6 +124,21 @@ function Profileinfo() {
                                 <Option value="male">Male</Option>
                                 <Option value="female">Female</Option>
                             </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={0} md={0} xl={1} />
+                    
+                    <Col xs={24} md={12} xl={8}>
+                        <Form.Item
+                            label="E-mail"
+                            name="Email"
+                            rules={[
+                                { required: true, message: "Please input your E-mail!" },
+                            ]}
+                        >
+                            <Input disabled={editform}
+                                pattern="^[a-zA-Z0-9\.]{1,}@[a-zA-Z\.]{1,}.[a-zA-Z0-9]{1,4}$"
+                            />
                         </Form.Item>
                     </Col>
                 </Row>
