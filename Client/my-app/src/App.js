@@ -39,16 +39,16 @@ function App() {
   return (
     <div>
       <Layout>
-        <Header>
+        <Header style ={{backgroundColor: "#f0f2f5"}}>
           <Row style={{ justifyContent: "space-between" }}>
-            <Col style={{ color: "white" }}>
+            <Col>
               <Link to="/GlassesShop/Home">
 
                 <img
-                  src="http://localhost:3000/logo2.png"
+                  src="http://localhost:3000/logo8.png"
                   alt="glasses!!"
-                  width="80"
-                  height="80"
+                  width="160"
+                  height="auto"
                 />
               </Link>
             </Col>
@@ -62,7 +62,7 @@ function App() {
                     <Space>
                       <Link to="/GlassesShop/Mycart">
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
-                          icon={< ShoppingCartOutlined style={{ fontSize: 30 ,Align: "justify"}} />} size={50}/>
+                          icon={< ShoppingCartOutlined style={{ fontSize: 30 ,Align: "justify",color:"#424949"}} />} size={50}/>
 
                       </Link>
 
@@ -78,7 +78,7 @@ function App() {
                           <span
                             style={{
                               padding: 10,
-                              color: "white",
+                              color: "#424949",
                             }}
                           >
                             {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
