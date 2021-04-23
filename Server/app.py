@@ -88,17 +88,17 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
-@app.route('/getpopulate')
-def getpopulate():
-    sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
-    LEFT JOIN iteminfo i on i.GID = s.iid 
-    LEFT JOIN itemtype ii on ii.TID = i.typeid 
-    GROUP by i.GID 
-    ORDER by val DESC 
-    LIMIT 3""")
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    return jsonify(data)
+# @app.route('/getpopulate')
+# def getpopulate():
+#     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
+#     LEFT JOIN iteminfo i on i.GID = s.iid 
+#     LEFT JOIN itemtype ii on ii.TID = i.typeid 
+#     GROUP by i.GID 
+#     ORDER by val DESC 
+#     LIMIT 3""")
+#     cursor.execute(sql)
+#     data = cursor.fetchall()
+#     return jsonify(data)
 
 @app.route('/sortitem/<table>/<column>/<order>')
 def sortitem(table, column, order):  # order(ASC,DESC)

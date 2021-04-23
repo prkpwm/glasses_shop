@@ -32,9 +32,11 @@ function Profile() {
         <div>
             <Card style={{ backgroundColor: "#DCDCDC", borderRadius: 20, fontSize: 25 }}>
                 <Row>
-                    <Col span={4} style={{ textAlign: "center" }}>
-                        <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={100} />
+                    <Col span={4} style={{display:"flex",alignItems:"center",justifyContent:"center" }}>
+                        <div  style={{ textAlign: "center"}}>
+                        <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={100} /><br/>
                         <Button shape="round" type="primary" onClick={showModal}>อัพโหลด</Button>
+                        </div>
                     </Col>
                     <Col span={1}>
                         <Divider type="vertical" style={{ backgroundColor: "black", height: "100%" }} />
