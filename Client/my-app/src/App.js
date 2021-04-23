@@ -50,7 +50,6 @@ function App() {
           <Row style={{ justifyContent: "space-between" }}>
             <Col style={{ color: "white" }}>
               <Link to="/GlassesShop/Home">
-
                 <Avatar shape="square" src={"http://localhost:3000/logo2.png"}
                   alt="glasses!!"
                   size={countcreen!="xs"?80:60}
