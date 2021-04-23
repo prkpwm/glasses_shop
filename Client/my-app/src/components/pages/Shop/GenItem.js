@@ -4,8 +4,8 @@ import { Row, Col, Button, Card, Select } from "antd";
 const { Meta } = Card;
 const { Option } = Select;
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
-const fontRight = { textAlign: "right" ,float: "right"};
-const fontLeft = { textAlign: "left",float: "left" ,color:"grey"};
+const fontRight = { textAlign: "right" ,float: "right",fontSize: "12px"};
+const fontLeft = { textAlign: "left",float: "left" ,color:"grey",fontSize: "12px"};
 const blue = {
   textAlign: "right",
   backgroundColor: "#330033",
