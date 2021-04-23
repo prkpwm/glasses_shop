@@ -24,6 +24,16 @@ function Genpopular() {
 
     const [visible, setVisible] = useState(false);
 
+    function getitem(id) {
+        axios.get("/getinfobyid/iteminfo/GID/"+id+" \n left join itemtype on itemtype.TID = iteminfo.typeid ")
+            .then(res => {
+                const datas = res.data;
+                console.log(datas)
+                setdatas(datas)
+            })
+            setVisible(true)
+    }
+
     return (
         <div>
             <Card title="Populate" extra={<a href="#">More</a>}
@@ -38,7 +48,7 @@ function Genpopular() {
                                 cover={<img alt="glasses!!" onClick={() => setVisible(true)} src={data[7]} width="95%" height="150" />}
 
                             >
-                                <div onClick={() => setVisible(true)}>
+                                <div onClick={() => getitem(data[0])}>
                                     <Meta title={data[5]} description={"Group : " + data[11]} /><br />
                                     <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{data[6]} ฿</h7></p>
                                     <br />

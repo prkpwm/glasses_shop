@@ -101,8 +101,6 @@ def getpopulate():
     data = cursor.fetchall()
     return jsonify(data)
 
-    
-
 @app.route('/sortitem/<table>/<column>/<order>')
 def sortitem(table, column, order):  # order(ASC,DESC)
     sql = ("select * from " + str(table) + " ORDER BY " + column + " " + order)
