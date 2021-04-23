@@ -14,7 +14,7 @@ import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
 import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
-import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Card, Button } from "antd";
+import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button,Grid } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
@@ -35,20 +35,25 @@ const menu1 = (
   </Menu>
 );
 
+const { useBreakpoint } = Grid;
+var countcreen = ""
 function App() {
+  const screens = useBreakpoint();
   return (
     <div>
+      {Object.entries(screens)
+        .filter(screen => !!screen[1])
+        .map(screen => 
+            {countcreen = screen[0]})}
       <Layout>
         <Header>
           <Row style={{ justifyContent: "space-between" }}>
             <Col style={{ color: "white" }}>
               <Link to="/GlassesShop/Home">
 
-                <img
-                  src="http://localhost:3000/logo2.png"
+                <Avatar shape="square" src={"http://localhost:3000/logo2.png"}
                   alt="glasses!!"
-                  width="80"
-                  height="80"
+                  size={countcreen!="xs"?80:60}
                 />
               </Link>
             </Col>
@@ -62,7 +67,7 @@ function App() {
                     <Space>
                       <Link to="/GlassesShop/Mycart">
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
-                          icon={< ShoppingCartOutlined style={{ fontSize: 30 ,Align: "justify"}} />} size={50}/>
+                          icon={< ShoppingCartOutlined style={{ fontSize: countcreen!="xs"?30:20 ,Align: "justify"}} />} size={countcreen!="xs"?50:40}/>
 
                       </Link>
 
@@ -75,6 +80,7 @@ function App() {
                             <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={40} /> :
                             <Avatar icon={<UserOutlined size={40} />} />
                           }
+                          {countcreen!="xs"&&
                           <span
                             style={{
                               padding: 10,
@@ -82,7 +88,7 @@ function App() {
                             }}
                           >
                             {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
-                          </span>
+                          </span>}
                         </a>
                       </Dropdown>
                     </Space>

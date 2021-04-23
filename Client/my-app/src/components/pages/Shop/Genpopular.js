@@ -35,13 +35,15 @@ function Genpopular() {
                         <div style={{ paddingBottom: "20px" }}>
                             <Card type="inner"
                                 hoverable
-                                cover={<img alt="glasses!!" src={data[7]} width="95%" height="150" />}
-                                onClick={() => setVisible(true)}
+                                cover={<img alt="glasses!!" onClick={() => setVisible(true)} src={data[7]} width="95%" height="150" />}
+
                             >
-                                <Meta title={data[5]} description={"Group : " + data[11]} /><br />
-                                <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{data[6]} ฿</h7></p>
-                                <br />
-                                <Button type="button" style={blue} >
+                                <div onClick={() => setVisible(true)}>
+                                    <Meta title={data[5]} description={"Group : " + data[11]} /><br />
+                                    <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{data[6]} ฿</h7></p>
+                                    <br />
+                                </div>
+                                <Button type="button" onClick={()=>console.log('Button')} style={blue} >
                                     Add to cart
                                 </Button>
 
