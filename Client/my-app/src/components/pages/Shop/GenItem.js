@@ -26,7 +26,6 @@ function GenItem() {
 
 
   const onChangeHandler = (event) => {
-
    console.log(event);
     var column ;
     var order ;

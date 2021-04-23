@@ -14,7 +14,6 @@ function Login() {
     await axios.get("/verify", { params: { body } })
       .then(response => {
         message = response.data
-        console.log("response: ", message)
       })
     if (message != "404") {
       Loginfinish(values, message);
@@ -40,7 +39,6 @@ function Login() {
       sessionStorage.setItem('role', message[2]);
       localStorage.setItem('isLogin', 'false')
     }
-    console.log(values)
     window.location.replace("/")
   }
 
