@@ -25,13 +25,13 @@ function Profileinfo() {
                 console.log(data)
                 setdatas(data)
                 const datainit = {
-                    Name: data[3],
-                    Surname: data[4],
-                    Email: data[5],
-                    Phone: data[6],
-                    Address: data[7],
-                    Gender: data[8],
-                    Birthday: dayjs(data[9]),
+                    // Name: data[3],
+                    // Surname: data[4],
+                    // Email: data[5],
+                    // Phone: data[6],
+                    // Address: data[7],
+                    // Gender: data[8],
+                    // Birthday: dayjs(data[9]),
                 }
                 setdatainitform(datainit)
             })
