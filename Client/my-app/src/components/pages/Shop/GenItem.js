@@ -17,7 +17,7 @@ function GenItem() {
   const [datas, setdatas] = useState([[]]);
 
   useEffect(() => {
-    axios.get("/sortitem2/iteminfo/price/asc")
+    axios.get("/sortitem/iteminfo/price/asc")
       .then(res => {
         const datas = res.data;
         setdatas(datas)
@@ -47,11 +47,21 @@ function GenItem() {
         order = "asc"
       default:
     }
-    axios.get("/sortitem2/iteminfo/" + column + "/" + order)
+    axios.get("/sortitem/iteminfo/" + column + "/" + order)
       .then(res => {
         const datas = res.data;
         setdatas(datas)
       })
+  }
+
+  function getitem(id) {
+    axios.get("/getinfobyid/iteminfo/GID/"+id+"")
+        // .then(res => {
+        //     const datas = res.data;
+        //     console.log(datas)
+        //     setdatas(datas)
+        // })
+        setVisible(true)
   }
   return (
     <div>
@@ -69,11 +79,11 @@ function GenItem() {
             <Col className="gutter-row" xs={24} md={12} xl={6}>
               <Card
                 hoverable
-                cover={<img alt="glasses!!" src={data[3]} onClick={() => setVisible(true)} width="95%" height="150" />}
+                cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
               >
-                <div onClick={() => setVisible(true)}>
-                  <Meta title={data[1]} description={"Group : " + data[7]} /><br />
-                  <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
+                <div onClick={() => getitem(data[0])}>
+                  <Meta title={data[1]} description={"Category : " + data[5]} /><br />
+                  <p><h7 style={fontLeft}>{data[6]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
                   <br />
                 </div>
 
