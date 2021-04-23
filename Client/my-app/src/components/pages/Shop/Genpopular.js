@@ -7,8 +7,8 @@ const fontRight = { textAlign: "right", float: "right", fontSize: "12px" };
 const fontLeft = { textAlign: "left", float: "left", color: "grey", fontSize: "12px" };
 const blue = {
     textAlign: "right",
-    backgroundColor: "#330033",
-    color: "#FFFFFF",
+    backgroundColor: "#f2f4f4",
+    color: "#000000",
 };
 
 function Genpopular() {
@@ -17,7 +17,6 @@ function Genpopular() {
         axios.get("/getpopulate")
             .then(res => {
                 const datas = res.data;
-                console.log(datas)
                 setdatas(datas)
             })
     }, [])

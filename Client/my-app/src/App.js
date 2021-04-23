@@ -46,14 +46,15 @@ function App() {
         .map(screen => 
             {countcreen = screen[0]})}
       <Layout>
-        <Header>
+        <Header style ={{backgroundColor: "#f0f2f5"}}>
           <Row style={{ justifyContent: "space-between" }}>
-            <Col style={{ color: "white" }}>
+            <Col>
               <Link to="/GlassesShop/Home">
-
-                <Avatar shape="square" src={"http://localhost:3000/logo2.png"}
+                <img
+                  src="http://localhost:3000/logo8.png"
                   alt="glasses!!"
-                  size={countcreen!="xs"?80:60}
+                  width={countcreen!="xs"?"160":"100"}
+                  height="auto"
                 />
               </Link>
             </Col>
@@ -67,8 +68,7 @@ function App() {
                     <Space>
                       <Link to="/GlassesShop/Mycart">
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
-                          icon={< ShoppingCartOutlined style={{ fontSize: countcreen!="xs"?30:20 ,Align: "justify"}} />} size={countcreen!="xs"?50:40}/>
-
+                          icon={< ShoppingCartOutlined style={{ fontSize: countcreen!="xs"?30:20 ,Align: "justify",color:"#424949"}} />} size={countcreen!="xs"?50:40}/>
                       </Link>
 
                       <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
@@ -84,7 +84,7 @@ function App() {
                           <span
                             style={{
                               padding: 10,
-                              color: "white",
+                              color: "#424949",
                             }}
                           >
                             {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
