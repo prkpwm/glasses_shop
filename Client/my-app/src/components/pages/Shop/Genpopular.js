@@ -29,7 +29,7 @@ function Genpopular() {
                       <Card type="inner"
                         hoverable
                         cover={<img alt="glasses!!" src={data[7]} width="95%" height="150" />}>
-                        <Meta title={data[5]} description={"Group : "+data[10]} />
+                        <Meta title={data[5]} description={"Group : "+data[11]} />
                         <p style={fontRight}>{data[6]} ฿</p>
                         <Button type="button" style={blue}>
                           Add to cart
