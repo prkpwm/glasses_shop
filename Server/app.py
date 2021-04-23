@@ -88,10 +88,6 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 89de9d30e1f798ffdc22a0268653ab5726c06233
 @app.route('/getpopulate')
 def getpopulate():
     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
