@@ -111,8 +111,8 @@ function Profileinfo() {
                             <DatePicker disabled={true} format={'DD/MM/YYYY'} />
                         </Form.Item>
                     </Col>
-                    <Col xs={0} md={0} xl={1} />
-                    <Col xs={8} md={8} xl={4}>
+                    <Col xs={1} md={0} xl={1} />
+                    <Col xs={10} md={8} xl={4}>
                         <Form.Item
                             label="เพศ"
                             name="Gender"
