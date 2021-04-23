@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Button, Card, Select } from "antd";
+import { Row, Col, Button, Card, Select, Modal } from "antd";
 const { Meta } = Card;
 const { Option } = Select;
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
@@ -25,6 +25,7 @@ function GenItem() {
       })
   }, [])
 
+  const [visible, setVisible] = useState(false);
 
   const onChangeHandler = (event) => {
     console.log(event);
@@ -71,7 +72,9 @@ function GenItem() {
             <Col className="gutter-row" xs={24} md={12} xl={6}>
               <Card
                 hoverable
-                cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}>
+                cover={<img alt="glasses!!" src={data[3]} width="95%" height="150" />}
+                onClick={() => setVisible(true)}
+                >
                 <Meta title={data[1]} description={"Group : " + data[7]} /><br/>
                     <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
                     <br/>
@@ -83,6 +86,18 @@ function GenItem() {
           )
         }
       </Row>
+      <Modal
+                title="Modal 1000px width"
+                centered
+                visible={visible}
+                onOk={() => setVisible(false)}
+                onCancel={() => setVisible(false)}
+                width={1000}
+            >
+                <p>some contents...</p>
+                <p>some contents...</p>
+                <p>some contents...</p>
+            </Modal>
     </div>
   )
 }
