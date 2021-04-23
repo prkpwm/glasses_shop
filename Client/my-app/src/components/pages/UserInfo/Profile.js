@@ -32,16 +32,19 @@ function Profile() {
         <div>
             <Card style={{ backgroundColor: "#DCDCDC", borderRadius: 20, fontSize: 25 }}>
                 <Row>
-                    <Col span={4} style={{display:"flex",alignItems:"center",justifyContent:"center" }}>
+                    <Col xs={24} md={6} xl={4} style={{display:"flex",alignItems:"center",justifyContent:"center" }}>
                         <div  style={{ textAlign: "center"}}>
                         <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={100} /><br/>
                         <Button shape="round" type="primary" onClick={showModal}>อัพโหลด</Button>
                         </div>
                     </Col>
-                    <Col span={1}>
+                    <Col xs={0} md={1} xl={1}>
                         <Divider type="vertical" style={{ backgroundColor: "black", height: "100%" }} />
                     </Col>
-                    <Col span={18}>
+                    <Col xs={24} md={0} xl={0}>
+                        <Divider style={{ backgroundColor: "black", width: "100%" }} />
+                    </Col>
+                    <Col xs={24} md={17} xl={19}>
                         <Profileinfo />
                     </Col>
                 </Row>
