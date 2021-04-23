@@ -39,7 +39,6 @@ const { useBreakpoint } = Grid;
 var countcreen = ""
 function App() {
   const screens = useBreakpoint();
-
   return (
     <div>
       {Object.entries(screens)
@@ -52,11 +51,9 @@ function App() {
             <Col style={{ color: "white" }}>
               <Link to="/GlassesShop/Home">
 
-                <img
-                  src="http://localhost:3000/logo2.png"
+                <Avatar shape="square" src={"http://localhost:3000/logo2.png"}
                   alt="glasses!!"
-                  width={countcreen!="xs"?"80":"60"}
-                  height={countcreen!="xs"?"80":"70"}
+                  size={countcreen!="xs"?80:60}
                 />
               </Link>
             </Col>
