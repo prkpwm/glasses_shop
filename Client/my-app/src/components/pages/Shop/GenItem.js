@@ -55,7 +55,7 @@ function GenItem() {
   }
   return (
     <div>
-      <div style={{ textAlign: "right", paddingBottom: "20px" }}>
+      <div style={{ textAlign: "right", paddingBottom: "20px" }} >
         <Select id="sortby" name="sortby" style={{ width: "250px" }} defaultValue="0" onChange={onChangeHandler}>
           <Option value="0">Sort by price (min-max)</Option>
           <Option value="1">Sort by price (max-min)</Option>

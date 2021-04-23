@@ -37,8 +37,8 @@ function Genpopular() {
         <div>
             <Card title="Populate" extra={<a href="#">More</a>}
                 style={{ backgroundColor: '#f0f2f5', border: 0, borderRadius: "15px" }}
-                headStyle={{ backgroundColor: '#EAECEE', border: 0 }}
-                bodyStyle={{ backgroundColor: '#f0f2f5', border: 0 }}>
+                headStyle={{ backgroundColor: '#f0f2f5', border: 0 }}
+                bodyStyle={{ backgroundColor: '#FBFCFC', border: 0 }}>
                 {
                     datas.map(data =>
                         <div style={{ paddingBottom: "20px" }}>
