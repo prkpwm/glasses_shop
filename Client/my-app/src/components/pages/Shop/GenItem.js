@@ -55,19 +55,20 @@ function GenItem() {
       })
   }
 
-  const onClickHandler = (data) =>{
+  const onClickHandler = (data) => {
 
   }
 
   function getitem(id) {
     console.log(id)
-    axios.get("/getinfobyid/iteminfo/GID/"+id+"")
-        .then(res => {
-            const datas = res.data[0];
-            console.log(datas)
-            setdatapopup(datas)
-        })
-        setVisible(true)
+    axios.get("/getinfobyid/iteminfo/GID/" + id + "")
+      .then(res => {
+        // const datas = res.data[0];
+        const datas = res.data;
+        console.log(datas)
+        setdatapopup(datas)
+      })
+    setVisible(true)
   }
   return (
     <div>
@@ -102,19 +103,40 @@ function GenItem() {
         }
       </Row>
       <Modal
-        title="Modal 1000px width"
+        title=" Glasses information "
         centered
         visible={visible}
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
-        width={1000}
+        width={400}
       >
+
         {datapopup.map(data => (
-          <p>{data}</p>
+          < div style={{ padding: '20px 20px' }} >
+            <div id='img' >
+              <img alt="glasses!!" src={data[3]} width="100%" height="150" />
+            </div>
+            <div>
+              <h3 >{data[1]} </h3>
+              <p style={{ float: 'right' }}>Category : {data[4]} </p>
+              <p >{data[5]}</p>
+              <p> Glasses are glasses .
+              The type of glasses is {data[4]} .
+              Just wear it on your head.
+              The whole world will be beautiful immediately </p>
+              <h4 style={{ textAlign: 'right' }}>{data[2]} ฿</h4>
+              <p style={{ textAlign: 'right' }}> AVAILABILITY: <b>IN STOCK </b></p>
+              <Button type="button" onClick={() => onClickHandler(data[0])} style={blue}>
+                Add to cart
+               </Button>
+            </div>
+          </div>
         ))}
-            
+
+
+
       </Modal>
-    </div>
+    </div >
   )
 }
 
