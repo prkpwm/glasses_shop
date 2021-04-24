@@ -15,6 +15,7 @@ const blue = {
 
 function GenItem() {
   const [datas, setdatas] = useState([[]]);
+  const [datapopup, setdatapopup] = useState([[]]);
 
   useEffect(() => {
     axios.get("/sortitem/iteminfo/price/asc")
@@ -55,12 +56,13 @@ function GenItem() {
   }
 
   function getitem(id) {
+    console.log(id)
     axios.get("/getinfobyid/iteminfo/GID/"+id+"")
-        // .then(res => {
-        //     const datas = res.data;
-        //     console.log(datas)
-        //     setdatas(datas)
-        // })
+        .then(res => {
+            const datas = res.data[0];
+            console.log(datas)
+            setdatapopup(datas)
+        })
         setVisible(true)
   }
   return (
@@ -103,9 +105,10 @@ function GenItem() {
         onCancel={() => setVisible(false)}
         width={1000}
       >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
+        {datapopup.map(data => (
+          <p>{data}</p>
+        ))}
+            
       </Modal>
     </div>
   )
