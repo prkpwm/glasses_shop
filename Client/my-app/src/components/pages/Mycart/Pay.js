@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Radio  } from "antd";
+import { Row, Col, Card, Radio ,Modal } from "antd";
+
+
+function success() {
+    Modal.success({
+        content: (
+          <div>
+            <p>ทำรายการสำเร็จ</p>
+          </div>
+        ),
+        onOk() {window.location.replace("/")},
+      });
+  }
+
 
 function Pay() {
     const [value, setValue] = useState(1);
@@ -43,7 +56,7 @@ function Pay() {
             </Card><br/>
             <Card style={{borderRadius:20,textAlign:"center", backgroundColor: "#DCDCDC"}}>
                 <span style={{color:"red",fontSize:20}}>ยอดชำระ ฿957</span><br/><br/>
-                <button className="myButton">ชำระเงิน</button>
+                <button className="myButton" onClick={success}>ชำระเงิน</button>
             </Card>
             </Col>
         </Row>

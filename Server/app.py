@@ -88,6 +88,15 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
+#ยังทำไม่เสร็จ
+@app.route('/updateuserinfo/<table>/<value>/<uid>')
+def updateuserinfo(table, value, uid):
+    print(value)
+    sql = ("select * from " + str(table) + " where " + "id" + " = " + uid )
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data) 
+
 @app.route('/getpopulate')
 def getpopulate():
     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 

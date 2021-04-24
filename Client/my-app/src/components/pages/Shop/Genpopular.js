@@ -24,6 +24,7 @@ function Genpopular() {
     const [visible, setVisible] = useState(false);
 
     function getitem(id) {
+        console.log(id)
         // axios.get("/getinfobyid/iteminfo/GID/"+id+"")
         //     .then(res => {
         //         const datas = res.data;
