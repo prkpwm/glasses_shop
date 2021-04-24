@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, Space, Button, Card,Row,Col } from 'antd';
+import { List, Avatar, Space, Button, Card,Row,Col,Modal } from 'antd';
 import { DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from 'axios'
+import Relateglasses from './Relateglasses'
 const { Meta } = Card;
 
 
@@ -45,6 +47,9 @@ function Mycarthome() {
         }
         setdatainlist(data)
     }
+
+    
+
     return (
         <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 30 }}>ตะกร้า</div>
@@ -76,41 +81,7 @@ function Mycarthome() {
                 <Button> <Link to="/GlassesShop/Pay">ไปหน้าชำระเงิน</Link></Button>
             </Card>
             <br />
-            <div style={{ fontSize: 30 }}>แว่นที่มักจะซื้อด้วยกัน</div>
-            <Row gutter={[32, 32]} style={{ width: "60%", marginLeft: "20%",marginTop:20}}>
-                <Col span={6}>
-                    <Card
-                        hoverable
-                        cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card
-                        hoverable
-                        cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card
-                        hoverable
-                        cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-                <Col span={6}>
-                    <Card
-                        hoverable
-                        cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                    >
-                        <Meta title="Europe Street beat" description="www.instagram.com" />
-                    </Card>
-                </Col>
-            </Row>
+            <Relateglasses/>
         </div>
     )
 }
