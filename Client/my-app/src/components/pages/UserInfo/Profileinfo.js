@@ -5,6 +5,7 @@ var dayjs = require('dayjs')
 const { Option } = Select;
 const { TextArea } = Input;
 
+var id = ""
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
     const [datas, setdatas] = useState([[]]);
@@ -12,7 +13,6 @@ function Profileinfo() {
     const [form] = Form.useForm()
 
     useEffect( () => {
-        var id = ""
         if (localStorage.getItem('isLogin') == "true") {
             id = localStorage.getItem('uid')
         }
@@ -42,6 +42,11 @@ function Profileinfo() {
 
     const onFinish = (values) => {
         console.log('Success:', values);
+        axios.get("/updateuserinfo/userinfo/" + values + "/" +id)
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+            })
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
