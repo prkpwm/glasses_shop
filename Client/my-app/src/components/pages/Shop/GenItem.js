@@ -54,6 +54,10 @@ function GenItem() {
       })
   }
 
+  const onClickHandler = (data) =>{
+
+  }
+
   function getitem(id) {
     axios.get("/getinfobyid/iteminfo/GID/"+id+"")
         // .then(res => {
@@ -82,12 +86,12 @@ function GenItem() {
                 cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
               >
                 <div onClick={() => getitem(data[0])}>
-                  <Meta title={data[1]} description={"Category : " + data[5]} /><br />
-                  <p><h7 style={fontLeft}>{data[6]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
+                  <Meta title={data[1]} description={"Category : " + data[4]} /><br />
+                  <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
                   <br />
                 </div>
 
-                <Button type="button" onClick={() => console.log("button")} style={blue}>
+                <Button type="button" onClick={() => onClickHandler(data[0])} style={blue}>
                   Add to cart
                   </Button>
               </Card>

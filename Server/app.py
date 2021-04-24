@@ -92,7 +92,6 @@ def getinfobyid(table, column, value):
 def getpopulate():
     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
     JOIN iteminfo i on i.GID = s.iid 
-    JOIN itemtype ii on ii.TID = i.typeid 
     GROUP by i.GID 
     ORDER by val DESC 
     LIMIT 3""")
@@ -108,6 +107,13 @@ def sortitem(table, column, order):  # order(ASC,DESC)
     data = cursor.fetchall()
     return jsonify(data)
 
+
+@app.route('/history/<gid>/<uid>')
+def history(gid, uid):  # order(ASC,DESC)
+    sql = ("INSERT INTO history() ")
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
 
 @app.route('/sortitem2/<table>/<column>/<order>')
 def sortitem2(table, column, order):  # order(ASC,DESC)
