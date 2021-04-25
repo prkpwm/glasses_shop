@@ -44,7 +44,7 @@ function GenItem() {
         order = "asc"
         break;
       case 3:
-        column = "typeid"
+        column = "category"
         order = "asc"
       default:
     }
