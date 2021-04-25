@@ -28,7 +28,7 @@ const menu = (
 
 const menu1 = (
   <Menu>
-    
+
     <Menu.Item key="1">
       <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
@@ -66,7 +66,7 @@ function App() {
                   </Col>
                   <Col>
                     <Space>
-                      <Link to={localStorage.getItem('isLogin') == "true" ?"/GlassesShop/Mycart" : "/GlassesShop/login"}>
+                      <Link to={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Mycart" : "/GlassesShop/login"}>
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
                           icon={< ShoppingCartOutlined style={{ fontSize: countcreen != "xs" ? 30 : 20, Align: "justify", color: "#424949" }} />} size={countcreen != "xs" ? 50 : 40} />
                       </Link>
@@ -111,14 +111,14 @@ function App() {
             <Route exact path="/">
               <Redirect to="/GlassesShop/Home" />
             </Route>
-            <Route exact path="/GlassesShop/AI" component={AIhome} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/AI" : "/GlassesShop/login"} component={AIhome} />
             <Route exact path="/GlassesShop/Home" component={Home} />
-            <Route exact path="/GlassesShop/Shopping" component={ShopHome} />
-            <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} />
-            <Route exact path="/GlassesShop/Contact" component={ContactusHome} />
-            <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
-            <Route exact path="/GlassesShop/Profile" component={Profile} />
-            <Route exact path="/GlassesShop/Pay" component={Pay} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Shopping" : "/GlassesShop/login"} component={ShopHome} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Analysis" : "/GlassesShop/login"} component={AnalysisHome} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Contact" : "/GlassesShop/login"} component={ContactusHome} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Mycart" : "/GlassesShop/login"} component={Mycarthome} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Profile" : "/GlassesShop/login"} component={Profile} />
+            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Pay" : "/GlassesShop/login"} component={Pay} />
             <Route exact path="/GlassesShop/Register" component={RegisterHome} />
 
           </div>
