@@ -13,12 +13,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-      {
-      (localStorage.getItem('isLogin') != "true"|| localStorage.getItem('isLogin') != "false")
-      && window.location.pathname !="/GlassesShop/Login" 
-      && window.location.pathname !="/GlassesShop/Register"
-      && window.location.pathname !="/GlassesShop/Home"? 
-      window.location.replace("Login") : ""}
         <Route exact path="/GlassesShop/Login" component={Login} />
         <App />
       </Switch>
