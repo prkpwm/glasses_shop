@@ -86,7 +86,7 @@ function App() {
                                 color: "#424949",
                               }}
                             >
-                              {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
+                              { (localStorage.getItem('uid') == null) ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
                             </span>}
                         </a>
                       </Dropdown>
@@ -112,26 +112,26 @@ function App() {
             </Route>
             <Route exact path="/GlassesShop/Register" component={RegisterHome} />
             <Route exact path="/GlassesShop/AI" component={AIhome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Home" component={Home} />
             <Route exact path="/GlassesShop/Shopping" component={ShopHome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Contact" component={ContactusHome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              {(localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Mycart" component={Mycarthome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Profile" component={Profile} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Pay" component={Pay} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : localStorage.getItem('role') != 1 ? <Redirect to="/GlassesShop/Login" /> : null}
+              { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : localStorage.getItem('role') != 1 ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
           </div>
         </Content>
