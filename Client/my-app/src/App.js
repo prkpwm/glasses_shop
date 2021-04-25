@@ -14,7 +14,7 @@ import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
 import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
-import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button, Grid } from "antd";
+import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button,Grid } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
@@ -28,7 +28,6 @@ const menu = (
 
 const menu1 = (
   <Menu>
-
     <Menu.Item key="1">
       <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
@@ -44,16 +43,17 @@ function App() {
     <div>
       {Object.entries(screens)
         .filter(screen => !!screen[1])
-        .map(screen => { countcreen = screen[0] })}
+        .map(screen => 
+            {countcreen = screen[0]})}
       <Layout>
-        <Header style={{ backgroundColor: "#EAECEE" }}>
+        <Header style ={{backgroundColor: "#EAECEE"}}>
           <Row style={{ justifyContent: "space-between" }}>
             <Col>
               <Link to="/GlassesShop/Home">
                 <img
                   src="http://localhost:3000/logo8.png"
                   alt="glasses!!"
-                  width={countcreen != "xs" ? "160" : "100"}
+                  width={countcreen!="xs"?"160":"100"}
                   height="auto"
                 />
               </Link>
@@ -66,9 +66,9 @@ function App() {
                   </Col>
                   <Col>
                     <Space>
-                      <Link to={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Mycart" : "/GlassesShop/login"}>
+                      <Link to="/GlassesShop/Mycart">
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
-                          icon={< ShoppingCartOutlined style={{ fontSize: countcreen != "xs" ? 30 : 20, Align: "justify", color: "#424949" }} />} size={countcreen != "xs" ? 50 : 40} />
+                          icon={< ShoppingCartOutlined style={{ fontSize: countcreen!="xs"?30:20 ,Align: "justify",color:"#424949"}} />} size={countcreen!="xs"?50:40}/>
                       </Link>
 
                       <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
@@ -77,18 +77,18 @@ function App() {
 
                         <a onClick={(e) => e.preventDefault()}>
                           {localStorage.getItem('userdata') || sessionStorage.getItem('userdata') ?
-                            <Avatar src={"/loadimages/" + localStorage.getItem('path')} size={40} /> :
+                            <Avatar src={"/loadimages/"+localStorage.getItem('path')} size={40} /> :
                             <Avatar icon={<UserOutlined size={40} />} />
                           }
-                          {countcreen != "xs" &&
-                            <span
-                              style={{
-                                padding: 10,
-                                color: "#424949",
-                              }}
-                            >
-                              {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
-                            </span>}
+                          {countcreen!="xs"&&
+                          <span
+                            style={{
+                              padding: 10,
+                              color: "#424949",
+                            }}
+                          >
+                            {localStorage.getItem('isLogin') == "true" ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
+                          </span>}
                         </a>
                       </Dropdown>
                     </Space>
@@ -111,16 +111,15 @@ function App() {
             <Route exact path="/">
               <Redirect to="/GlassesShop/Home" />
             </Route>
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/AI" : "/GlassesShop/login"} component={AIhome} />
+            <Route exact path="/GlassesShop/AI" component={AIhome} />
             <Route exact path="/GlassesShop/Home" component={Home} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Shopping" : "/GlassesShop/login"} component={ShopHome} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Analysis" : "/GlassesShop/login"} component={AnalysisHome} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Contact" : "/GlassesShop/login"} component={ContactusHome} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Mycart" : "/GlassesShop/login"} component={Mycarthome} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Profile" : "/GlassesShop/login"} component={Profile} />
-            <Route exact path={localStorage.getItem('isLogin') == "true" ? "/GlassesShop/Pay" : "/GlassesShop/login"} component={Pay} />
+            <Route exact path="/GlassesShop/Shopping" component={ShopHome} />
+            <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} />
+            <Route exact path="/GlassesShop/Contact" component={ContactusHome} />
+            <Route exact path="/GlassesShop/Mycart" component={Mycarthome} />
+            <Route exact path="/GlassesShop/Profile" component={Profile} />
+            <Route exact path="/GlassesShop/Pay" component={Pay} />
             <Route exact path="/GlassesShop/Register" component={RegisterHome} />
-
           </div>
         </Content>
         <footer style={{
