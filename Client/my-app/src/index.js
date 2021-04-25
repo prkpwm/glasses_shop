@@ -8,12 +8,15 @@ import "bootstrap/dist/css/bootstrap.css";
 import "antd/dist/antd.css";
 import Login from "./components/pages/Login/Login";
 import "./CSS/Button.css"
-
+import reset from "./components/pages/Login/reset";
+import changepass from "./components/pages/Login/changepass";
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
         <Route exact path="/GlassesShop/Login" component={Login} />
+        <Route exact path="/GlassesShop/reset" component={reset} />
+        <Route exact path="/GlassesShop/changepass" component={changepass} />
         <App />
       </Switch>
     </Router>
