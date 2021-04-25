@@ -28,6 +28,7 @@ const menu = (
 
 const menu1 = (
   <Menu>
+    
     <Menu.Item key="1">
       <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
@@ -65,7 +66,7 @@ function App() {
                   </Col>
                   <Col>
                     <Space>
-                      <Link to="/GlassesShop/Mycart">
+                      <Link to={localStorage.getItem('isLogin') == "true" ?"/GlassesShop/Mycart" : "/GlassesShop/login"}>
                         <Avatar shape="square" style={{ color: "white", backgroundColor: "transparent" }}
                           icon={< ShoppingCartOutlined style={{ fontSize: countcreen != "xs" ? 30 : 20, Align: "justify", color: "#424949" }} />} size={countcreen != "xs" ? 50 : 40} />
                       </Link>
