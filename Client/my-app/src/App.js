@@ -110,14 +110,12 @@ function App() {
             <Route exact path="/">
               <Redirect to="/GlassesShop/Home" />
             </Route>
+            <Route exact path="/GlassesShop/Register" component={RegisterHome} />
             <Route exact path="/GlassesShop/AI" component={AIhome} >
               {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Home" component={Home} />
             <Route exact path="/GlassesShop/Shopping" component={ShopHome} >
-              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
-            </Route>
-            <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} >
               {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
             <Route exact path="/GlassesShop/Contact" component={ContactusHome} >
@@ -132,7 +130,9 @@ function App() {
             <Route exact path="/GlassesShop/Pay" component={Pay} >
               {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
-            <Route exact path="/GlassesShop/Register" component={RegisterHome} />
+            <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} >
+              {localStorage.getItem('isLogin') != "true" ? <Redirect to="/GlassesShop/Login" /> : localStorage.getItem('role') != 1 ? <Redirect to="/GlassesShop/Login" /> : null}
+            </Route>
           </div>
         </Content>
         <footer style={{

@@ -6,7 +6,7 @@ function Analysis() {
 
     return (
         <div>
-            {localStorage.getItem('role') != 1 ? window.location.replace("Login") : ""}
+            
             <div>
                 <Row>
                     <Col span={8}><PieCharted /></Col>
