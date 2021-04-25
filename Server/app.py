@@ -117,6 +117,14 @@ def sortitem(table, column, order):  # order(ASC,DESC)
     return jsonify(data)
 
 
+@app.route('/searchitem/<table>/<name>')
+def searchitem(table, name):  
+    sql = ("select * from " + str(table) + " Where name LIKE '%"+str(name)+"%'")
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
 @app.route('/history/<gid>/<uid>')
 def history(gid, uid):  # order(ASC,DESC)
     sql = ("INSERT INTO history() ")

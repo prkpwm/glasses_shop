@@ -11,11 +11,20 @@ const blue = {
   backgroundColor: "#f2f4f4",
   color: "#000000",
 };
-
+const blueright = {
+  backgroundColor: "#f2f4f4",
+  color: "#000000",
+  float: 'right',
+};
 
 function GenItem() {
   const [datas, setdatas] = useState([[]]);
   const [datapopup, setdatapopup] = useState([[]]);
+
+  this.props.history.push({
+    pathname: '/ShopHome',
+      state: data // your data array of objects
+  })
 
   useEffect(() => {
     axios.get("/sortitem/iteminfo/price/asc")
@@ -59,15 +68,36 @@ function GenItem() {
 
   }
 
-  function getitem(id) {
+  async function getitem(id) {
     console.log(id)
-    axios.get("/getinfobyid/iteminfo/GID/" + id + "")
+    await axios.get("/getinfobyid/iteminfo/GID/" + id + "")
       .then(res => {
         // const datas = res.data[0];
         const datas = res.data;
         console.log(datas)
         setdatapopup(datas)
       })
+
+    let body = {
+      iid: id,
+      uid: localStorage.getItem('uid'),
+    };
+    let message = ""
+    axios.get('/insert_statistics/', { params: { body } })
+      .then(response => {
+        message = response.data
+        console.log("response: ", response)
+
+      })
+      .catch(err => console.log(err));
+    if (message == "Success") {
+
+    }
+    else {
+      // return notification["error"]({
+      //   message: 'something wrong',
+      // });
+    }
     setVisible(true)
   }
   return (
@@ -81,7 +111,7 @@ function GenItem() {
         </Select>
       </div>
       <Row gutter={[16, 24]}>
-        {
+        {(datas.length > 1) ?
           datas.map(data =>
             <Col className="gutter-row" xs={24} md={12} xl={6}>
               <Card
@@ -100,6 +130,9 @@ function GenItem() {
               </Card>
             </Col>
           )
+          : <div style={{width:'100%'}}>
+              <h5 style={{ color: 'red', textAlign: 'center' }}>Nothing Here </h5>
+          </div>
         }
       </Row>
       <Modal
@@ -109,6 +142,7 @@ function GenItem() {
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         width={400}
+        footer={null}
       >
 
         {datapopup.map(data => (
@@ -126,15 +160,12 @@ function GenItem() {
               The whole world will be beautiful immediately </p>
               <h4 style={{ textAlign: 'right' }}>{data[2]} ฿</h4>
               <p style={{ textAlign: 'right' }}> AVAILABILITY: <b>IN STOCK </b></p>
-              <Button type="button" onClick={() => onClickHandler(data[0])} style={blue}>
+              <Button type="button" onClick={() => onClickHandler(data[0])} style={blueright}>
                 Add to cart
                </Button>
             </div>
           </div>
         ))}
-
-
-
       </Modal>
     </div >
   )
