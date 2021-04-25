@@ -8,6 +8,7 @@ import time
 from flask_cors import CORS, cross_origin
 from mysql.connector import errors 
 import os
+import reset_password
 
 app = Flask(__name__)
 CORS(app)
@@ -282,6 +283,18 @@ def insert_statistics():
         massage = "Unsuccess"
     return jsonify(massage)
 
+@app.route('/changepassword', methods=['GET', 'POST'])
+def changepassword():
+    if request.method == "GET":
+        body = json.loads(request.args.get('body'))
+        cursor.execute("select userinfo.email from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
+        confirm = cursor.fetchone()
+        if confirm is not None:
+            reset_password.email(confirm[0])
+            return jsonify("done")
+        else:
+           return jsonify("404")
+    
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)

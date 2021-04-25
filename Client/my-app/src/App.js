@@ -14,6 +14,7 @@ import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
 import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
+
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -111,6 +112,7 @@ function App() {
               <Redirect to="/GlassesShop/Home" />
             </Route>
             <Route exact path="/GlassesShop/Register" component={RegisterHome} />
+            
             <Route exact path="/GlassesShop/AI" component={AIhome} >
               { (localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
             </Route>
