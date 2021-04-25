@@ -287,13 +287,23 @@ def insert_statistics():
 def changepassword():
     if request.method == "GET":
         body = json.loads(request.args.get('body'))
-        cursor.execute("select userinfo.email from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
+        cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
         confirm = cursor.fetchone()
         if confirm is not None:
-            reset_password.email(confirm[0])
-            return jsonify("done")
+            reset_password.email(confirm[0],confirm[1])
+            return jsonify("Success")
         else:
            return jsonify("404")
+
+@app.route('/updatepassword', methods=['GET', 'POST'])
+def updatepassword():
+    if request.method == "GET":
+        body = json.loads(request.args.get('body'))
+        print(body)
+        cursor.execute("UPDATE userinfo SET pwd = " + "\""+str(body.get('pwd'))+ "\"" +" WHERE id = "+str(body.get('uid')))
+        con.commit()
+        return jsonify("Success")
+    return jsonify("404")
     
 
 if __name__ == '__main__':

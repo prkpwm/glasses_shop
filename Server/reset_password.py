@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-def email(receiver):
+def email(receiver,uid):
     sender_email = "glassesshop.miniprojectweb@gmail.com"
     password = 'glassesshopP@ssw0rd'
     receiver_email = receiver
@@ -17,7 +17,7 @@ def email(receiver):
     <html>
     <body>
         เราได้รับคำขอเปลี่ยนรหัสผ่านของคุณแล้ว<br>
-        <a href="http://localhost:3000/GlassesShop/Login">เปลี่ยนรหัสผ่าน</a> 
+        <a href="http://localhost:3000/GlassesShop/changepass?uid="""+str(uid)+""" ">เปลี่ยนรหัสผ่าน</a> 
         </p>
     </body>
     </html>
