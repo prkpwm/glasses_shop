@@ -102,7 +102,7 @@ function App() {
                             <Avatar src={"/loadimages/" + localStorage.getItem('path')} size={40} /> :
                             <Avatar icon={<UserOutlined size={40} />} />
                           }
-                          {countcreen != "xs" &&
+                          {(countcreen != "xs"&&countcreen != "sm"&&countcreen != "md") &&
                             <span
                               style={{
                                 padding: 10,
