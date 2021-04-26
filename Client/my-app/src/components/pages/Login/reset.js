@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Row, Col, Card, Checkbox } from "antd";
+import { Form, Input, Button, Row, Col, Card, Checkbox, Divider, notification, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import axios from 'axios';
 import { Link } from "react-router-dom";
@@ -10,16 +10,23 @@ function Login() {
   const [isLoginFail, setisLoginFail] = useState({ status: "", word: "" });
   const onFinish = async (values) => {
     console.log(values)
-    let body = { email: values.Email};
+    let body = { email: values.Email };
     let message = ""
     await axios.get("/changepassword", { params: { body } })
       .then(response => {
         message = response.data
         console.log(message)
       })
-      if (message == "404") {
-        setisLoginFail({ status: "error", word: "invalid email." });
-      }
+    if (message == "404") {
+      return notification["error"]({
+        message: 'Email unavailable',
+      });
+    }
+    else{
+      return notification["success"]({
+        message: 'Sending Email',
+      });
+    }
   };
 
   //   const onFinishFailed = (errorInfo) => {
@@ -68,7 +75,7 @@ function Login() {
               </Form.Item>
               <Form.Item>
                 <button className="myButton" htmlType="submit">
-                send
+                  send
                 </button>
               </Form.Item>
             </Form>
