@@ -1,3 +1,4 @@
+import React, { useEffect, useState} from 'react';
 import HeaderMenu from "./components/layouts/HeaderMenu.js";
 import {
   BrowserRouter as Router,
@@ -14,6 +15,7 @@ import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
 import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
+import axios from 'axios';
 
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button, Grid } from "antd";
 import { Link } from "react-router-dom";
@@ -38,8 +40,28 @@ const menu1 = (
 
 const { useBreakpoint } = Grid;
 var countcreen = ""
+var id = null
 function App() {
   const screens = useBreakpoint();
+
+  useEffect( () => {
+    if (localStorage.getItem('isLogin') == "true") {
+        id = localStorage.getItem('uid')
+    }
+    else if (localStorage.getItem('isLogin') == "false"){
+        id = sessionStorage.getItem('uid')
+    }
+    if(id!=null){
+      axios.get("/getinfobyid/userinfo/id/" + id)
+        .then(res => {
+            const data = res.data[0];
+            console.log(data)
+            sessionStorage.setItem('nameshow',data[3])
+        })
+    }
+    
+
+  }, [])
   return (
     <div>
       {Object.entries(screens)
@@ -87,7 +109,7 @@ function App() {
                                 color: "#424949",
                               }}
                             >
-                              { (localStorage.getItem('uid') == null) ? localStorage.getItem('userdata') : sessionStorage.getItem('userdata')}
+                              { sessionStorage.getItem('nameshow') }
                             </span>}
                         </a>
                       </Dropdown>
