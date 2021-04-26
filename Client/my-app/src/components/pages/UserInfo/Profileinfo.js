@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useForm } from 'react';
-import { Row, Col, Form, Input, Button, Select, DatePicker } from "antd";
+import { Row, Col, Form, Input, Button, Select, DatePicker,Modal } from "antd";
 import axios from 'axios';
 var dayjs = require('dayjs')
 const { Option } = Select;
@@ -39,13 +39,41 @@ function Profileinfo() {
     useEffect(() => {
         form.setFieldsValue(datainitform)
     }, [form, datainitform])
-
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
-        axios.get("/updateuserinfo/userinfo/" + values + "/" +id)
+        let body = {
+            firstname: values.Name,
+            lastname: values.Surname,
+            email: values.Email,
+            phone: values.Phone,
+            address: values.Address,
+            dob: values.Birthday,
+            sex: values.Gender,
+            uid:id
+        };
+        console.log(body)
+        await axios.get("/updateuserinfo", { params: { body } })
             .then(res => {
                 const data = res.data;
                 console.log(data)
+                if(data=="Success"){
+                    Modal.success({
+                        content: (
+                          <div>
+                            <p>ทำรายการสำเร็จ</p>
+                          </div>
+                        ),
+                        onOk() {window.location.replace('/GlassesShop/Profile')},
+                      });
+                }
+                else{
+                    Modal.error({
+                        title: <div>
+                        <p>ทำรายการไม่สำเร็จสำเร็จ</p>
+                        <p>โปรดลองใหม่อีกครั้ง</p>
+                      </div>,
+                      });
+                }
             })
     };
     const onFinishFailed = (errorInfo) => {
@@ -56,10 +84,7 @@ function Profileinfo() {
             <Form
                 form={form}
                 name="basic"
-                initialValues={datainitform
-                    // Name: datas[3], Surname: datas[4], Birthday: dayjs('2020-06-09'), Gender: "Male"
-                    // , Email: "test@gmail.com", Phone: "0869574599", Address: "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                }
+                initialValues={datainitform}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >

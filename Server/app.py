@@ -89,15 +89,6 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
-#ยังทำไม่เสร็จ
-@app.route('/updateuserinfo/<table>/<value>/<uid>')
-def updateuserinfo(table, value, uid):
-    print(value)
-    sql = ("select * from " + str(table) + " where " + "id" + " = " + uid )
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    return jsonify(data) 
-
 @app.route('/getpopulate')
 def getpopulate():
     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
@@ -313,6 +304,23 @@ def updatepassword():
         return jsonify("Success")
     return jsonify("404")
     
+#ยังไม่ได้ test
+@app.route('/updateuserinfo', methods=['GET', 'POST'])
+def updateuserinfo():
+    if request.method == "GET":
+        body = json.loads(request.args.get('body'))
+        print(body)
+        cursor.execute("UPDATE userinfo SET firstname = " + "\""+str(body.get('firstname'))+ "\"" 
+        + ", lastname = " + "\""+str(body.get('lastname'))+ "\"" 
+        + ", email = " + "\""+str(body.get('email'))+ "\"" 
+        + ", phone = " + "\""+str(body.get('phone'))+ "\"" 
+        + ", address = " + "\""+str(body.get('address'))+ "\"" 
+        + ", sex = " + "\""+str(body.get('sex'))+ "\"" 
+        + ", dob = " + "\""+str(body.get('dob'))+ "\"" 
+        +" WHERE id = " +str(body.get('uid')))
+        con.commit()
+        return jsonify("Success")
+    return jsonify("404")
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
