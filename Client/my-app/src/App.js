@@ -34,7 +34,7 @@ const menu1 = (
     <Menu.Item key="1">
       <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="3" onClick={() => { localStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
+    <Menu.Item key="3" onClick={() => { localStorage.clear();sessionStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
 );
 
@@ -45,20 +45,20 @@ function App() {
   const screens = useBreakpoint();
 
   useEffect(() => {
-    if (localStorage.getItem('isLogin') == "true") {
-      id = localStorage.getItem('uid')
-    }
-    else if (localStorage.getItem('isLogin') == "false") {
-      id = sessionStorage.getItem('uid')
-    }
-    if (id != null) {
-      axios.get("/getinfobyid/userinfo/id/" + id)
-        .then(res => {
-          const data = res.data[0];
-          console.log(data)
-          sessionStorage.setItem('nameshow', data[3])
-        })
-    }
+    // if (localStorage.getItem('isLogin') == "true") {
+    //   id = localStorage.getItem('uid')
+    // }
+    // else if (localStorage.getItem('isLogin') == "false") {
+    //   id = sessionStorage.getItem('uid')
+    // }
+    // if (id != null) {
+    //   axios.get("/getinfobyid/userinfo/id/" + id)
+    //     .then(res => {
+    //       const data = res.data[0];
+    //       console.log(data)
+    //       sessionStorage.setItem('nameshow', data[3])
+    //     })
+    // }
 
 
   }, [])
@@ -118,7 +118,7 @@ function App() {
                                   color: "#424949",
                                 }}
                               >
-                                {sessionStorage.getItem('nameshow')}
+                                {sessionStorage.getItem('userdata')}{localStorage.getItem('userdata')}
                               </span>}
                           </a>
                         </Dropdown>
