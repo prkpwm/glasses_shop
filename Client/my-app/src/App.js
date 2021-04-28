@@ -106,8 +106,8 @@ function App() {
                           </Link>
                         }
                         <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
-                          ? menu1 : menu} trigger={["click"]}
-                        >
+                          ? menu1 : menu} trigger={["hover"]}
+                          placement="bottomRight" arrow onClick={e => e.preventDefault()}>
 
                           <a onClick={(e) => e.preventDefault()}>
                             {localStorage.getItem('userdata') || sessionStorage.getItem('userdata') ?
