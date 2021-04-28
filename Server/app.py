@@ -89,6 +89,23 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
+
+@app.route('/getinfowithorderby/<table>/<category>/<column>/<value>')
+def getinfowithorderby(table,category, column, value):
+    sql = ("select * from " + str(table) + " where " + category + " = " + value +" ORDER BY "+ column + " " + order)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
+@app.route('/getbasketitem/<table>/<category>/<column>/<value>')
+def getbasketitem(table,category, column, value):
+    sql = ("select * from history")
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
 @app.route('/getpopulate')
 def getpopulate():
     sql = ("""SELECT *, COUNT(s.iid) as val from statistics s 
