@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { List, Avatar, Space, Button, Card,Row,Col,Modal,Spin } from 'antd';
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined,PlusOutlined,MinusOutlined} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import Relateglasses from './Relateglasses'
@@ -84,7 +84,7 @@ function Mycarthome() {
                     <List.Item
                         actions={[<Space style={{ fontSize: 15 }}>
                             <a><Avatar onClick={()=>{changenumberlist(item.id,"-")}}>-</Avatar></a>
-                            <Avatar>{item.number}</Avatar>
+                            <Avatar style={{backgroundColor:"white",color:"black"}}>{item.number}</Avatar>
                             <a><Avatar onClick={()=>{changenumberlist(item.id,"+")}}>+</Avatar></a>
                             </Space>
                         ,<Button type="danger" shape="round" onClick={()=>{deletelist(item.id)}}>
