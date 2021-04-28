@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useForm } from 'react';
-import { Row, Col, Form, Input, Button, Select, DatePicker,Modal } from "antd";
+import { Table, Tag,Row, Col, Form, Input, Button, Select, DatePicker,Modal } from "antd";
 import axios from 'axios';
 var dayjs = require('dayjs')
 const { Option } = Select;
