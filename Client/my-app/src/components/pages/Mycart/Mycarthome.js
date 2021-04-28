@@ -17,21 +17,25 @@ function Mycarthome() {
             {
                 title: 'Glass 1',
                 price: '100 ฿',
+                number: 1,
                 id: 1,
             },
             {
                 title: 'Glass 2',
                 price: '200 ฿',
+                number: 3,
                 id: 2,
             },
             {
                 title: 'Glass 3',
                 price: '300 ฿',
+                number: 2,
                 id: 3,
             },
             {
                 title: 'Glass 4',
                 price: '400 ฿',
+                number: 1,
                 id: 4,
             },
         ]
@@ -61,11 +65,16 @@ function Mycarthome() {
                 dataSource={datainlist}
                 renderItem={item => (
                     <List.Item
-                        actions={[<Button type="danger" shape="round" onClick={()=>{deletelist(item.id)}}>
-                            <Space style={{ fontSize: 15 }}>
-                                <DeleteOutlined />ลบ
-                                </Space>
-                        </Button>]}>
+                        actions={[<Space style={{ fontSize: 15 }}>
+                            <Avatar>-</Avatar>
+                            <Avatar>{item.number}</Avatar>
+                            <Avatar>+</Avatar>
+                            </Space>
+                        ,<Button type="danger" shape="round" onClick={()=>{deletelist(item.id)}}>
+                        <Space style={{ fontSize: 15 }}>
+                            <DeleteOutlined />ลบ
+                            </Space>
+                    </Button>]}>
                         <List.Item.Meta
                             avatar={<Avatar shape="square" src="/img/dumpGlasses.png" />}
                             title={<span>{item.title}</span>}
