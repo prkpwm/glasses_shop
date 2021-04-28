@@ -19,6 +19,7 @@ const blueright = {
 function Relateglasses() {
     const [datapopulate, setdatapopulate] = useState([[]]);
     const [datapopup, setdatapopup] = useState([[]]);
+    const [loading, setloading] = useState(true);
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -27,6 +28,7 @@ function Relateglasses() {
                 const datas = res.data;
                 console.log(datas)
                 setdatapopulate(datas)
+                setloading(false)
             })
     }, [])
 
@@ -69,8 +71,9 @@ function Relateglasses() {
     return (
         <div>
             <div style={{ fontSize: 30 }}>แว่นที่มักจะซื้อด้วยกัน</div>
+            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
             <Row gutter={[32, 32]} style={{ width: "60%", marginLeft: "20%", marginTop: 20 }}>
-            {(datapopulate.length > 1) ?
+            {
                     datapopulate.map(data =>
                         <Col xs={24} lg={8} xl={8}>
                             {console.log(data)}
@@ -89,10 +92,9 @@ function Relateglasses() {
                             </Card>
                         </Col>
                     )
-                :
-                <div style={{textAlign:"center"}}><Spin size="large" tip="Loading..."/></div>}
-
+                }
             </Row>
+</Spin>
 
 
             <Modal

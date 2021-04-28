@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, Space, Button, Card,Row,Col,Modal } from 'antd';
+import { List, Avatar, Space, Button, Card,Row,Col,Modal,Spin } from 'antd';
 import { DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from 'axios'
@@ -10,6 +10,7 @@ const { Meta } = Card;
 
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
+    const [loading, setloading] = useState(true);
 
     useEffect(() => {
         var data = data = [
@@ -35,6 +36,7 @@ function Mycarthome() {
             },
         ]
         setdatainlist(data)
+        setloading(false)
     }, [])
     const deletelist = (x) => {
         console.log(x)
@@ -53,7 +55,7 @@ function Mycarthome() {
     return (
         <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 30 }}>ตะกร้า</div>
-            <List
+            <List loading={loading}
                 style={{ width: "60%", marginLeft: "20%", textAlign: "left" }}
                 itemLayout="horizontal"
                 dataSource={datainlist}
