@@ -42,12 +42,29 @@ function Mycarthome() {
         setdatainlist(data)
         setloading(false)
     }, [])
-    const deletelist = (x) => {
+    const deletelist = async (x) => {
         console.log(x)
         var data = [...datainlist]
         for(var i=0;i<data.length;i++){
             if(x==data[i].id){
                 data.splice(i, 1)
+                break
+            }
+        }
+        setdatainlist(data)
+    }
+
+    const changenumberlist = async (x,count) => {
+        console.log(x)
+        var data = [...datainlist]
+        for(var i=0;i<data.length;i++){
+            if(x==data[i].id){
+                if(count=="+"){
+                    data[i].number++
+                }
+                else if(count=="-"){
+                    data[i].number--
+                }
                 break
             }
         }
@@ -66,9 +83,9 @@ function Mycarthome() {
                 renderItem={item => (
                     <List.Item
                         actions={[<Space style={{ fontSize: 15 }}>
-                            <Avatar>-</Avatar>
+                            <a><Avatar onClick={()=>{changenumberlist(item.id,"-")}}>-</Avatar></a>
                             <Avatar>{item.number}</Avatar>
-                            <Avatar>+</Avatar>
+                            <a><Avatar onClick={()=>{changenumberlist(item.id,"+")}}>+</Avatar></a>
                             </Space>
                         ,<Button type="danger" shape="round" onClick={()=>{deletelist(item.id)}}>
                         <Space style={{ fontSize: 15 }}>
