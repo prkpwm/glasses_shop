@@ -79,7 +79,7 @@ function App() {
           .filter(screen => !!screen[1])
           .map(screen => { countcreen = screen[0] })}
         <Layout>
-          <Header style={{ backgroundColor: "#EAECEE" }}>
+          <Header style={{ backgroundColor: "#EAECEE" ,height:"auto"}}>
             <Row style={{ justifyContent: "space-between" }}>
               <Col>
                 <Link to="/GlassesShop/Home">
