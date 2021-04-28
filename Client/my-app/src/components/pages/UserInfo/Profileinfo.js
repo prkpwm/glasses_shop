@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useForm } from 'react';
-import { Table, Tag,Row, Col, Form, Input, Button, Select, DatePicker,Modal } from "antd";
+import { Table, Tag,Row, Col, Form, Input, Button, Select, DatePicker,Modal,Spin } from "antd";
 import axios from 'axios';
 var dayjs = require('dayjs')
 const { Option } = Select;
@@ -8,6 +8,7 @@ const { TextArea } = Input;
 var id = ""
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
+    const [loading, setloading] = useState(true);
     const [datas, setdatas] = useState([[]]);
     const [datainitform, setdatainitform] = useState();
     const [form] = Form.useForm()
@@ -34,6 +35,7 @@ function Profileinfo() {
                     Birthday: dayjs(data[9]),
                 }
                 setdatainitform(datainit)
+                setloading(false)
             })
     }, [])
     useEffect(() => {
@@ -97,8 +99,10 @@ function Profileinfo() {
                                 { required: true, message: "Please input your Firstname!" },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <Input disabled={editform}
                                 pattern="^[A-Za-zก-๏]{3,}$" />
+                                </Spin>
                         </Form.Item>
                     </Col>
                     <Col xs={0} md={1} xl={1} />
@@ -110,8 +114,10 @@ function Profileinfo() {
                                 { required: true, message: "Please input your Lastname!" },
                             ]}
                         >
+                            <Spin spinning={loading} delay={500}>
                             <Input disabled={editform}
                                 pattern="^[A-Za-zก-๏]{3,}$" />
+                                </Spin>
                         </Form.Item>
                     </Col>
                     <Col xs={0} md={0} xl={1} />
@@ -123,7 +129,9 @@ function Profileinfo() {
                                 { required: true, message: "Please input your Phone" },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <Input disabled={editform} pattern="^[0-9]{10}$" />
+                                </Spin>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -138,7 +146,9 @@ function Profileinfo() {
                                 { required: true, message: "Please select your Birthday" },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <DatePicker disabled={true} format={'DD/MM/YYYY'} />
+                                </Spin>
                         </Form.Item>
                     </Col>
                     <Col xs={1} md={0} xl={1} />
@@ -150,10 +160,12 @@ function Profileinfo() {
                                 { required: true },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <Select style={{ width: "100%" }} disabled={editform} >
                                 <Option value="male">Male</Option>
                                 <Option value="female">Female</Option>
                             </Select>
+                                </Spin>
                         </Form.Item>
                     </Col>
                     <Col xs={0} md={0} xl={1} />
@@ -166,9 +178,11 @@ function Profileinfo() {
                                 { required: true, message: "Please input your E-mail!" },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <Input disabled={editform}
                                 pattern="^[a-zA-Z0-9\.]{1,}@[a-zA-Z\.]{1,}.[a-zA-Z0-9]{1,4}$"
                             />
+                            </Spin>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -182,9 +196,11 @@ function Profileinfo() {
                                 { required: true, message: "Please input your Address" },
                             ]}
                         >
+                        <Spin spinning={loading} delay={500}>
                             <TextArea rows={4} disabled={editform}
                                 pattern="^.{1,}$"
                             />
+                            </Spin>
                         </Form.Item>
 
                     </Col>

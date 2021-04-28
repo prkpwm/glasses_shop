@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, Space, Button, Card, Row, Col, Modal } from 'antd';
+import { List, Avatar, Space, Button, Card, Row, Col, Modal,Spin  } from 'antd';
 import axios from 'axios'
 const { Meta } = Card;
 
@@ -70,7 +70,7 @@ function Relateglasses() {
         <div>
             <div style={{ fontSize: 30 }}>แว่นที่มักจะซื้อด้วยกัน</div>
             <Row gutter={[32, 32]} style={{ width: "60%", marginLeft: "20%", marginTop: 20 }}>
-                {
+            {(datapopulate.length > 1) ?
                     datapopulate.map(data =>
                         <Col xs={24} lg={8} xl={8}>
                             {console.log(data)}
@@ -89,7 +89,8 @@ function Relateglasses() {
                             </Card>
                         </Col>
                     )
-                }
+                :
+                <div style={{textAlign:"center"}}><Spin size="large" tip="Loading..."/></div>}
 
             </Row>
 
