@@ -214,7 +214,7 @@ def insert_userinfo():
         massage = "Unsuccess"
     return jsonify(massage)
 
-
+#ของเดิม
 @app.route('/insert_orderinfo/', methods=['GET', 'POST'])
 def insert_orderinfo():
     massage = ""
@@ -236,7 +236,7 @@ def insert_orderinfo():
         massage = "Unsuccess"
     return jsonify(massage)
 
-
+# ของเดิม
 @app.route('/insert_history/', methods=['GET', 'POST'])
 def insert_history():
     massage = ""
@@ -258,6 +258,54 @@ def insert_history():
         massage = "Success"
     else:
         massage = "Unsuccess"
+    return jsonify(massage)
+
+
+@app.route('/insert_orderinfo2/',methods=['GET','POST'])
+def insert_orderinfo2():
+    massage = ""
+    try:
+        if request.method == "GET":
+            body = json.loads(request.args.get('body'))
+            sql = "INSERT INTO  `orderinfo`(`itemid`, `historyid`, `quanlity`, `unitprice`) VALUES  ('"+str(body.get('iid'))+"','"+str(body.get('orderid'))+"','"+ str(body.get('quanlity'))+"','"+ str(body.get('itemprice'))+"') ON DUPLICATE KEY UPDATE quanlity = (VALUES(quanlity)+'"+str(body.get('quanlity'))+"')"
+            cursor.execute(sql)
+            con.commit()
+            massage = "Success"
+        else:
+            massage = "Unsuccess"
+
+    except(errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+        return jsonify(e)
+
+    return jsonify(massage)
+
+@app.route('/check_oderidinhis/',methods=['GET','POST'])
+def check_oderidinhis():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
+    cursor.execute(sql2)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
+
+
+@app.route('/insert_history2/', methods=['GET', 'POST'])
+def insert_history2():
+    massage = ""
+    try:
+        if request.method == "GET":
+            body = json.loads(request.args.get('body'))
+            sql = "INSERT INTO history (uid,status,date) VALUES ("+body.get('uid')+", \""+str(body.get('status'))+"\", CURDATE())"
+            cursor.execute(sql)
+            con.commit()
+            massage = "Success"
+        else:
+            message = "Unsuccess"
+    except (errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+        return jsonify(e)
+
     return jsonify(massage)
 
 
