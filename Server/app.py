@@ -300,7 +300,7 @@ def insert_orderinfo2():
 def check_oderidinhis():
     message = "fail"
     body = json.loads(request.args.get('body'))
-    sql2 = "select orderinfo.id ,orderinfo.itemid,orderinfo.quanlity,orderinfo.unitprice,iteminfo.name,iteminfo.price,iteminfo.path,iteminfo.category from `orderinfo` LEFT JOIN `history` ON orderinfo.historyid = history.id LEFT JOIN `iteminfo` ON orderinfo.itemid = iteminfo.GID where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
+    sql2 = "select orderinfo.id ,orderinfo.itemid,orderinfo.quanlity,iteminfo.name,iteminfo.price,iteminfo.path,iteminfo.category from `orderinfo` LEFT JOIN `history` ON orderinfo.historyid = history.id LEFT JOIN `iteminfo` ON orderinfo.itemid = iteminfo.GID where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
     cursor.execute(sql2)
     res = cursor.fetchall()
     if res == []:
