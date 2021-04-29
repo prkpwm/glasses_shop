@@ -8,37 +8,57 @@ const { Meta } = Card;
 
 
 
+var id = ""
+if (localStorage.getItem('isLogin') == "true") {
+    id = localStorage.getItem('uid')
+}
+else {
+    id = sessionStorage.getItem('uid')
+}
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
-        var data = data = [
-            {
-                title: 'Glass 1',
-                price: '100 ฿',
-                number: 1,
-                id: 1,
-            },
-            {
-                title: 'Glass 2',
-                price: '200 ฿',
-                number: 3,
-                id: 2,
-            },
-            {
-                title: 'Glass 3',
-                price: '300 ฿',
-                number: 2,
-                id: 3,
-            },
-            {
-                title: 'Glass 4',
-                price: '400 ฿',
-                number: 1,
-                id: 4,
-            },
-        ]
+        let body = {
+            uid: id,
+            status: 'in-basket',
+        };
+        let message = ""
+        axios.get('/check_oderidinhis/', { params: { body } })
+        .then(response => {
+            message = response.data
+            console.log("response: ", response)
+        })
+        .catch(err => console.log(err));
+
+        var data
+        // var data = [
+        //     {
+        //         title: 'Glass 1',
+        //         price: '100 ฿',
+        //         number: 1,
+        //         id: 1,
+        //     },
+        //     {
+        //         title: 'Glass 2',
+        //         price: '200 ฿',
+        //         number: 3,
+        //         id: 2,
+        //     },
+        //     {
+        //         title: 'Glass 3',
+        //         price: '300 ฿',
+        //         number: 2,
+        //         id: 3,
+        //     },
+        //     {
+        //         title: 'Glass 4',
+        //         price: '400 ฿',
+        //         number: 1,
+        //         id: 4,
+        //     },
+        // ]
         setdatainlist(data)
         setloading(false)
     }, [])
