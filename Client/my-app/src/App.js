@@ -121,7 +121,9 @@ function App() {
                                   color: "#424949",
                                 }}
                               >
-                                {sessionStorage.getItem('userdata')}{localStorage.getItem('userdata')}
+                                {localStorage.getItem('isLogin')=='true'
+                                ?localStorage.getItem('userdata')
+                                :sessionStorage.getItem('userdata')}
                               </span>}
                           </a>
                         </Dropdown>
