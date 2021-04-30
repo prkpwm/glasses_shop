@@ -98,12 +98,16 @@ def getinfowithorderby(table,category, column, value):
     return jsonify(data)
 
 
-@app.route('/getbasketitem/<table>/<category>/<column>/<value>')
-def getbasketitem(table,category, column, value):
-    sql = ("select * from history")
+@app.route('/getbasketitem/',methods=['GET','POST'])
+def getbasketitem():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql = "select orderinfo.id ,orderinfo.itemid,orderinfo.quanlity,iteminfo.name,iteminfo.price,iteminfo.path,iteminfo.category from `orderinfo` LEFT JOIN `history` ON orderinfo.historyid = history.id LEFT JOIN `iteminfo` ON orderinfo.itemid = iteminfo.GID where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
     cursor.execute(sql)
-    data = cursor.fetchall()
-    return jsonify(data)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
 
 
 @app.route('/getpopulate')
@@ -300,12 +304,12 @@ def insert_orderinfo2():
 def check_oderidinhis():
     message = "fail"
     body = json.loads(request.args.get('body'))
-    sql2 = "select orderinfo.id ,orderinfo.itemid,orderinfo.quanlity,iteminfo.name,iteminfo.price,iteminfo.path,iteminfo.category from `orderinfo` LEFT JOIN `history` ON orderinfo.historyid = history.id LEFT JOIN `iteminfo` ON orderinfo.itemid = iteminfo.GID where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
     cursor.execute(sql2)
     res = cursor.fetchall()
     if res == []:
         return jsonify(message)
-    return jsonify(res)
+    return jsonify(res[0])
 
 @app.route('/insert_history2/', methods=['GET', 'POST'])
 def insert_history2():
