@@ -93,7 +93,9 @@ function Mycarthome() {
                 renderItem={item => (
                     <List.Item
                         actions={[<Space style={{ fontSize: 15 }}>
-                            <a><Avatar onClick={() => { changenumberlist(item.id, "-") }}>-</Avatar></a>
+                            {item.number>1?<a><Avatar onClick={() => { changenumberlist(item.id, "-") }}>-</Avatar></a>
+                            :<Avatar>-</Avatar>}
+                            
                             <Avatar style={{ backgroundColor: "white", color: "black" }}>{item.number}</Avatar>
                             <a><Avatar onClick={() => { changenumberlist(item.id, "+") }}>+</Avatar></a>
                         </Space>
