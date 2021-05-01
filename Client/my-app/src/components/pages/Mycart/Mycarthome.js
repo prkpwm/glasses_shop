@@ -15,7 +15,6 @@ if (localStorage.getItem('isLogin') == "true") {
 else {
     id = sessionStorage.getItem('uid')
 }
-var sumprice = 0
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
     const [loading, setloading] = useState(true);
