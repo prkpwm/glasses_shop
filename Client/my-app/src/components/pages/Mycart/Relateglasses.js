@@ -82,7 +82,7 @@ function Relateglasses() {
                             >
                                 <div onClick={() => getitem(data[2])}>
                                     <Meta title={data[5]} description={"Category : " + data[8]} /><br />
-                                    <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{data[6]} ฿</h7></p>
+                                    <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{new Intl.NumberFormat('en').format(data[6])} ฿</h7></p>
                                     <br />
                                 </div>
                                 <Button type="button" onClick={() => onClickHandler(data[2])} style={blue} >

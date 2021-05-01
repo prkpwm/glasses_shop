@@ -15,6 +15,7 @@ if (localStorage.getItem('isLogin') == "true") {
 else {
     id = sessionStorage.getItem('uid')
 }
+var sumprice = 0
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
     const [loading, setloading] = useState(true);
@@ -26,7 +27,7 @@ function Mycarthome() {
         };
         let message = ""
         const getdata = async () => {
-            await axios.get('/check_oderidinhis/', { params: { body } })
+            await axios.get('/getbasketitem/', { params: { body } })
                 .then(response => {
                     message = response.data
                     console.log("response: ", response)
@@ -42,6 +43,7 @@ function Mycarthome() {
                         path:message[i][5],
                         id: i+1,
                     })
+                    sumprice+=message[i][4]*message[i][2]
                 }
                 setdatainlist(data)
                 setloading(false)
@@ -109,8 +111,8 @@ function Mycarthome() {
                             title={<span>{item.title}</span>}
                             description={
                                 <div>
-                                <span >ราคา {item.price} ฿</span><br/>
-                            <span style={{ color: "green" }}>รวม : {item.price*item.number} ฿</span>
+                                <span >ราคา {new Intl.NumberFormat('en').format(item.price)} ฿</span><br/>
+                            <span style={{ color: "green" }}>รวม : {new Intl.NumberFormat('en').format(item.price*item.number)} ฿</span>
                             </div>
                         }
                         />
@@ -122,7 +124,8 @@ function Mycarthome() {
             <br /><br />
 
             <Card style={{ backgroundColor: "#DCDCDC", fontSize: 30}}>
-                ยอดชำระ ฿1000<br />
+                ยอดชำระ {new Intl.NumberFormat('en').format(datainlist.map(item=>item.price*item.number).reduce((a, b) => a + b, 0))} ฿
+                <br />
                 <Button> <Link to="/GlassesShop/Pay">ไปหน้าชำระเงิน</Link></Button>
             </Card>
             <br />
