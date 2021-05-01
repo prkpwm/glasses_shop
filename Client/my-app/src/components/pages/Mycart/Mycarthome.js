@@ -42,7 +42,6 @@ function Mycarthome() {
                         path:message[i][5],
                         id: i+1,
                     })
-                    sumprice+=message[i][4]*message[i][2]
                 }
                 setdatainlist(data)
                 setloading(false)
