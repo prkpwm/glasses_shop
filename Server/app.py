@@ -429,6 +429,9 @@ LEFT JOIN `iteminfo` i ON i.GID = s.iid
 GROUP BY i.category
 
 
+จำนวนยอดขายของแว่นแต่ละประเภท
+select i.category,sum(o.quanlity)  from `orderinfo` o
+LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category
 
 '''
 
