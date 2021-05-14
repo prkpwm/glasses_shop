@@ -419,7 +419,7 @@ LEFT JOIN `iteminfo` i ON i.GID = s.iid
 GROUP BY c 
 
 ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
-select time(s.dt)
+select Hour(s.dt)
 from `statistics` s
 
 
