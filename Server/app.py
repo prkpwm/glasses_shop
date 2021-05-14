@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
-from werkzeug.utils import secure_filename
-import AI.det
-import mysql.connector
 import json
-from flask import jsonify,send_file,redirect
-import time
-from flask_cors import CORS, cross_origin
-from mysql.connector import errors 
 import os
+import time
+
+import mysql.connector
+from flask import Flask, jsonify, redirect, render_template, request, send_file
+from flask_cors import CORS, cross_origin
+from mysql.connector import errors
+from werkzeug.utils import secure_filename
+
+import AI.det
 import reset_password
 
 app = Flask(__name__)
@@ -21,8 +22,8 @@ cors = CORS(app, resources={
 face_shapes = ['square', 'round', 'heart', 'oblong', 'oval']
 glasses_recomments = ["Oval, Round and Large", "Rectangle, Square and Oval", "Rectangle, Oval and Horn",
                       "Rectangle, Square and Oval", "Rectangle, Oval, Square, Round, Large and Horn"]
-con = mysql.connector.connect(user='sql6407956', password='D15gEvevUL',
-                              host='sql6.freemysqlhosting.net', database='sql6407956')
+con = mysql.connector.connect(user='sql6412381', password='hjYLTWwnfx',
+                              host='sql6.freemysqlhosting.net', database='sql6412381')
 cursor = con.cursor()
 
 
@@ -389,6 +390,47 @@ def updateuserinfo():
         con.commit()
         return jsonify("Success")
     return jsonify("404")
+
+
+@app.route('/interes_gender', methods=['GET', 'POST'])
+def changepassword():
+    if request.method == "GET":
+        body = json.loads(request.args.get('body'))
+        cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
+        confirm = cursor.fetchone()
+        if confirm is not None:
+            reset_password.email(confirm[0],confirm[1])
+            return jsonify("Success")
+        else:
+           return jsonify("404")
+
+
+'''
+เพศสนใจของแว่นแต่ละประเภท 
+select CONCAT(u.sex , i.category ) as c ,i.category,COUNT(CONCAT(u.sex , i.category )),u.sex  from `statistics` s
+LEFT JOIN `userinfo` u ON u.id = s.uid 
+LEFT JOIN `iteminfo` i ON i.GID = s.iid 
+GROUP BY c
+
+ช่วงอายุสนใจของแว่นแต่ละประเภท 
+select CONCAT(u.dob , i.category ) as c ,i.category,COUNT(CONCAT(u.dob , i.category )),year(u.dob)  from `statistics` s
+LEFT JOIN `userinfo` u ON u.id = s.uid 
+LEFT JOIN `iteminfo` i ON i.GID = s.iid 
+GROUP BY c 
+
+ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
+select time(s.dt)
+from `statistics` s
+
+
+จำนวนยอดคนสนใจของแว่นแต่ละประเภท
+select COUNT(s.sid) , i.category  from `statistics` s
+LEFT JOIN `iteminfo` i ON i.GID = s.iid
+GROUP BY i.category
+
+
+
+'''
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
