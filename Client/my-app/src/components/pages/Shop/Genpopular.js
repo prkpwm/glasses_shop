@@ -40,27 +40,26 @@ function Genpopular() {
       })
 
 
-    // let body = {
-    //   iid: id,
-    //   uid: localStorage.getItem('uid'),
-    // };
-    // let message = ""
-    // axios.get('/insert_statistics/', { params: { body } })
-    //   .then(response => {
-    //     message = response.data
-    //     console.log("response: ", response)
+    let body = {
+        iid: id,
+        uid: localStorage.getItem('uid'),
+    };
+    let message = ""
+    axios.get('/insert_statistics/', { params: { body } })
+        .then(response => {
+            message = response.data
+            console.log("response: ", response)
 
-    //   })
-    //   .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    if (message == "Success") {
 
-    // if (message == "Success") {
-
-    // }
-    // else {
-    //   return notification["error"]({
-    //     message: 'something wrong',
-    //   });
-    // }
+    }
+    else {
+        // return notification["error"]({
+        //   message: 'something wrong',
+        // });
+    }
 
     setVisible(true)
   }

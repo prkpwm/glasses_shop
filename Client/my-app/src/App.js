@@ -15,6 +15,7 @@ import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
 import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
+import Historyhome from "./components/pages/History/Historyhome";
 import axios from 'axios';
 
 import { Layout, Row, Col, Avatar, Space, Menu, Dropdown, Tag, Button, Grid } from "antd";
@@ -33,6 +34,8 @@ const menu1 = (
   <Menu>
     <Menu.Item key="1">
       <Link to="/GlassesShop/Profile">โปรไฟล์</Link></Menu.Item>
+    <Menu.Item key="2">
+      <Link to="/GlassesShop/History">ประวัติการซื้อ</Link></Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3" onClick={() => { localStorage.clear();sessionStorage.clear(); window.location.replace("/") }}>ออกจากระบบ</Menu.Item>
   </Menu>
@@ -76,7 +79,7 @@ function App() {
           .filter(screen => !!screen[1])
           .map(screen => { countcreen = screen[0] })}
         <Layout>
-          <Header style={{ backgroundColor: "#EAECEE" }}>
+          <Header style={{ backgroundColor: "#EAECEE" ,height:"auto"}}>
             <Row style={{ justifyContent: "space-between" }}>
               <Col>
                 <Link to="/GlassesShop/Home">
@@ -104,7 +107,7 @@ function App() {
                         }
                         <Dropdown overlay={localStorage.getItem('userdata') || sessionStorage.getItem('userdata')
                           ? menu1 : menu} trigger={["click"]}
-                        >
+                          placement="bottomRight" arrow onClick={e => e.preventDefault()}>
 
                           <a onClick={(e) => e.preventDefault()}>
                             {localStorage.getItem('userdata') || sessionStorage.getItem('userdata') ?
@@ -118,7 +121,9 @@ function App() {
                                   color: "#424949",
                                 }}
                               >
-                                {sessionStorage.getItem('userdata')}{localStorage.getItem('userdata')}
+                                {localStorage.getItem('isLogin')=='true'
+                                ?localStorage.getItem('userdata')
+                                :sessionStorage.getItem('userdata')}
                               </span>}
                           </a>
                         </Dropdown>
@@ -165,6 +170,9 @@ function App() {
               </Route>
               <Route exact path="/GlassesShop/Analysis" component={AnalysisHome} >
                 {(localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : localStorage.getItem('role') != 1 ? <Redirect to="/GlassesShop/Login" /> : null}
+              </Route>
+              <Route exact path="/GlassesShop/History" component={Historyhome} >
+                {(localStorage.getItem('uid') == null) ? <Redirect to="/GlassesShop/Login" /> : null}
               </Route>
             </div>
           </Content>

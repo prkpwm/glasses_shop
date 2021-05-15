@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { List, Avatar, Space, Button, Card, Row, Col, Modal } from 'antd';
+import { List, Avatar, Space, Button, Card, Row, Col, Modal,Spin  } from 'antd';
 import axios from 'axios'
 const { Meta } = Card;
 
@@ -19,19 +19,21 @@ const blueright = {
 function Relateglasses() {
     const [datapopulate, setdatapopulate] = useState([[]]);
     const [datapopup, setdatapopup] = useState([[]]);
+    const [loading, setloading] = useState(true);
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         axios.get("/getpopulate")
             .then(res => {
                 const datas = res.data;
-                console.log(datas)
+                // console.log(datas)
                 setdatapopulate(datas)
+                setloading(false)
             })
     }, [])
 
     async function getitem(id) {
-        console.log(id)
+        // console.log(id)
         await axios.get("/getinfobyid/iteminfo/GID/" + id + "")
             .then(res => {
                 // const datas = res.data[0];
@@ -48,7 +50,7 @@ function Relateglasses() {
         axios.get('/insert_statistics/', { params: { body } })
             .then(response => {
                 message = response.data
-                console.log("response: ", response)
+                // console.log("response: ", response)
 
             })
             .catch(err => console.log(err));
@@ -69,18 +71,18 @@ function Relateglasses() {
     return (
         <div>
             <div style={{ fontSize: 30 }}>แว่นที่มักจะซื้อด้วยกัน</div>
-            <Row gutter={[32, 32]} style={{ width: "60%", marginLeft: "20%", marginTop: 20 }}>
-                {
+            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+            <Row gutter={[32, 32]} style={{ marginTop: 20 }}>
+            {
                     datapopulate.map(data =>
                         <Col xs={24} lg={8} xl={8}>
-                            {console.log(data)}
                             <Card type="inner"
                                 hoverable
                                 cover={<img alt="glasses!!" onClick={() => getitem(data[2])} src={data[7]} width="95%" height="150" />}
                             >
                                 <div onClick={() => getitem(data[2])}>
                                     <Meta title={data[5]} description={"Category : " + data[8]} /><br />
-                                    <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{data[6]} ฿</h7></p>
+                                    <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{new Intl.NumberFormat('en').format(data[6])} ฿</h7></p>
                                     <br />
                                 </div>
                                 <Button type="button" onClick={() => onClickHandler(data[2])} style={blue} >
@@ -90,8 +92,8 @@ function Relateglasses() {
                         </Col>
                     )
                 }
-
             </Row>
+</Spin>
 
 
             <Modal

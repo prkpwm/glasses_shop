@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
-from werkzeug.utils import secure_filename
-import AI.det
-import mysql.connector
 import json
-from flask import jsonify,send_file,redirect
-import time
-from flask_cors import CORS, cross_origin
-from mysql.connector import errors 
 import os
+import time
+
+import mysql.connector
+from flask import Flask, jsonify, redirect, render_template, request, send_file
+from flask_cors import CORS, cross_origin
+from mysql.connector import errors
+from werkzeug.utils import secure_filename
+
+import AI.det
 import reset_password
 
 app = Flask(__name__)
@@ -21,8 +22,8 @@ cors = CORS(app, resources={
 face_shapes = ['square', 'round', 'heart', 'oblong', 'oval']
 glasses_recomments = ["Oval, Round and Large", "Rectangle, Square and Oval", "Rectangle, Oval and Horn",
                       "Rectangle, Square and Oval", "Rectangle, Oval, Square, Round, Large and Horn"]
-con = mysql.connector.connect(user='sql6407956', password='D15gEvevUL',
-                              host='sql6.freemysqlhosting.net', database='sql6407956')
+con = mysql.connector.connect(user='sql6412381', password='hjYLTWwnfx',
+                              host='sql6.freemysqlhosting.net', database='sql6412381')
 cursor = con.cursor()
 
 
@@ -88,6 +89,27 @@ def getinfobyid(table, column, value):
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
+
+
+@app.route('/getinfowithorderby/<table>/<category>/<column>/<value>')
+def getinfowithorderby(table,category, column, value):
+    sql = ("select * from " + str(table) + " where " + category + " = " + value +" ORDER BY "+ column + " " + order)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
+@app.route('/getbasketitem/',methods=['GET','POST'])
+def getbasketitem():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql = "select orderinfo.id ,orderinfo.itemid,orderinfo.quanlity,iteminfo.name,iteminfo.price,iteminfo.path,iteminfo.category from `orderinfo` LEFT JOIN `history` ON orderinfo.historyid = history.id LEFT JOIN `iteminfo` ON orderinfo.itemid = iteminfo.GID where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
+    cursor.execute(sql)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
+
 
 @app.route('/getpopulate')
 def getpopulate():
@@ -214,7 +236,7 @@ def insert_userinfo():
         massage = "Unsuccess"
     return jsonify(massage)
 
-
+#ของเดิม
 @app.route('/insert_orderinfo/', methods=['GET', 'POST'])
 def insert_orderinfo():
     massage = ""
@@ -236,7 +258,7 @@ def insert_orderinfo():
         massage = "Unsuccess"
     return jsonify(massage)
 
-
+# ของเดิม
 @app.route('/insert_history/', methods=['GET', 'POST'])
 def insert_history():
     massage = ""
@@ -258,6 +280,53 @@ def insert_history():
         massage = "Success"
     else:
         massage = "Unsuccess"
+    return jsonify(massage)
+
+
+@app.route('/insert_orderinfo2/',methods=['GET','POST'])
+def insert_orderinfo2():
+    massage = ""
+    try:
+        if request.method == "GET":
+            body = json.loads(request.args.get('body'))
+            sql = "INSERT INTO  `orderinfo`(`itemid`, `historyid`, `quanlity`, `unitprice`) VALUES  ('"+str(body.get('iid'))+"','"+str(body.get('orderid'))+"','"+ str(body.get('quanlity'))+"','"+ str(body.get('itemprice'))+"') ON DUPLICATE KEY UPDATE quanlity = (VALUES(quanlity)+'"+str(body.get('quanlity'))+"')"
+            cursor.execute(sql)
+            con.commit()
+            massage = "Success"
+        else:
+            massage = "Unsuccess"
+
+    except(errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+        return jsonify(e)
+
+    return jsonify(massage)
+
+@app.route('/check_oderidinhis/',methods=['GET','POST'])
+def check_oderidinhis():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" and status = \""+str(body.get('status'))+"\""
+    cursor.execute(sql2)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res[0])
+
+@app.route('/insert_history2/', methods=['GET', 'POST'])
+def insert_history2():
+    massage = ""
+    try:
+        if request.method == "GET":
+            body = json.loads(request.args.get('body'))
+            sql = "INSERT INTO history (uid,status,date) VALUES ("+body.get('uid')+", \""+str(body.get('status'))+"\", CURDATE())"
+            cursor.execute(sql)
+            con.commit()
+            massage = "Success"
+        else:
+            message = "Unsuccess"
+    except (errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
+        return jsonify(e)
+
     return jsonify(massage)
 
 
@@ -321,6 +390,50 @@ def updateuserinfo():
         con.commit()
         return jsonify("Success")
     return jsonify("404")
+
+
+@app.route('/interes_gender', methods=['GET', 'POST'])
+def changepassword():
+    if request.method == "GET":
+        body = json.loads(request.args.get('body'))
+        cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
+        confirm = cursor.fetchone()
+        if confirm is not None:
+            reset_password.email(confirm[0],confirm[1])
+            return jsonify("Success")
+        else:
+           return jsonify("404")
+
+
+'''
+เพศสนใจของแว่นแต่ละประเภท 
+select CONCAT(u.sex , i.category ) as c ,i.category,COUNT(CONCAT(u.sex , i.category )),u.sex  from `statistics` s
+LEFT JOIN `userinfo` u ON u.id = s.uid 
+LEFT JOIN `iteminfo` i ON i.GID = s.iid 
+GROUP BY c
+
+ช่วงอายุสนใจของแว่นแต่ละประเภท 
+select CONCAT(u.dob , i.category ) as c ,i.category,COUNT(CONCAT(u.dob , i.category )),year(u.dob)  from `statistics` s
+LEFT JOIN `userinfo` u ON u.id = s.uid 
+LEFT JOIN `iteminfo` i ON i.GID = s.iid 
+GROUP BY c 
+
+ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
+select Hour(s.dt)
+from `statistics` s
+
+
+จำนวนยอดคนสนใจของแว่นแต่ละประเภท
+select COUNT(s.sid) , i.category  from `statistics` s
+LEFT JOIN `iteminfo` i ON i.GID = s.iid
+GROUP BY i.category
+
+
+จำนวนยอดขายของแว่นแต่ละประเภท
+select i.category,sum(o.quanlity)  from `orderinfo` o
+LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category
+
+'''
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)

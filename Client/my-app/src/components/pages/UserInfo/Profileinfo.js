@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useForm } from 'react';
-import { Row, Col, Form, Input, Button, Select, DatePicker,Modal } from "antd";
+import { Table, Tag,Row, Col, Form, Input, Button, Select, DatePicker,Modal,Spin } from "antd";
 import axios from 'axios';
 var dayjs = require('dayjs')
 const { Option } = Select;
@@ -8,6 +8,7 @@ const { TextArea } = Input;
 var id = ""
 function Profileinfo() {
     const [editform, seteditform] = useState(true);
+    const [loading, setloading] = useState(true);
     const [datas, setdatas] = useState([[]]);
     const [datainitform, setdatainitform] = useState();
     const [form] = Form.useForm()
@@ -34,6 +35,7 @@ function Profileinfo() {
                     Birthday: dayjs(data[9]),
                 }
                 setdatainitform(datainit)
+                setloading(false)
             })
     }, [])
     useEffect(() => {
@@ -81,6 +83,7 @@ function Profileinfo() {
     };
     return (
         <div>
+            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
             <Form
                 form={form}
                 name="basic"
@@ -200,6 +203,7 @@ function Profileinfo() {
                                 </Button>}
                 </Form.Item>
             </Form>
+            </Spin>
         </div>
     )
 }
