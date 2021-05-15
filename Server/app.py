@@ -91,9 +91,9 @@ def getinfobyid(table, column, value):
     return jsonify(data)
 
 
-@app.route('/getinfowithorderby/<table>/<category>/<column>/<value>')
-def getinfowithorderby(table,category, column, value):
-    sql = ("select * from " + str(table) + " where " + category + " = " + value +" ORDER BY "+ column + " " + order)
+@app.route('/getinfowithorderby/<categorytype>/<column>/<value>')
+def getinfowithorderby(categorytype, column, value):
+    sql = ("select * from iteminfo where category in ('"+categorytype+"') ORDER BY "+ column + " " + value)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
