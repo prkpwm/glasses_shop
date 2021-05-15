@@ -392,18 +392,61 @@ def updateuserinfo():
     return jsonify("404")
 
 
-@app.route('/interes_gender', methods=['GET', 'POST'])
-def changepassword():
-    if request.method == "GET":
-        body = json.loads(request.args.get('body'))
-        cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
-        confirm = cursor.fetchone()
-        if confirm is not None:
-            reset_password.email(confirm[0],confirm[1])
-            return jsonify("Success")
-        else:
-           return jsonify("404")
+@app.route('/interes_gender')
+def interes_gender():
+    cursor.execute("""select CONCAT(u.sex , i.category ) as c,i.category,COUNT(CONCAT(u.sex , i.category )) as Counter,u.sex from `statistics` s LEFT JOIN `userinfo` u ON u.id = s.uid LEFT JOIN `iteminfo` i ON i.GID = s.iid GROUP BY c""")
+    confirm = cursor.fetchall()
+    if confirm is not None:
+        return jsonify(confirm)
+    else:
+        return jsonify("404")
 
+
+@app.route('/interes_age_range')
+def interes_age_range():
+    cursor.execute("""select CONCAT(u.dob , i.category ) as c ,i.category,COUNT(CONCAT(u.dob , i.category )),year(u.dob)  from `statistics` s LEFT JOIN `userinfo` u ON u.id = s.uid LEFT JOIN `iteminfo` i ON i.GID = s.iid GROUP BY c """)
+    confirm = cursor.fetchall()
+    if confirm is not None:
+        return jsonify(confirm)
+    else:
+        return jsonify("404")
+
+@app.route('/interes_time')
+def interes_time():
+    cursor.execute("""select Hour(s.dt) from `statistics` s""")
+    confirm = cursor.fetchall()
+    if confirm is not None:
+        return jsonify(confirm)
+    else:
+        return jsonify("404")
+
+@app.route('/interes_person')
+def interes_person():
+    cursor.execute("""select COUNT(s.sid) , i.category  from `statistics` s
+LEFT JOIN `iteminfo` i ON i.GID = s.iid
+GROUP BY i.category""")
+    confirm = cursor.fetchall()
+    if confirm is not None:
+        return jsonify(confirm)
+    else:
+        return jsonify("404")
+
+@app.route('/solditem')
+def solditem():
+    cursor.execute("""select i.category,sum(o.quanlity)  from `orderinfo` o LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category""")
+    confirm = cursor.fetchall()
+    
+    str_con = "["
+    for i in range(len(confirm)):
+        str_con += "["+str(confirm[i][0])+","+str(confirm[i][1])+"]"
+        if i != len(confirm)-1:
+            str_con+= ","
+    str_con += "]"
+    print(str_con)
+    if str_con is not None:
+        return json.dumps(str_con)
+    else:
+        return jsonify("404")
 
 '''
 เพศสนใจของแว่นแต่ละประเภท 
@@ -422,7 +465,6 @@ GROUP BY c
 select Hour(s.dt)
 from `statistics` s
 
-
 จำนวนยอดคนสนใจของแว่นแต่ละประเภท
 select COUNT(s.sid) , i.category  from `statistics` s
 LEFT JOIN `iteminfo` i ON i.GID = s.iid
@@ -432,7 +474,6 @@ GROUP BY i.category
 จำนวนยอดขายของแว่นแต่ละประเภท
 select i.category,sum(o.quanlity)  from `orderinfo` o
 LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category
-
 '''
 
 if __name__ == '__main__':
