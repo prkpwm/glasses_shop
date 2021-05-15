@@ -392,17 +392,17 @@ def updateuserinfo():
     return jsonify("404")
 
 
-@app.route('/interes_gender', methods=['GET', 'POST'])
-def changepassword():
-    if request.method == "GET":
-        body = json.loads(request.args.get('body'))
-        cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
-        confirm = cursor.fetchone()
-        if confirm is not None:
-            reset_password.email(confirm[0],confirm[1])
-            return jsonify("Success")
-        else:
-           return jsonify("404")
+# @app.route('/interes_gender', methods=['GET', 'POST'])
+# def changepassword():
+#     if request.method == "GET":
+#         body = json.loads(request.args.get('body'))
+#         cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
+#         confirm = cursor.fetchone()
+#         if confirm is not None:
+#             reset_password.email(confirm[0],confirm[1])
+#             return jsonify("Success")
+#         else:
+#            return jsonify("404")
 
 
 '''
