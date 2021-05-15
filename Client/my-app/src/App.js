@@ -14,7 +14,7 @@ import Mycarthome from "./components/pages/Mycart/Mycarthome";
 import Pay from "./components/pages/Mycart/Pay";
 import Profile from "./components/pages/UserInfo/Profile";
 import RegisterHome from "./components/pages/Register/RegisterHome";
-import AnalysisHome from "./components/pages/Analysis/AnalysisHome";
+import AnalysisHome from "./components/pages/Analysis/analytics";
 import Historyhome from "./components/pages/History/Historyhome";
 import axios from 'axios';
 
