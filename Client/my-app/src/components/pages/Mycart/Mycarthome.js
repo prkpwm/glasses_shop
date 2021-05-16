@@ -16,9 +16,6 @@ else {
     id = sessionStorage.getItem('uid')
 }
 
-var incart = JSON.parse(localStorage.getItem('mycart'));
-console.log(incart)
-
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
     const [loading, setloading] = useState(true);
@@ -103,11 +100,14 @@ function Mycarthome() {
 
 
     return (
+        <div>
+        {datainlist.length!=0?
         <Row >
         <Col xs={0} md={2} lg={3} xl={4}/>
             <Col xs={24} md={20} lg={18} xl={16} >
         <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 30 }}>ตะกร้า</div>
+            
             <List loading={loading}
                 style={{ textAlign: "left" }}
                 itemLayout="horizontal"
@@ -154,6 +154,15 @@ function Mycarthome() {
         </div>
         </Col>
         </Row>
+        :
+        <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 30 }}>ตะกร้า</div>
+        <div style={{fontSize:20,color:"red"}}>
+            <br/><br/>ไม่สินค้าในตะกร้า</div>
+            
+        </div>
+            }
+        </div>
     )
 }
 

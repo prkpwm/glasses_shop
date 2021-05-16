@@ -3,13 +3,15 @@ import { Row, Col, Card, Radio ,Modal, Divider } from "antd";
 import axios from 'axios'
 
 function success() {
+    
+
     Modal.success({
         content: (
           <div>
             <p>ทำรายการสำเร็จ</p>
           </div>
         ),
-        onOk() {window.location.replace("/")},
+        onOk() {localStorage.removeItem("mycart");window.location.replace("/")},
       });
   }
 

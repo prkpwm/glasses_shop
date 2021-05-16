@@ -39,7 +39,6 @@ function Genpopular() {
         setdatapopup(datas)
       })
 
-
     let body = {
         iid: id,
         uid: localStorage.getItem('uid'),
