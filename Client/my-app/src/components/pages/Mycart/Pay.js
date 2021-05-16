@@ -70,6 +70,16 @@ function Pay() {
                 }
                 setshoworder(data)
                 setloading(false)
+
+
+        // var cookie = ["aaaaa", '=', JSON.stringify(data), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
+        // document.cookie = cookie;
+
+        var testObject = { 'URL': 1, 'TITLE': 2 };
+localStorage.setItem('testObject', JSON.stringify(testObject));
+var retrievedObject = localStorage.getItem('testObject');
+console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
             }
         }
         getdata()
@@ -78,6 +88,8 @@ function Pay() {
     const onChange = e => {
         console.log('radio checked', e.target.value);
         setValue(e.target.value);
+        // var result = JSON.parse()
+        // console.log(result)
       };
     return (
         <div >
