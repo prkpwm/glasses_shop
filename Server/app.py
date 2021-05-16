@@ -312,13 +312,24 @@ def check_oderidinhis():
         return jsonify(message)
     return jsonify(res[0])
 
+@app.route('/check_oderidinhis2/',methods=['GET','POST'])
+def check_oderidinhis2():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" "
+    cursor.execute(sql2)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
+
 @app.route('/insert_history2/', methods=['GET', 'POST'])
 def insert_history2():
     massage = ""
     try:
         if request.method == "GET":
             body = json.loads(request.args.get('body'))
-            sql = "INSERT INTO history (uid,status,date) VALUES ("+body.get('uid')+", \""+str(body.get('status'))+"\", CURDATE())"
+            sql = "INSERT INTO history (uid,status,date) VALUES ("+str(body.get('uid'))+", \""+str(body.get('status'))+"\", CURDATE())"
             cursor.execute(sql)
             con.commit()
             massage = "Success"
