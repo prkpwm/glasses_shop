@@ -75,7 +75,7 @@ function Pay() {
         // var cookie = ["aaaaa", '=', JSON.stringify(data), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
         // document.cookie = cookie;
 
-        var testObject = { 'URL': 1, 'TITLE': 2 };
+        var testObject = [{ 'URL': 1, 'TITLE': 2 },{ 'URL': 3, 'TITLE': 4 }];
 localStorage.setItem('testObject', JSON.stringify(testObject));
 var retrievedObject = localStorage.getItem('testObject');
 console.log('retrievedObject: ', JSON.parse(retrievedObject));

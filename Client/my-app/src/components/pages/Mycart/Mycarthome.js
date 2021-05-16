@@ -15,37 +15,57 @@ if (localStorage.getItem('isLogin') == "true") {
 else {
     id = sessionStorage.getItem('uid')
 }
+
+var incart = JSON.parse(localStorage.getItem('mycart'));
+console.log(incart)
+
 function Mycarthome() {
     const [datainlist, setdatainlist] = useState([]);
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
-        let body = {
-            uid: id,
-            status: 'in-basket',
-        };
-        let message = ""
+        // let body = {
+        //     uid: id,
+        //     status: 'in-basket',
+        // };
+        // let message = ""
         const getdata = async () => {
-            await axios.get('/getbasketitem/', { params: { body } })
-                .then(response => {
-                    message = response.data
-                    console.log("response: ", response)
-                })
-                .catch(err => console.log(err));
-            if (message != "fail") {
+            var dataincart = JSON.parse(localStorage.getItem('mycart'));
+            if(dataincart!=null){
                 var data = []
-                for (var i = 0; i < message.length; i++) {
+                for (var i = 0; i < dataincart.length; i++) {
                     data.push({
-                        title: message[i][3],
-                        price: message[i][4] ,
-                        number: message[i][2],
-                        path:message[i][5],
-                        id: i+1,
+                        name: dataincart[i].name,
+                        itemprice: dataincart[i].itemprice ,
+                        quanlity: dataincart[i].quanlity,
+                        code: dataincart[i].code,
+                        pathpic:dataincart[i].pathpic,
+                        iid: dataincart[i].iid,
                     })
                 }
                 setdatainlist(data)
                 setloading(false)
             }
+            // await axios.get('/getbasketitem/', { params: { body } })
+            //     .then(response => {
+            //         message = response.data
+            //         console.log("response: ", response)
+            //     })
+            //     .catch(err => console.log(err));
+            // if (message != "fail") {
+            //     var data = []
+            //     for (var i = 0; i < message.length; i++) {
+            //         data.push({
+            //             title: message[i][3],
+            //             price: message[i][4] ,
+            //             number: message[i][2],
+            //             path:message[i][5],
+            //             id: i+1,
+            //         })
+            //     }
+            //     setdatainlist(data)
+            //     setloading(false)
+            // }
         }
         getdata()
     }, [])
@@ -53,29 +73,31 @@ function Mycarthome() {
         console.log(x)
         var data = [...datainlist]
         for (var i = 0; i < data.length; i++) {
-            if (x == data[i].id) {
+            if (x == data[i].iid) {
                 data.splice(i, 1)
                 break
             }
         }
         setdatainlist(data)
+        localStorage.setItem('mycart', JSON.stringify(data));
     }
 
     const changenumberlist = async (x, count) => {
         console.log(x)
         var data = [...datainlist]
         for (var i = 0; i < data.length; i++) {
-            if (x == data[i].id) {
+            if (x == data[i].iid) {
                 if (count == "+") {
-                    data[i].number++
+                    data[i].quanlity++
                 }
                 else if (count == "-") {
-                    data[i].number--
+                    data[i].quanlity--
                 }
                 break
             }
         }
         setdatainlist(data)
+        localStorage.setItem('mycart', JSON.stringify(data));
     }
 
 
@@ -93,24 +115,25 @@ function Mycarthome() {
                 renderItem={item => (
                     <List.Item
                         actions={[<Space style={{ fontSize: 15 }}>
-                            {item.number>1?<a><Avatar onClick={() => { changenumberlist(item.id, "-") }}>-</Avatar></a>
+                            {item.quanlity>1?<a><Avatar onClick={() => { changenumberlist(item.iid, "-") }}>-</Avatar></a>
                             :<Avatar>-</Avatar>}
                             
-                            <Avatar style={{ backgroundColor: "white", color: "black" }}>{item.number}</Avatar>
-                            <a><Avatar onClick={() => { changenumberlist(item.id, "+") }}>+</Avatar></a>
+                            <Avatar style={{ backgroundColor: "white", color: "black" }}>{item.quanlity}</Avatar>
+                            <a><Avatar onClick={() => { changenumberlist(item.iid, "+") }}>+</Avatar></a>
                         </Space>
-                            , <Button type="danger" shape="round" onClick={() => { deletelist(item.id) }}>
+                            , <Button type="danger" shape="round" onClick={() => { deletelist(item.iid) }}>
                             <Space style={{ fontSize: 15 }}>
                                 <DeleteOutlined />ลบ
                             </Space>
                         </Button>]}>
                         <List.Item.Meta
-                            avatar={<img style={{width:60,height:"auto",paddingTop:"25%"}} src={item.path}/>}
-                            title={<span>{item.title}</span>}
+                            avatar={<img style={{width:60,height:"auto",paddingTop:"25%"}} src={item.pathpic}/>}
+                            title={<span>{item.name} </span>}
                             description={
                                 <div>
-                                <span >ราคา {new Intl.NumberFormat('en').format(item.price)} ฿</span><br/>
-                            <span style={{ color: "green" }}>รวม : {new Intl.NumberFormat('en').format(item.price*item.number)} ฿</span>
+                                   <span >{item.code}</span> <br/>
+                                <span >ราคา {new Intl.NumberFormat('en').format(item.itemprice)} ฿</span><br/>
+                            <span style={{ color: "green" }}>รวม : {new Intl.NumberFormat('en').format(item.itemprice*item.quanlity)} ฿</span>
                             </div>
                         }
                         />
@@ -122,7 +145,7 @@ function Mycarthome() {
             <br /><br />
 
             <Card style={{ backgroundColor: "#DCDCDC", fontSize: 30}}>
-                ยอดชำระ {new Intl.NumberFormat('en').format(datainlist.map(item=>item.price*item.number).reduce((a, b) => a + b, 0))} ฿
+                ยอดชำระ {new Intl.NumberFormat('en').format(datainlist.map(item=>item.itemprice*item.quanlity).reduce((a, b) => a + b, 0))} ฿
                 <br />
                 <Button> <Link to="/GlassesShop/Pay">ไปหน้าชำระเงิน</Link></Button>
             </Card>
