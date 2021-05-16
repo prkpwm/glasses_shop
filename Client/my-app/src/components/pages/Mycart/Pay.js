@@ -89,14 +89,14 @@ function Pay() {
 
         }
 
-        // Modal.success({
-        //     content: (
-        //         <div>
-        //             <p>ทำรายการสำเร็จ</p>
-        //         </div>
-        //     ),
-        //     onOk() { localStorage.removeItem("mycart"); window.location.replace("/") },
-        // });
+        Modal.success({
+            content: (
+                <div>
+                    <p>ทำรายการสำเร็จ</p>
+                </div>
+            ),
+            onOk() { localStorage.removeItem("mycart"); window.location.replace("/") },
+        });
 
     }
 
