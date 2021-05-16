@@ -41,46 +41,42 @@ function Pay() {
 
     
     useEffect(() => {
-        let body = {
-            uid: id,
-            status: 'in-basket',
-        };
-        let message = ""
+        // let body = {
+        //     uid: id,
+        //     status: 'in-basket',
+        // };
+        // let message = ""
         const getdata = async () => {
-            await axios.get('/getbasketitem/', { params: { body } })
-                .then(response => {
-                    message = response.data
-                    console.log("response: ", response)
-                })
-                .catch(err => console.log(err));
-            if (message != "fail") {
-                var data1 = []
-                for (var i = 0; i < message.length; i++) {
-                    data1.push({
-                        title: message[i][3],
-                        price: message[i][4] ,
-                        number: message[i][2],
-                        path:message[i][5],
-                        id: i+1,
-                    })
-                }
+            var dataincart = JSON.parse(localStorage.getItem('mycart'));
                 var data = {
-                    number:message.length,
-                    order:data1
+                    number:dataincart.length,
+                    order:dataincart
                 }
                 setshoworder(data)
+            // await axios.get('/getbasketitem/', { params: { body } })
+            //     .then(response => {
+            //         message = response.data
+            //         console.log("response: ", response)
+            //     })
+            //     .catch(err => console.log(err));
+            // if (message != "fail") {
+            //     var data1 = []
+            //     for (var i = 0; i < message.length; i++) {
+            //         data1.push({
+            //             title: message[i][3],
+            //             price: message[i][4] ,
+            //             number: message[i][2],
+            //             path:message[i][5],
+            //             id: i+1,
+            //         })
+            //     }
+            //     var data = {
+            //         number:message.length,
+            //         order:data1
+            //     }
+            //     setshoworder(data)
+
                 setloading(false)
-
-
-        // var cookie = ["aaaaa", '=', JSON.stringify(data), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
-        // document.cookie = cookie;
-
-        var testObject = [{ 'URL': 1, 'TITLE': 2 },{ 'URL': 3, 'TITLE': 4 }];
-localStorage.setItem('testObject', JSON.stringify(testObject));
-var retrievedObject = localStorage.getItem('testObject');
-console.log('retrievedObject: ', JSON.parse(retrievedObject));
-
-            }
         }
         getdata()
     }, [])
@@ -128,19 +124,19 @@ console.log('retrievedObject: ', JSON.parse(retrievedObject));
                 {showorder.order.map(item=>
                     <Row>
                         <Col span={8}>
-                    {item.title}
+                    {item.code}
                     </Col>
                     <Col span={6}>
-                        จำนวน {item.number}
+                        จำนวน {item.quanlity}
                     </Col> 
                         <Col>
-                        ราคา {new Intl.NumberFormat('en').format(item.price*item.number)} ฿
+                        ราคา {new Intl.NumberFormat('en').format(item.itemprice*item.quanlity)} ฿
                     </Col>
                     </Row>
                 )}
             </Card><br/>
             <Card style={{borderRadius:20,textAlign:"center", backgroundColor: "#DCDCDC"}}>
-                <span style={{color:"red",fontSize:20}}>ยอดชำระ {new Intl.NumberFormat('en').format(showorder.order.map(item=>item.price*item.number).reduce((a, b) => a + b, 0))} ฿</span><br/><br/>
+                <span style={{color:"red",fontSize:20}}>ยอดชำระ {new Intl.NumberFormat('en').format(showorder.order.map(item=>item.itemprice*item.quanlity).reduce((a, b) => a + b, 0))} ฿</span><br/><br/>
                 <button className="myButton" onClick={success}>ชำระเงิน</button>
             </Card>
             </Col>
