@@ -91,9 +91,9 @@ def getinfobyid(table, column, value):
     return jsonify(data)
 
 
-@app.route('/getinfowithorderby/<table>/<category>/<column>/<value>')
-def getinfowithorderby(table,category, column, value):
-    sql = ("select * from " + str(table) + " where " + category + " = " + value +" ORDER BY "+ column + " " + order)
+@app.route('/getinfowithorderby/<categorytype>/<column>/<value>')
+def getinfowithorderby(categorytype, column, value):
+    sql = ("select * from iteminfo where category in ('"+categorytype+"') ORDER BY "+ column + " " + value)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
@@ -312,13 +312,24 @@ def check_oderidinhis():
         return jsonify(message)
     return jsonify(res[0])
 
+@app.route('/check_oderidinhis2/',methods=['GET','POST'])
+def check_oderidinhis2():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" "
+    cursor.execute(sql2)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
+
 @app.route('/insert_history2/', methods=['GET', 'POST'])
 def insert_history2():
     massage = ""
     try:
         if request.method == "GET":
             body = json.loads(request.args.get('body'))
-            sql = "INSERT INTO history (uid,status,date) VALUES ("+body.get('uid')+", \""+str(body.get('status'))+"\", CURDATE())"
+            sql = "INSERT INTO history (uid,status,date) VALUES ("+str(body.get('uid'))+", \""+str(body.get('status'))+"\", CURDATE())"
             cursor.execute(sql)
             con.commit()
             massage = "Success"

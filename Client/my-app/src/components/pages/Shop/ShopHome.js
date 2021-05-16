@@ -22,8 +22,11 @@ const blueright = {
     float: 'right',
 };
 
-var categorynow = 0;
+var itemlist = [];
+
+var categorynow = " ";
 var caseselect = 0;
+
 
 function ShopHome() {
     const [datas, setdatas] = useState([[]]);
@@ -49,129 +52,228 @@ function ShopHome() {
             })
     }
 
-
-
     const [visible, setVisible] = useState(false);
+
+    const onClickTap = (event) =>{
+        categorynow = event;
+        // console.log("tab = "+event);
+        var column;
+        var order;
+        var sql ;
+        switch (Number(caseselect)) {
+            case 0:
+                column = "price"
+                order = "asc"
+                break;
+            case 1:
+                column = "price"
+                order = "desc"
+                break;
+            case 2:
+                column = "name"
+                order = "asc"
+                break;
+            case 3:
+                column = "category"
+                order = "asc"
+                break;
+            default:
+        }
+        
+        if(event===" "){
+            sql = "/sortitem/iteminfo/" + column + "/" + order;
+        }else{
+            sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order;
+        }
+        // console.log(sql);
+        axios.get(sql)
+            .then(res => {
+                const datas = res.data;
+                // console.log(datas)
+                setdatas(datas)
+            })
+    }
 
     const onChangeHandler = (event) => {
         var column;
         var order;
+        var sql;
         caseselect = Number(event);
-        categorynow = document.getElementById('cate').value;
-        // if (categorynow === 0) {
-            switch (Number(event)) {
-                case 0:
-                    column = "price"
-                    order = "asc"
-                    break;
-                case 1:
-                    column = "price"
-                    order = "desc"
-                    break;
-                case 2:
-                    column = "name"
-                    order = "asc"
-                    break;
-                case 3:
-                    column = "category"
-                    order = "asc"
-                default:
+        switch (Number(caseselect)) {
+            case 0:
+                column = "price"
+                order = "asc"
+                break;
+            case 1:
+                column = "price"
+                order = "desc"
+                break;
+            case 2:
+                column = "name"
+                order = "asc"
+                break;
+            case 3:
+                column = "category"
+                order = "asc"
+                break;
+            default:
+        }
+        
+        if(categorynow ===" "){
+            sql = "/sortitem/iteminfo/" + column + "/" + order;
+        }else{
+            sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order;
+        }
+        // console.log(sql);
+        axios.get(sql)
+            .then(res => {
+                const datas = res.data;
+                // console.log(datas)
+                setdatas(datas)
+            })
+    }
+
+    function onClickHandler(data) {
+        console.log(data)
+        var dataincart = JSON.parse(localStorage.getItem('mycart'));
+        console.log(dataincart)
+        if(dataincart!=null){
+            var count = 0
+            for(var i=0;i<dataincart.length;i++){
+                if(dataincart[i].iid==data[0]){
+                    dataincart[i].quanlity++;
+                    count = 1;
+                }
             }
-            axios.get("/sortitem/iteminfo/" + column + "/" + order)
-                .then(res => {
-                    const datas = res.data;
-                    setdatas(datas)
+            if(count == 0){
+                dataincart.push({
+                    iid:data[0],
+                    name:data[1],
+                    itemprice: data[2],
+                    pathpic:data[3],
+                    code:data[5],
+                    quanlity: 1,
                 })
-        // }else{
-            // switch (Number(event)) {
-            //     case 0:
-            //         column = "price"
-            //         order = "asc"
-            //         break;
-            //     case 1:
-            //         column = "price"
-            //         order = "desc"
-            //         break;
-            //     case 2:
-            //         column = "name"
-            //         order = "asc"
-            //         break;
-            //     case 3:
-            //         column = "category"
-            //         order = "asc"
-            //     default:
-            // }
-            // axios.get("/getinfowithorderby/iteminfo/<category>/<column>/<value>" + column + "/" + order)
-            //     .then(res => {
-            //         const datas = res.data;
-            //         setdatas(datas)
-            //     })
-            // console.log(categorynow)
+            }
+        }
+        else{
+            dataincart=[{
+                iid:data[0],
+                name:data[1],
+                itemprice: data[2],
+                pathpic:data[3],
+                code:data[5],
+                quanlity: 1,
+            }]
+        }
+        localStorage.setItem('mycart', JSON.stringify(dataincart));
+        // let body = {
+        //     iid: data[0],
+        //     uid: localStorage.getItem('uid'),
+        //     itemprice: data[2],
+        //     status: 'in-basket',
+        //     quanlity: 1,
+        //     orderid: null,
+        // };
+        // let message = ""
+
+        // await axios.get('/check_oderidinhis/', { params: { body } })
+        //     .then(response => {
+        //         message = response.data
+        //         console.log("response: ", response)
+        //     })
+        //     .catch(err => console.log(err));
+
+        // // has orderid
+        // if (message !== "fail") {
+
+        //     body.orderid = JSON.parse(message[0]);
+        //     console.log("after get id : " + body.orderid)
+
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+
+        // } else {
+        //     // create orderid before insert in orderid
+        //     await axios.get('/insert_history2/', { params: { body } })
+        //         .then(response => {
+        //             console.log("response insert history : ", response)
+        //         })
+        //         .catch(err => console.log(err));
+
+        //     // get id from his
+        //     await axios.get('/check_oderidinhis/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response check oderid in his: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+        //     body.orderid = JSON.parse(message[0]);
+
+        //     //insert into orderinfo
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response insert orderinfo2: ", response)
+        //         })
+        //         .catch(err => console.log(err));
         // }
 
-    }
+        // let message = ""
 
-    async function onClickHandler(data) {
-        console.log(data)
-        let body = {
-            iid: data[0],
-            uid: localStorage.getItem('uid'),
-            itemprice: data[2],
-            status: 'in-basket',
-            quanlity: 1,
-            orderid: null,
-        };
-        let message = ""
+        // await axios.get('/check_oderidinhis/', { params: { body } })
+        //     .then(response => {
+        //         message = response.data
+        //         console.log("response: ", response)
+        //     })
+        //     .catch(err => console.log(err));
 
-        await axios.get('/check_oderidinhis/', { params: { body } })
-            .then(response => {
-                message = response.data
-                console.log("response: ", response)
-            })
-            .catch(err => console.log(err));
+        // // has orderid
+        // if (message !== "fail") {
 
-        // has orderid
-        if (message != "fail") {
+        //     body.orderid = JSON.parse(message[0]);
+        //     console.log("after get id : " + body.orderid)
 
-            body.orderid = JSON.parse(message[0]);
-            console.log("after get id : " + body.orderid)
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response: ", response)
+        //         })
+        //         .catch(err => console.log(err));
 
-            axios.get('/insert_orderinfo2/', { params: { body } })
-                .then(response => {
-                    message = response.data
-                    console.log("response: ", response)
-                })
-                .catch(err => console.log(err));
+        // } else {
+        //     // create orderid before insert in orderid
+        //     await axios.get('/insert_history2/', { params: { body } })
+        //         .then(response => {
+        //             console.log("response insert history : ", response)
+        //         })
+        //         .catch(err => console.log(err));
 
-        } else {
-            // create orderid before insert in orderid
-            await axios.get('/insert_history2/', { params: { body } })
-                .then(response => {
-                    console.log("response insert history : ", response)
-                })
-                .catch(err => console.log(err));
+        //     // get id from his
+        //     await axios.get('/check_oderidinhis/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response check oderid in his: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+        //     body.orderid = JSON.parse(message[0]);
 
-            // get id from his
-            await axios.get('/check_oderidinhis/', { params: { body } })
-                .then(response => {
-                    message = response.data
-                    console.log("response check oderid in his: ", response)
-                })
-                .catch(err => console.log(err));
-            body.orderid = JSON.parse(message[0]);
-
-            //insert into orderinfo
-            axios.get('/insert_orderinfo2/', { params: { body } })
-                .then(response => {
-                    message = response.data
-                    console.log("response insert orderinfo2: ", response)
-                })
-                .catch(err => console.log(err));
-        }
+        //     //insert into orderinfo
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response insert orderinfo2: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+        // }
 
 
     }
-
+    
     async function getitem(id) {
         console.log(id)
         await axios.get("/getinfobyid/iteminfo/GID/" + id + "")
@@ -194,7 +296,7 @@ function ShopHome() {
 
             })
             .catch(err => console.log(err));
-        if (message == "Success") {
+        if (message === "Success") {
 
         }
         else {
@@ -206,10 +308,6 @@ function ShopHome() {
     }
 
     const genitem = ()=>{
-        // categorynow = document.getElementById('TabPane').value;
-        // if(categorynow!=0 && caseselect != 0){
-
-        // }
         return (
             <Row gutter={[16, 24]}>
                 {(datas.length > 1) ?
@@ -273,40 +371,31 @@ function ShopHome() {
                                 </Select>
                             </div>
                             <Tabs defaultActiveKey="0" size={'small'} style={{ marginBottom: 32 }}>
-                                <TabPane tab="ALL" key="0">
-                                    <input type="hidden" value='0' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap(" ")}>{"ALL"}</span>} key="0" >
                                      {genitem()}
                                 </TabPane>
-                                <TabPane tab="Boston" key="1">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("boston")}>{"Boston"}</span>} key="1" >
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Browline" key="2">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("browline")}>{"Browline"}</span>} key="2">
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Oval" key="3">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("oval")}>{"Oval"}</span>} key="3">
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Rrectangle" key="4">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("rectangle")}>{"Rectangle"}</span>} key="4">
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Rrimless" key="5">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("rimless")}>{"Rimless"}</span>} key="5" >
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Round" key="6">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("round")}>{"Round"}</span>}  key="6">
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Wellington" key="7">
-                                    <input type="hidden" value='1' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("wellington")}>{"Wellington"}</span>} key="7">
                                     {genitem()}
                                 </TabPane>
-                                <TabPane tab="Other" key="8">
-                                    <input type="hidden" value='2' id='cate'/>
+                                <TabPane tab={<span onClick={() =>onClickTap("other")}>{"Other"}</span>} key="8" >
                                     {genitem()}
                                 </TabPane>
                             </Tabs>
