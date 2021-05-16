@@ -65,7 +65,40 @@ function Relateglasses() {
         setVisible(true)
     }
     const onClickHandler = (data) => {
-
+        console.log(data)
+        var dataincart = JSON.parse(localStorage.getItem('mycart'));
+        console.log(dataincart)
+        if(dataincart!=null){
+            var count = 0
+            for(var i=0;i<dataincart.length;i++){
+                if(dataincart[i].iid==data[2]){
+                    dataincart[i].quanlity++;
+                    count = 1;
+                }
+            }
+            if(count == 0){
+                dataincart.push({
+                    iid:data[2],
+                    name:data[5],
+                    itemprice: data[6],
+                    pathpic:data[7],
+                    code:data[9],
+                    quanlity: 1,
+                })
+            }
+        }
+        else{
+            dataincart=[{
+                iid:data[0],
+                name:data[1],
+                itemprice: data[2],
+                pathpic:data[3],
+                code:data[5],
+                quanlity: 1,
+            }]
+        }
+        localStorage.setItem('mycart', JSON.stringify(dataincart));
+        window.location.replace("/GlassesShop/Mycart")
     }
 
     return (
@@ -85,7 +118,7 @@ function Relateglasses() {
                                     <p><h7 style={fontLeft}>{data[9]} </h7> <h7 style={fontRight}>{new Intl.NumberFormat('en').format(data[6])} ฿</h7></p>
                                     <br />
                                 </div>
-                                <Button type="button" onClick={() => onClickHandler(data[2])} style={blue} >
+                                <Button type="button" onClick={() => onClickHandler(data)} style={blue} >
                                     Add to cart
                   </Button>
                             </Card>

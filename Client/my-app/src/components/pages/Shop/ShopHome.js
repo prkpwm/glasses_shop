@@ -27,6 +27,7 @@ var itemlist = [];
 var categorynow = " ";
 var caseselect = 0;
 
+
 function ShopHome() {
     const [datas, setdatas] = useState([[]]);
     const [datapopup, setdatapopup] = useState([[]]);
@@ -134,25 +135,93 @@ function ShopHome() {
 
     function onClickHandler(data) {
         console.log(data)
-
-        let body = {
-            iid: data[0],
-            iname :data[1],
-            isrc :data[3],
-            icategory : data[4],
-            itemprice: data[2],
-            icode : data[5],
-            quanlity: 1,
-        };
-
-        if(!containsObject(data[0],itemlist)){
-            itemlist.push(body);
+        var dataincart = JSON.parse(localStorage.getItem('mycart'));
+        console.log(dataincart)
+        if(dataincart!=null){
+            var count = 0
+            for(var i=0;i<dataincart.length;i++){
+                if(dataincart[i].iid==data[0]){
+                    dataincart[i].quanlity++;
+                    count = 1;
+                }
+            }
+            if(count == 0){
+                dataincart.push({
+                    iid:data[0],
+                    name:data[1],
+                    itemprice: data[2],
+                    pathpic:data[3],
+                    code:data[5],
+                    quanlity: 1,
+                })
+            }
         }
+        else{
+            dataincart=[{
+                iid:data[0],
+                name:data[1],
+                itemprice: data[2],
+                pathpic:data[3],
+                code:data[5],
+                quanlity: 1,
+            }]
+        }
+        localStorage.setItem('mycart', JSON.stringify(dataincart));
+        // let body = {
+        //     iid: data[0],
+        //     uid: localStorage.getItem('uid'),
+        //     itemprice: data[2],
+        //     status: 'in-basket',
+        //     quanlity: 1,
+        //     orderid: null,
+        // };
+        // let message = ""
 
-        var listProduct = { 'userid': localStorage.getItem('uid'), 'status':'in-basket', 'item': itemlist };
-        localStorage.setItem('listProduct', JSON.stringify(listProduct));
-        var retrievedObject = localStorage.getItem('listProduct');
-        console.log('retrievedObject: ', JSON.parse(retrievedObject));
+        // await axios.get('/check_oderidinhis/', { params: { body } })
+        //     .then(response => {
+        //         message = response.data
+        //         console.log("response: ", response)
+        //     })
+        //     .catch(err => console.log(err));
+
+        // // has orderid
+        // if (message !== "fail") {
+
+        //     body.orderid = JSON.parse(message[0]);
+        //     console.log("after get id : " + body.orderid)
+
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+
+        // } else {
+        //     // create orderid before insert in orderid
+        //     await axios.get('/insert_history2/', { params: { body } })
+        //         .then(response => {
+        //             console.log("response insert history : ", response)
+        //         })
+        //         .catch(err => console.log(err));
+
+        //     // get id from his
+        //     await axios.get('/check_oderidinhis/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response check oderid in his: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+        //     body.orderid = JSON.parse(message[0]);
+
+        //     //insert into orderinfo
+        //     axios.get('/insert_orderinfo2/', { params: { body } })
+        //         .then(response => {
+        //             message = response.data
+        //             console.log("response insert orderinfo2: ", response)
+        //         })
+        //         .catch(err => console.log(err));
+        // }
 
         // let message = ""
 
@@ -204,18 +273,7 @@ function ShopHome() {
 
 
     }
-
-    function containsObject(obj, list) {
-        var i;
-        for (i = 0; i < itemlist.length; i++) {
-            if (list[i].iid === obj) {
-                itemlist[i].quanlity = itemlist[i]+1;
-                return true;
-            }
-        }
-        return false;
-    }
-
+    
     async function getitem(id) {
         console.log(id)
         await axios.get("/getinfobyid/iteminfo/GID/" + id + "")

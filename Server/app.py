@@ -312,13 +312,24 @@ def check_oderidinhis():
         return jsonify(message)
     return jsonify(res[0])
 
+@app.route('/check_oderidinhis2/',methods=['GET','POST'])
+def check_oderidinhis2():
+    message = "fail"
+    body = json.loads(request.args.get('body'))
+    sql2 = "select id from history where uid = \""+str(body.get('uid'))+"\" "
+    cursor.execute(sql2)
+    res = cursor.fetchall()
+    if res == []:
+        return jsonify(message)
+    return jsonify(res)
+
 @app.route('/insert_history2/', methods=['GET', 'POST'])
 def insert_history2():
     massage = ""
     try:
         if request.method == "GET":
             body = json.loads(request.args.get('body'))
-            sql = "INSERT INTO history (uid,status,date) VALUES ("+body.get('uid')+", \""+str(body.get('status'))+"\", CURDATE())"
+            sql = "INSERT INTO history (uid,status,date) VALUES ("+str(body.get('uid'))+", \""+str(body.get('status'))+"\", CURDATE())"
             cursor.execute(sql)
             con.commit()
             massage = "Success"
@@ -392,19 +403,6 @@ def updateuserinfo():
     return jsonify("404")
 
 
-<<<<<<< HEAD
-# @app.route('/interes_gender', methods=['GET', 'POST'])
-# def changepassword():
-#     if request.method == "GET":
-#         body = json.loads(request.args.get('body'))
-#         cursor.execute("select email,id from userinfo where userinfo.email =  " + "\""+str(body.get('email'))+ "\"")
-#         confirm = cursor.fetchone()
-#         if confirm is not None:
-#             reset_password.email(confirm[0],confirm[1])
-#             return jsonify("Success")
-#         else:
-#            return jsonify("404")
-=======
 @app.route('/interes_gender')
 def interes_gender():
     cursor.execute("""select CONCAT(u.sex , i.category ) as c,i.category,COUNT(CONCAT(u.sex , i.category )) as Counter,u.sex from `statistics` s LEFT JOIN `userinfo` u ON u.id = s.uid LEFT JOIN `iteminfo` i ON i.GID = s.iid GROUP BY c""")
@@ -413,7 +411,6 @@ def interes_gender():
         return jsonify(confirm)
     else:
         return jsonify("404")
->>>>>>> 0cf1a970ca6a11afba05ce0a94026033134281b5
 
 
 @app.route('/interes_age_range')
