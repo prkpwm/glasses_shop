@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs } from 'antd';
+import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs ,Pagination,notification   } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 // import GenItem from './GenItem'
 import Paging from './Paging'
@@ -167,6 +167,15 @@ function ShopHome() {
             }]
         }
         localStorage.setItem('mycart', JSON.stringify(dataincart));
+
+        const args = {
+            message: 'Success',
+            description:
+              'Add item into cart successfully',
+            duration: 500,
+          };
+          notification.open(args);
+
         // let body = {
         //     iid: data[0],
         //     uid: localStorage.getItem('uid'),
@@ -273,7 +282,7 @@ function ShopHome() {
 
 
     }
-    
+
     async function getitem(id) {
         console.log(id)
         await axios.get("/getinfobyid/iteminfo/GID/" + id + "")
@@ -309,30 +318,32 @@ function ShopHome() {
 
     const genitem = ()=>{
         return (
-            <Row gutter={[16, 24]}>
-                {(datas.length > 1) ?
-                    datas.map(data =>
-                        <Col className="gutter-row" xs={24} md={12} xl={6}>
-                            <Card
-                                hoverable
-                                cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
-                            >
-                                <div onClick={() => getitem(data[0])}>
-                                    <Meta title={data[1]} description={"Category : " + data[4]} /><br />
-                                    <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
-                                    <br />
-                                </div>
-                                <Button type="button" onClick={() => onClickHandler(data)} style={blue}>
-                                    Add to cart
-                                </Button>
-                            </Card>
-                        </Col>
-                    )
-                    : <div style={{ width: '100%' }}>
-                        <h5 style={{ color: 'red', textAlign: 'center' }}>Nothing Here </h5>
-                    </div>
-                }
-            </Row>
+            <div>
+                <Row gutter={[16, 24]}>
+                    {(datas.length > 1) ?
+                        datas.map(data =>
+                            <Col className="gutter-row" xs={24} md={12} xl={6}>
+                                <Card
+                                    hoverable
+                                    cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
+                                >
+                                    <div onClick={() => getitem(data[0])}>
+                                        <Meta title={data[1]} description={"Category : " + data[4]} /><br />
+                                        <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
+                                        <br />
+                                    </div>
+                                    <Button type="button" onClick={() => onClickHandler(data)} style={blue}>
+                                        Add to cart
+                                    </Button>
+                                </Card>
+                            </Col>
+                        )
+                        : <div style={{ width: '100%' }}>
+                            <h5 style={{ color: 'red', textAlign: 'center' }}>Nothing Here </h5>
+                        </div>
+                    }
+                </Row>
+            </div>
         )
     }
     return (
@@ -359,7 +370,7 @@ function ShopHome() {
                     <div style={{ fontSize: "30px" }}>
                         Shop
                     </div>
-
+                    <div id="alert"></div>
                     <div id="listItem" style={{ textAlign: 'center' }}>
                         <div>
                             <div style={{ textAlign: "right", paddingBottom: "20px" }} >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Row, Col, Button, Card, Modal } from "antd";
+import { Row, Col, Button, Card, Modal,notification } from "antd";
 const { Meta } = Card;
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
 const fontRight = { textAlign: "right", float: "right", fontSize: "12px" };
@@ -96,6 +96,15 @@ function Genpopular() {
         }]
     }
     localStorage.setItem('mycart', JSON.stringify(dataincart));
+
+    
+    const args = {
+      message: 'Success',
+      description:
+        'Add item into cart successfully',
+      duration: 500,
+    };
+    notification.open(args);
   }
 
 
