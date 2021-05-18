@@ -31,14 +31,43 @@ var caseselect = 0;
 function ShopHome() {
     const [datas, setdatas] = useState([[]]);
     const [datapopup, setdatapopup] = useState([[]]);
+    const [countpage, setcountpage] = useState(10);
+    const [currentpage, setcurrentpage] = useState(1);
+    const [datasql, setdatasql] = useState({
+        event:" ",
+        column:null,
+        order:null
+    });
 
-    useEffect(() => {
-        axios.get("/sortitem/iteminfo/price/asc")
+    useEffect( async() => {
+       await axios.get("/sortitem/iteminfo/price/asc/0")
             .then(res => {
                 const datas = res.data;
                 setdatas(datas)
             })
+            
+       await axios.get("/countrow/iteminfo/price")
+        .then(res => {
+            const datas = res.data[0][0];
+            console.log((datas/12)*10)
+            setcountpage((datas/12)*10)
+        })
     }, [])
+    const onChangepage = async(page) => {
+        console.log(page);
+        setcurrentpage(page)
+        var sql
+        if(datasql.event===" "){
+            sql = "/sortitem/iteminfo/price/asc/" + ((page-1)*12) 
+        }else{
+            sql ="/getinfowithorderby/"+ datasql.event +"/" + datasql.column + "/" + datasql.order+ "/"  + ((page-1)*12) ;
+        }
+        await axios.get(sql)
+        .then(res => {
+            const datas = res.data;
+            setdatas(datas)
+        })
+      };
 
     function searchdata() {
         let name = document.getElementById('searchbar').value
@@ -54,12 +83,13 @@ function ShopHome() {
 
     const [visible, setVisible] = useState(false);
 
-    const onClickTap = (event) =>{
+    const onClickTap = async(event) =>{
         categorynow = event;
         // console.log("tab = "+event);
         var column;
         var order;
         var sql ;
+        var sql1 ;
         switch (Number(caseselect)) {
             case 0:
                 column = "price"
@@ -79,19 +109,34 @@ function ShopHome() {
                 break;
             default:
         }
+        setdatasql({
+            event:event,
+            column:column,
+            order:order,
+        })
         
         if(event===" "){
-            sql = "/sortitem/iteminfo/" + column + "/" + order;
+            sql = "/sortitem/iteminfo/price/asc/0";
+            // sql1 = "/countrow/iteminfo/price"
         }else{
-            sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order;
+            sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order +"/0";
+            // sql1 = "/countrowbyrule/iteminfo/price/"+categorynow
         }
+        // await axios.get(sql1)
+        // .then(res => {
+        //     const datas = res.data[0][0];
+        //     console.log((datas/12)*10)
+        //     setcountpage((datas/12)*10)
+        // })
         // console.log(sql);
-        axios.get(sql)
+        await axios.get(sql)
             .then(res => {
                 const datas = res.data;
                 // console.log(datas)
                 setdatas(datas)
             })
+            
+        setcurrentpage(1)
     }
 
     const onChangeHandler = (event) => {
@@ -118,11 +163,16 @@ function ShopHome() {
                 break;
             default:
         }
+        setdatasql({
+            event:event,
+            column:column,
+            order:order,
+        })
         
         if(categorynow ===" "){
-            sql = "/sortitem/iteminfo/" + column + "/" + order;
+            sql = "/sortitem/iteminfo/price/asc/0";
         }else{
-            sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order;
+            sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order + "/0";
         }
         // console.log(sql);
         axios.get(sql)
@@ -131,6 +181,7 @@ function ShopHome() {
                 // console.log(datas)
                 setdatas(datas)
             })
+        setcurrentpage(1)
     }
 
     function onClickHandler(data) {
@@ -175,111 +226,6 @@ function ShopHome() {
             duration: 500,
           };
           notification.open(args);
-
-        // let body = {
-        //     iid: data[0],
-        //     uid: localStorage.getItem('uid'),
-        //     itemprice: data[2],
-        //     status: 'in-basket',
-        //     quanlity: 1,
-        //     orderid: null,
-        // };
-        // let message = ""
-
-        // await axios.get('/check_oderidinhis/', { params: { body } })
-        //     .then(response => {
-        //         message = response.data
-        //         console.log("response: ", response)
-        //     })
-        //     .catch(err => console.log(err));
-
-        // // has orderid
-        // if (message !== "fail") {
-
-        //     body.orderid = JSON.parse(message[0]);
-        //     console.log("after get id : " + body.orderid)
-
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        // } else {
-        //     // create orderid before insert in orderid
-        //     await axios.get('/insert_history2/', { params: { body } })
-        //         .then(response => {
-        //             console.log("response insert history : ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        //     // get id from his
-        //     await axios.get('/check_oderidinhis/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response check oderid in his: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        //     body.orderid = JSON.parse(message[0]);
-
-        //     //insert into orderinfo
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response insert orderinfo2: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        // }
-
-        // let message = ""
-
-        // await axios.get('/check_oderidinhis/', { params: { body } })
-        //     .then(response => {
-        //         message = response.data
-        //         console.log("response: ", response)
-        //     })
-        //     .catch(err => console.log(err));
-
-        // // has orderid
-        // if (message !== "fail") {
-
-        //     body.orderid = JSON.parse(message[0]);
-        //     console.log("after get id : " + body.orderid)
-
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        // } else {
-        //     // create orderid before insert in orderid
-        //     await axios.get('/insert_history2/', { params: { body } })
-        //         .then(response => {
-        //             console.log("response insert history : ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        //     // get id from his
-        //     await axios.get('/check_oderidinhis/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response check oderid in his: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        //     body.orderid = JSON.parse(message[0]);
-
-        //     //insert into orderinfo
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response insert orderinfo2: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        // }
-
 
     }
 
@@ -420,7 +366,6 @@ function ShopHome() {
                                 width={400}
                                 footer={null}
                             >
-
                                 {datapopup.map(data => (
                                     < div style={{ padding: '20px 20px' }} >
                                         <div id='img' >
@@ -446,7 +391,8 @@ function ShopHome() {
                         </div >
                     </div>
                     <div id="pagination" style={{ paddingTop: "25px", textAlign: "center" }}>
-                        <Paging />
+                        <Pagination  current={currentpage} onChange={onChangepage}
+                        defaultCurrent={1} total={countpage} pageSize={12}/>
                     </div>
                 </Col>
             </Row>

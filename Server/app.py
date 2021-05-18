@@ -90,10 +90,24 @@ def getinfobyid(table, column, value):
     data = cursor.fetchall()
     return jsonify(data)
 
+@app.route('/countrow/<table>/<column>')
+def countrow(table, column):
+    sql = ("select COUNT(" + column +")from " + str(table))
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
 
-@app.route('/getinfowithorderby/<categorytype>/<column>/<value>')
-def getinfowithorderby(categorytype, column, value):
-    sql = ("select * from iteminfo where category in ('"+categorytype+"') ORDER BY "+ column + " " + value)
+@app.route('/countrowbyrule/<table>/<column>/<categorytype>')
+def countrowbyrule(table, column,categorytype):
+    sql = ("select COUNT(" + column +")from " + str(table) + "where category in " + categorytype) 
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
+
+@app.route('/getinfowithorderby/<categorytype>/<column>/<value>/<offset>')
+def getinfowithorderby(categorytype, column, value, offset):
+    sql = ("select * from iteminfo where category in ('"+categorytype+"') ORDER BY "+ column + " " + value+ " LIMIT 12 OFFSET " + offset)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
@@ -123,13 +137,19 @@ def getpopulate():
     data = cursor.fetchall()
     return jsonify(data)
 
-@app.route('/sortitem/<table>/<column>/<order>')
-def sortitem(table, column, order):  # order(ASC,DESC)
-    sql = ("select * from " + str(table) + " ORDER BY " + column + " " + order)
+# @app.route('/sortitem/<table>/<column>/<order>')
+# def sortitem(table, column, order):  # order(ASC,DESC)
+#     sql = ("select * from " + str(table) + " ORDER BY " + column + " " + order)
+#     cursor.execute(sql)
+#     data = cursor.fetchall()
+#     return jsonify(data)
+
+@app.route('/sortitem/<table>/<column>/<order>/<offset>')
+def sortitem(table, column, order, offset):  # order(ASC,DESC)
+    sql = ("select * from " + str(table) + " ORDER BY " + column + " " + order + " LIMIT 12 OFFSET " + offset)
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)
-
 
 @app.route('/searchitem/<table>/<name>')
 def searchitem(table, name):  
