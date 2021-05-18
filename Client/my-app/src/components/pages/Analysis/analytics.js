@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { Row, Col, Button, Card } from "antd";
+import PieCharted from './PieCharted.js';
+import BarCharted from "./BarCharted.js";
 const style = { background: "#F8F9F9", padding: "8px 8px", height: "250px" };
 const fontRight = { textAlign: "right" };
 const blue = {
@@ -114,6 +116,7 @@ export default class PersonList extends React.Component {
 
         เพศสนใจของแว่นแต่ละประเภท
                 <div id="table1"></div>
+                <BarCharted/>
          ช่วงอายุสนใจของแว่นแต่ละประเภท
                 <div id="table2"></div>
          ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
