@@ -99,7 +99,7 @@ def countrow(table, column):
 
 @app.route('/countrowbyrule/<table>/<column>/<categorytype>')
 def countrowbyrule(table, column,categorytype):
-    sql = ("select COUNT(" + column +")from " + str(table) + "where category in " + categorytype) 
+    sql = ("select COUNT(" + column +")from " + str(table) + "where category = ('"+categorytype+"')") 
     cursor.execute(sql)
     data = cursor.fetchall()
     return jsonify(data)

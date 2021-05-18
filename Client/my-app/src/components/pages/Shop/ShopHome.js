@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs ,Pagination,notification   } from 'antd';
+import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs ,Pagination,notification,Spin   } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 // import GenItem from './GenItem'
 import Paging from './Paging'
@@ -33,6 +33,7 @@ function ShopHome() {
     const [datapopup, setdatapopup] = useState([[]]);
     const [countpage, setcountpage] = useState(10);
     const [currentpage, setcurrentpage] = useState(1);
+    const [loading, setloading] = useState(true);
     const [datasql, setdatasql] = useState({
         event:" ",
         column:null,
@@ -52,10 +53,12 @@ function ShopHome() {
             console.log((datas/12)*10)
             setcountpage((datas/12)*10)
         })
+        setloading(false)
     }, [])
     const onChangepage = async(page) => {
         console.log(page);
         setcurrentpage(page)
+        setloading(true)
         var sql
         if(datasql.event===" "){
             sql = "/sortitem/iteminfo/price/asc/" + ((page-1)*12) 
@@ -66,6 +69,7 @@ function ShopHome() {
         .then(res => {
             const datas = res.data;
             setdatas(datas)
+            setloading(false)
         })
       };
 
@@ -84,6 +88,7 @@ function ShopHome() {
     const [visible, setVisible] = useState(false);
 
     const onClickTap = async(event) =>{
+        setloading(true)
         categorynow = event;
         // console.log("tab = "+event);
         var column;
@@ -134,6 +139,7 @@ function ShopHome() {
                 const datas = res.data;
                 // console.log(datas)
                 setdatas(datas)
+                setloading(false)
             })
             
         setcurrentpage(1)
@@ -144,6 +150,7 @@ function ShopHome() {
         var order;
         var sql;
         caseselect = Number(event);
+        setloading(true)
         switch (Number(caseselect)) {
             case 0:
                 column = "price"
@@ -180,6 +187,7 @@ function ShopHome() {
                 const datas = res.data;
                 // console.log(datas)
                 setdatas(datas)
+                setloading(false)
             })
         setcurrentpage(1)
     }
@@ -329,31 +337,57 @@ function ShopHome() {
                             </div>
                             <Tabs defaultActiveKey="0" size={'small'} style={{ marginBottom: 32 }}>
                                 <TabPane tab={<span onClick={() =>onClickTap(" ")}>{"ALL"}</span>} key="0" >
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
                                      {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("boston")}>{"Boston"}</span>} key="1" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("browline")}>{"Browline"}</span>} key="2">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("oval")}>{"Oval"}</span>} key="3">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("rectangle")}>{"Rectangle"}</span>} key="4">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("rimless")}>{"Rimless"}</span>} key="5" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("round")}>{"Round"}</span>}  key="6">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("wellington")}>{"Wellington"}</span>} key="7">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("other")}>{"Other"}</span>} key="8" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                             </Tabs>
 
