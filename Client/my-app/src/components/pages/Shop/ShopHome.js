@@ -122,6 +122,7 @@ function ShopHome() {
         
         if(event===" "){
             sql = "/sortitem/iteminfo/price/asc/0";
+            // sql = "/sortitem/iteminfo/" + column + "/" + order + "/0";
             // sql1 = "/countrow/iteminfo/price"
         }else{
             sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order +"/0";
@@ -177,7 +178,8 @@ function ShopHome() {
         })
         
         if(categorynow ===" "){
-            sql = "/sortitem/iteminfo/price/asc/0";
+            // sql = "/sortitem/iteminfo/price/asc/0";
+            sql = "/sortitem/iteminfo/" + column + "/" + order + "/0";
         }else{
             sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order + "/0";
         }
