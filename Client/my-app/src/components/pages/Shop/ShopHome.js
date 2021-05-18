@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs } from 'antd';
+import { Row, Col, Breadcrumb, Button, Card, Select, Modal, Tabs ,Pagination,notification,Spin   } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 // import GenItem from './GenItem'
 import Paging from './Paging'
@@ -31,14 +31,47 @@ var caseselect = 0;
 function ShopHome() {
     const [datas, setdatas] = useState([[]]);
     const [datapopup, setdatapopup] = useState([[]]);
+    const [countpage, setcountpage] = useState(10);
+    const [currentpage, setcurrentpage] = useState(1);
+    const [loading, setloading] = useState(true);
+    const [datasql, setdatasql] = useState({
+        event:" ",
+        column:null,
+        order:null
+    });
 
-    useEffect(() => {
-        axios.get("/sortitem/iteminfo/price/asc")
+    useEffect( async() => {
+       await axios.get("/sortitem/iteminfo/price/asc/0")
             .then(res => {
                 const datas = res.data;
                 setdatas(datas)
             })
+            
+       await axios.get("/countrow/iteminfo/price")
+        .then(res => {
+            const datas = res.data[0][0];
+            console.log((datas/12)*10)
+            setcountpage((datas/12)*10)
+        })
+        setloading(false)
     }, [])
+    const onChangepage = async(page) => {
+        console.log(page);
+        setcurrentpage(page)
+        setloading(true)
+        var sql
+        if(datasql.event===" "){
+            sql = "/sortitem/iteminfo/price/asc/" + ((page-1)*12) 
+        }else{
+            sql ="/getinfowithorderby/"+ datasql.event +"/" + datasql.column + "/" + datasql.order+ "/"  + ((page-1)*12) ;
+        }
+        await axios.get(sql)
+        .then(res => {
+            const datas = res.data;
+            setdatas(datas)
+            setloading(false)
+        })
+      };
 
     function searchdata() {
         let name = document.getElementById('searchbar').value
@@ -54,12 +87,14 @@ function ShopHome() {
 
     const [visible, setVisible] = useState(false);
 
-    const onClickTap = (event) =>{
+    const onClickTap = async(event) =>{
+        setloading(true)
         categorynow = event;
         // console.log("tab = "+event);
         var column;
         var order;
         var sql ;
+        var sql1 ;
         switch (Number(caseselect)) {
             case 0:
                 column = "price"
@@ -79,19 +114,36 @@ function ShopHome() {
                 break;
             default:
         }
+        setdatasql({
+            event:event,
+            column:column,
+            order:order,
+        })
         
         if(event===" "){
-            sql = "/sortitem/iteminfo/" + column + "/" + order;
+            sql = "/sortitem/iteminfo/price/asc/0";
+            // sql = "/sortitem/iteminfo/" + column + "/" + order + "/0";
+            // sql1 = "/countrow/iteminfo/price"
         }else{
-            sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order;
+            sql ="/getinfowithorderby/"+ event +"/" + column + "/" + order +"/0";
+            // sql1 = "/countrowbyrule/iteminfo/price/"+categorynow
         }
+        // await axios.get(sql1)
+        // .then(res => {
+        //     const datas = res.data[0][0];
+        //     console.log((datas/12)*10)
+        //     setcountpage((datas/12)*10)
+        // })
         // console.log(sql);
-        axios.get(sql)
+        await axios.get(sql)
             .then(res => {
                 const datas = res.data;
                 // console.log(datas)
                 setdatas(datas)
+                setloading(false)
             })
+            
+        setcurrentpage(1)
     }
 
     const onChangeHandler = (event) => {
@@ -99,6 +151,7 @@ function ShopHome() {
         var order;
         var sql;
         caseselect = Number(event);
+        setloading(true)
         switch (Number(caseselect)) {
             case 0:
                 column = "price"
@@ -118,11 +171,17 @@ function ShopHome() {
                 break;
             default:
         }
+        setdatasql({
+            event:event,
+            column:column,
+            order:order,
+        })
         
         if(categorynow ===" "){
-            sql = "/sortitem/iteminfo/" + column + "/" + order;
+            // sql = "/sortitem/iteminfo/price/asc/0";
+            sql = "/sortitem/iteminfo/" + column + "/" + order + "/0";
         }else{
-            sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order;
+            sql ="/getinfowithorderby/"+ categorynow +"/" + column + "/" + order + "/0";
         }
         // console.log(sql);
         axios.get(sql)
@@ -130,7 +189,9 @@ function ShopHome() {
                 const datas = res.data;
                 // console.log(datas)
                 setdatas(datas)
+                setloading(false)
             })
+        setcurrentpage(1)
     }
 
     function onClickHandler(data) {
@@ -167,113 +228,17 @@ function ShopHome() {
             }]
         }
         localStorage.setItem('mycart', JSON.stringify(dataincart));
-        // let body = {
-        //     iid: data[0],
-        //     uid: localStorage.getItem('uid'),
-        //     itemprice: data[2],
-        //     status: 'in-basket',
-        //     quanlity: 1,
-        //     orderid: null,
-        // };
-        // let message = ""
 
-        // await axios.get('/check_oderidinhis/', { params: { body } })
-        //     .then(response => {
-        //         message = response.data
-        //         console.log("response: ", response)
-        //     })
-        //     .catch(err => console.log(err));
-
-        // // has orderid
-        // if (message !== "fail") {
-
-        //     body.orderid = JSON.parse(message[0]);
-        //     console.log("after get id : " + body.orderid)
-
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        // } else {
-        //     // create orderid before insert in orderid
-        //     await axios.get('/insert_history2/', { params: { body } })
-        //         .then(response => {
-        //             console.log("response insert history : ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        //     // get id from his
-        //     await axios.get('/check_oderidinhis/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response check oderid in his: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        //     body.orderid = JSON.parse(message[0]);
-
-        //     //insert into orderinfo
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response insert orderinfo2: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        // }
-
-        // let message = ""
-
-        // await axios.get('/check_oderidinhis/', { params: { body } })
-        //     .then(response => {
-        //         message = response.data
-        //         console.log("response: ", response)
-        //     })
-        //     .catch(err => console.log(err));
-
-        // // has orderid
-        // if (message !== "fail") {
-
-        //     body.orderid = JSON.parse(message[0]);
-        //     console.log("after get id : " + body.orderid)
-
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        // } else {
-        //     // create orderid before insert in orderid
-        //     await axios.get('/insert_history2/', { params: { body } })
-        //         .then(response => {
-        //             console.log("response insert history : ", response)
-        //         })
-        //         .catch(err => console.log(err));
-
-        //     // get id from his
-        //     await axios.get('/check_oderidinhis/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response check oderid in his: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        //     body.orderid = JSON.parse(message[0]);
-
-        //     //insert into orderinfo
-        //     axios.get('/insert_orderinfo2/', { params: { body } })
-        //         .then(response => {
-        //             message = response.data
-        //             console.log("response insert orderinfo2: ", response)
-        //         })
-        //         .catch(err => console.log(err));
-        // }
-
+        const args = {
+            message: 'Success',
+            description:
+              'Add item into cart successfully',
+            duration: 500,
+          };
+          notification.open(args);
 
     }
-    
+
     async function getitem(id) {
         console.log(id)
         await axios.get("/getinfobyid/iteminfo/GID/" + id + "")
@@ -309,30 +274,32 @@ function ShopHome() {
 
     const genitem = ()=>{
         return (
-            <Row gutter={[16, 24]}>
-                {(datas.length > 1) ?
-                    datas.map(data =>
-                        <Col className="gutter-row" xs={24} md={12} xl={6}>
-                            <Card
-                                hoverable
-                                cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
-                            >
-                                <div onClick={() => getitem(data[0])}>
-                                    <Meta title={data[1]} description={"Category : " + data[4]} /><br />
-                                    <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
-                                    <br />
-                                </div>
-                                <Button type="button" onClick={() => onClickHandler(data)} style={blue}>
-                                    Add to cart
-                                </Button>
-                            </Card>
-                        </Col>
-                    )
-                    : <div style={{ width: '100%' }}>
-                        <h5 style={{ color: 'red', textAlign: 'center' }}>Nothing Here </h5>
-                    </div>
-                }
-            </Row>
+            <div>
+                <Row gutter={[16, 24]}>
+                    {(datas.length > 1) ?
+                        datas.map(data =>
+                            <Col className="gutter-row" xs={24} md={12} xl={6}>
+                                <Card
+                                    hoverable
+                                    cover={<img alt="glasses!!" src={data[3]} onClick={() => getitem(data[0])} width="95%" height="150" />}
+                                >
+                                    <div onClick={() => getitem(data[0])}>
+                                        <Meta title={data[1]} description={"Category : " + data[4]} /><br />
+                                        <p><h7 style={fontLeft}>{data[5]} </h7> <h7 style={fontRight}>{data[2]} ฿</h7></p>
+                                        <br />
+                                    </div>
+                                    <Button type="button" onClick={() => onClickHandler(data)} style={blue}>
+                                        Add to cart
+                                    </Button>
+                                </Card>
+                            </Col>
+                        )
+                        : <div style={{ width: '100%' }}>
+                            <h5 style={{ color: 'red', textAlign: 'center' }}>Nothing Here </h5>
+                        </div>
+                    }
+                </Row>
+            </div>
         )
     }
     return (
@@ -359,7 +326,7 @@ function ShopHome() {
                     <div style={{ fontSize: "30px" }}>
                         Shop
                     </div>
-
+                    <div id="alert"></div>
                     <div id="listItem" style={{ textAlign: 'center' }}>
                         <div>
                             <div style={{ textAlign: "right", paddingBottom: "20px" }} >
@@ -372,31 +339,57 @@ function ShopHome() {
                             </div>
                             <Tabs defaultActiveKey="0" size={'small'} style={{ marginBottom: 32 }}>
                                 <TabPane tab={<span onClick={() =>onClickTap(" ")}>{"ALL"}</span>} key="0" >
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
                                      {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("boston")}>{"Boston"}</span>} key="1" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("browline")}>{"Browline"}</span>} key="2">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("oval")}>{"Oval"}</span>} key="3">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("rectangle")}>{"Rectangle"}</span>} key="4">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("rimless")}>{"Rimless"}</span>} key="5" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("round")}>{"Round"}</span>}  key="6">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("wellington")}>{"Wellington"}</span>} key="7">
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                                 <TabPane tab={<span onClick={() =>onClickTap("other")}>{"Other"}</span>} key="8" >
-                                    {genitem()}
+                                    
+                            <Spin spinning={loading} delay={500} size="large" tip="Loading...">
+                                     {genitem()}
+                                     </Spin>
                                 </TabPane>
                             </Tabs>
 
@@ -409,7 +402,6 @@ function ShopHome() {
                                 width={400}
                                 footer={null}
                             >
-
                                 {datapopup.map(data => (
                                     < div style={{ padding: '20px 20px' }} >
                                         <div id='img' >
@@ -435,7 +427,8 @@ function ShopHome() {
                         </div >
                     </div>
                     <div id="pagination" style={{ paddingTop: "25px", textAlign: "center" }}>
-                        <Paging />
+                        <Pagination  current={currentpage} onChange={onChangepage}
+                        defaultCurrent={1} total={countpage} pageSize={12}/>
                     </div>
                 </Col>
             </Row>
