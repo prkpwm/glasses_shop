@@ -52,6 +52,7 @@ export default class PersonList extends React.Component {
 
         let data = "";
         data += "<table>"
+        this.state.datas1.splice(0, 0,["","Category","Total","Gender"]);
         for (let i = 0; i < this.state.datas1.length; i++) {
             data += "<tr>"
             for (let j = 1; j < 4; j++) {
@@ -64,6 +65,7 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas2.splice(0, 0,["","Category","Total","Year"]);
         for (let i = 0; i < this.state.datas2.length; i++) {
             data += "<tr>"
             for (let j = 1; j < 4; j++) {
@@ -76,6 +78,7 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas3.splice(0, 0,["Time","Total"]);
         for (let i = 0; i < this.state.datas3.length; i++) {
             data += "<tr>"
             for (let j = 0; j < 2; j++) {
@@ -89,9 +92,10 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas4.splice(0, 0,["Total","Category"]);
         for (let i = 0; i < this.state.datas4.length; i++) {
             data += "<tr>"
-            for (let j = 0; j < 2; j++) {
+            for (let j = 1; j >=0 ; j--) {
                 data += "<th>" + this.state.datas4[i][j] + "<th>"
             }
             data += "</tr>"
@@ -102,6 +106,7 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas5.splice(0, 0,["Category","Total"]);
         for (let i = 0; i < this.state.datas5.length; i++) {
             data += "<tr>"
             for (let j = 0; j < 2; j++) {
