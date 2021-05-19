@@ -77,7 +77,12 @@ export default class PersonList extends React.Component {
         data = "";
         data += "<table>"
         for (let i = 0; i < this.state.datas3.length; i++) {
-            data += "<th>" + this.state.datas3[i] + "<th>"
+            data += "<tr>"
+            for (let j = 0; j < 2; j++) {
+                data += "<th>" + this.state.datas3[i][j] + "<th>"
+
+            }
+            data += "</tr>"
         }
         data += "</table>"
         document.getElementById("table3").innerHTML = data;
@@ -113,15 +118,15 @@ export default class PersonList extends React.Component {
             <div>
 
         เพศสนใจของแว่นแต่ละประเภท
-                <div id="table1"></div>
+                <div id="table1"></div><br/>
          ช่วงอายุสนใจของแว่นแต่ละประเภท
-                <div id="table2"></div>
+                <div id="table2"></div><br/>
          ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
-                <div id="table3"></div>
+                <div id="table3"></div><br/>
          จำนวนยอดคนสนใจของแว่นแต่ละประเภท
-                <div id="table4"></div>
+                <div id="table4"></div><br/>
          จำนวนยอดขายของแว่นแต่ละประเภท
-                <div id="table5"></div>
+                <div id="table5"></div><br/>
             </div>
 
         )
