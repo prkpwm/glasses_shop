@@ -102,9 +102,13 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
-        data += "<tr>"
-        data += "<th>" + this.state.datas5 + "<th>"
-        data += "</tr>"
+        for (let i = 0; i < this.state.datas5.length; i++) {
+            data += "<tr>"
+            for (let j = 0; j < 2; j++) {
+                data += "<th>" + this.state.datas5[i][j] + "<th>"
+            }
+            data += "</tr>"
+        }
         data += "</table>"
         document.getElementById("table5").innerHTML = data;
     }

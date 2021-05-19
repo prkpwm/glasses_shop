@@ -471,13 +471,9 @@ GROUP BY i.category""")
 def solditem():
     cursor.execute("""select i.category,sum(o.quanlity)  from `orderinfo` o LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category""")
     confirm = cursor.fetchall()
-    
-    str_con = "["
+    str_con = []
     for i in range(len(confirm)):
-        str_con += "["+str(confirm[i][0])+","+str(confirm[i][1])+"]"
-        if i != len(confirm)-1:
-            str_con+= ","
-    str_con += "]"
+        str_con.append([str(confirm[i][0]),str(confirm[i][1])]) 
     print(str_con)
     if str_con is not None:
         return json.dumps(str_con)
