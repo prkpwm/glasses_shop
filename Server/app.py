@@ -238,7 +238,6 @@ def insert_userinfo():
         sql = "INSERT INTO userinfo ( username, pwd, firstname, lastname, email, phone, address ,sex ,dob) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         val = (details['username'], details['pwd'], details['firstname'],
                details['lastname'], details['email'], details['phone'], details['address'], details['sex'])
-        cursor.execute(sql, val)
         try:
             cursor.execute(sql, val)
             con.commit()
@@ -251,16 +250,15 @@ def insert_userinfo():
         sql = "INSERT INTO userinfo (username, pwd, firstname, lastname, email, phone, address ,sex,dob) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         val = (body.get('username'), body.get('pwd'), body.get('firstname'),
                body.get('lastname'), body.get('email'), body.get('phone'), body.get('address'), body.get('sex'), body.get('dob'))
-        cursor.execute(sql, val)
         try:
             cursor.execute(sql, val)
             con.commit()
         except (errors.DatabaseError,mysql.connector.Error,mysql.connector.errors.IntegrityError) as e:
             return jsonify(e)
-        
         massage = "Success"
     else:
         massage = "Unsuccess"
+    print(massage)
     return jsonify(massage)
 
 #ของเดิม
