@@ -143,7 +143,16 @@ export default class PersonList extends React.Component {
 =======
 
         เพศสนใจของแว่นแต่ละประเภท
+<<<<<<< HEAD
                 <div id="table1"></div><br/>
+=======
+<<<<<<< HEAD
+                <div id="table1"></div>
+                <BarCharted/>
+=======
+                <div id="table1"></div><br/>
+>>>>>>> c6cda19959bd985f7a64558ccd0cc94bd1af54bc
+>>>>>>> a8a7f15735e149c80c48a0c56fdeb01bd70f59bf
          ช่วงอายุสนใจของแว่นแต่ละประเภท
                 <div id="table2"></div><br/>
          ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
