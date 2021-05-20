@@ -158,6 +158,13 @@ def searchitem(table, name):
     data = cursor.fetchall()
     return jsonify(data)
 
+@app.route('/searchitem1/<table>/<name>')
+def searchitem1(table, name):  
+    sql = ("select name from " + str(table) + " Where name LIKE '%"+str(name)+"%' GROUP BY name")
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return jsonify(data)
+
 
 @app.route('/history/<gid>/<uid>')
 def history(gid, uid):  # order(ASC,DESC)

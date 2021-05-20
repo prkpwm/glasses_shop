@@ -123,7 +123,7 @@ function BarCharted() {
       <br></br>
       <hr></hr>
 
-      <h5>ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)</h5>
+      <h5>ช่วงเวลาที่คนเข้าชมสินค้า</h5>
         <BarChart width={800} height={300} data={datas3}>
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="datatime" fontSize={12} />
