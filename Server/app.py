@@ -435,7 +435,10 @@ def interes_gender():
 
 @app.route('/interes_age_range')
 def interes_age_range():
-    cursor.execute("""select CONCAT(u.dob , i.category ) as c ,i.category,COUNT(CONCAT(u.dob , i.category )),year(u.dob)  from `statistics` s LEFT JOIN `userinfo` u ON u.id = s.uid LEFT JOIN `iteminfo` i ON i.GID = s.iid GROUP BY c """)
+    cursor.execute("""select CONCAT(year(u.dob) , i.category ) as c ,i.category,COUNT(CONCAT(u.dob , i.category )),year(u.dob)  from `statistics` s
+LEFT JOIN `userinfo` u ON u.id = s.uid 
+LEFT JOIN `iteminfo` i ON i.GID = s.iid 
+GROUP BY c""")
     confirm = cursor.fetchall()
     if confirm is not None:
         return jsonify(confirm)
@@ -444,7 +447,9 @@ def interes_age_range():
 
 @app.route('/interes_time')
 def interes_time():
-    cursor.execute("""select Hour(s.dt) from `statistics` s""")
+    cursor.execute("""select Hour(s.dt),COUNT(Hour(s.dt))
+from `statistics` s
+GROUP by Hour(s.dt)""")
     confirm = cursor.fetchall()
     if confirm is not None:
         return jsonify(confirm)
@@ -466,13 +471,9 @@ GROUP BY i.category""")
 def solditem():
     cursor.execute("""select i.category,sum(o.quanlity)  from `orderinfo` o LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category""")
     confirm = cursor.fetchall()
-    
-    str_con = "["
+    str_con = []
     for i in range(len(confirm)):
-        str_con += "["+str(confirm[i][0])+","+str(confirm[i][1])+"]"
-        if i != len(confirm)-1:
-            str_con+= ","
-    str_con += "]"
+        str_con.append([str(confirm[i][0]),str(confirm[i][1])]) 
     print(str_con)
     if str_con is not None:
         return json.dumps(str_con)
@@ -493,8 +494,9 @@ LEFT JOIN `iteminfo` i ON i.GID = s.iid
 GROUP BY c 
 
 ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
-select Hour(s.dt)
+select Hour(s.dt),COUNT(Hour(s.dt))
 from `statistics` s
+GROUP by Hour(s.dt)
 
 จำนวนยอดคนสนใจของแว่นแต่ละประเภท
 select COUNT(s.sid) , i.category  from `statistics` s
