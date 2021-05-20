@@ -97,28 +97,6 @@ function BarCharted() {
   const demoUrl = 'https://codesandbox.io/s/two-simple-pie-chart-otx9h';
   return (
     <div>
-      
-      <h5>ช่วงอายุสนใจของแว่นแต่ละประเภท</h5>
-        <BarChart width={1400} height={300} data={datas2}>
-        <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="nameage" ffoontSize={15} />
-          <YAxis ffoontSize={15} />
-          <Bar dataKey="numage" barSize={20} fill="#4682B4"/>
-        </BarChart> 
-      <br></br>         
-      <hr></hr>
-
-      <h5>เพศสนใจของแว่นแต่ละประเภท</h5>
-        <BarChart width={1400} height={300} data={datas1}>
-        <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="namegender" ffoontSize={15} />
-          <YAxis ffoontSize={15} />
-          <Bar dataKey="fv" barSize={50} fill="#4682B4" />
-          <Bar dataKey="mv" barSize={50} fill="#ff7300"/>
-        </BarChart>
-      <br></br>
-      <hr></hr>
-
       <h5>ช่วงเวลาที่คนเข้าชมสินค้า</h5>
       <LineChart
       width={1400}
@@ -133,6 +111,17 @@ function BarCharted() {
       <br></br>
       <hr></hr>
 
+      <h5>เพศสนใจของแว่นแต่ละประเภท</h5>
+        <BarChart width={1400} height={300} data={datas1}>
+        <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="namegender" ffoontSize={15} />
+          <YAxis ffoontSize={15} />
+          <Bar dataKey="fv" barSize={50} fill="#4682B4" />
+          <Bar dataKey="mv" barSize={50} fill="#ff7300"/>
+        </BarChart>
+      <br></br>
+      <hr></hr>
+
       <h5>จำนวนยอดคนสนใจของแว่นแต่ละประเภท</h5>
         <BarChart width={1400} height={300} data={datas4}>
         <CartesianGrid strokeDasharray="3 3" />
@@ -144,7 +133,6 @@ function BarCharted() {
       <hr></hr>
 
       <h5>จำนวนยอดขายของแว่นแต่ละประเภท</h5>
-
         <BarChart width={1400} height={300} data={datas5}>
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="nameitem" fontSize={15}/>
@@ -153,6 +141,15 @@ function BarCharted() {
         </BarChart> 
       <br></br>  
 
+      <h5>ช่วงอายุสนใจของแว่นแต่ละประเภท</h5>
+        <BarChart width={1400} height={300} data={datas2}>
+        <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="nameage" ffoontSize={15} />
+          <YAxis ffoontSize={15} />
+          <Bar dataKey="numage" barSize={20} fill="#4682B4"/>
+        </BarChart> 
+      <br></br>         
+      <hr></hr>
     </div>
   )
 }
