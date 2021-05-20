@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart,Cell, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 
 function BarCharted() {
@@ -20,6 +20,7 @@ function BarCharted() {
   const [datas4, setdatas4] = useState([[]]);
   const [datas5, setdatas5] = useState([[]]);
 
+  const barColors = ["#1f77b4", "#ff7f0e"]
   useEffect(async() => {
 
   //Graph interes_gender
@@ -118,6 +119,12 @@ function BarCharted() {
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="namegender" fontSize={12} angle={-30} />
           <YAxis fontSize={12} />
+          {
+            datas1.map((data, index) => (
+                
+                <Cell fill={datas1[index] === "female" ? '#290a0a' : '#005599' } />
+            ))
+          }
           <Bar dataKey="numgender" barSize={25} fill="#483D8B"/>
         </BarChart>
       <br></br>
