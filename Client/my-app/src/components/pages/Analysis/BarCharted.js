@@ -4,9 +4,7 @@ import axios from 'axios';
 
 function BarCharted() {
 
-  const [datas, setdatas] = useState([[]]);
-
-   const data = [
+  const data = [
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
     { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 },
@@ -16,99 +14,97 @@ function BarCharted() {
     { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
   ];
   
+  const [datas1, setdatas1] = useState([[]]);
+  const [datas2, setdatas2] = useState([[]]);
+  const [datas3, setdatas3] = useState([[]]);
+  const [datas4, setdatas4] = useState([[]]);
+  const [datas5, setdatas5] = useState([[]]);
+
   useEffect(async() => {
 
   //Graph interes_gender
     await axios.get("/interes_gender")
       .then(res => {
-        const datas = res.data;
-        console.log(datas)
+        const datas1 = res.data;
+        console.log(datas1)
+        // this.setState({ datas1: datas });
         var datagender = []
-        for(var i = 0; i<datas.length;i++){
+        for(var i = 0; i<datas1.length;i++){
           datagender.push({
-            namegender: datas[i][1] +" ("+ datas[i][3][0] +") " ,
-            numgender: datas[i][2]
+            namegender: datas1[i][1] +" ("+ datas1[i][3][0] +") " ,
+            numgender: datas1[i][2]
           })
         }
-        setdatas(datagender)
+        setdatas1(datagender)
       })
 
     // Graph interes_age_range
-      // await axios.get("/interes_age_range")
-      //   .then(res => {
-      //     const datas = res.data;
-      //     console.log(datas)
-      //     var dataagerange = []
-      //     for(var i = 0; i<datas.length;i++){
-      //       dataagerange.push({
-      //         nameage: datas[i][1]+ " ("+ datas[i][3]+ ") " ,
-      //         numage: datas[i][2]
-      //       })
-      //     }
-      //     setdatas(dataagerange)
-      //   })
+      await axios.get("/interes_age_range")
+        .then(res => {
+          const datas2 = res.data;
+          console.log(datas2)
+          var dataagerange = []
+          for(var i = 0; i<datas2.length;i++){
+            dataagerange.push({
+              nameage: datas2[i][1]+ " ("+ datas2[i][3]+ ") " ,
+              numage: datas2[i][2]
+            })
+          }
+          setdatas2(dataagerange)
+        })
 
     // Graph interes_time
-      // await axios.get("/interes_time")
-      //   .then(res => {
-      //       const datas = res.data;
-      //       console.log(datas)
-      //       var datainterestime = []
-      //       for(var i = 0; i<datas.length;i++){
-      //         datainterestime.push({
-      //         datatime: datas[i][0],
-      //         numtime: datas[i][1]
-      //       })
-      //     }
-      //     setdatas(datainterestime)
-      // })
+      await axios.get("/interes_time")
+        .then(res => {
+            const datas3 = res.data;
+            console.log(datas3)
+            var datainterestime = []
+            for(var i = 0; i<datas3.length;i++){
+              datainterestime.push({
+              datatime: datas3[i][0],
+              numtime: datas3[i][1]
+            })
+          }
+          setdatas3(datainterestime)
+      })
 
   //Graph interes_person
-    // await axios.get("/interes_person")
-    //   .then(res => {
-    //     const datas = res.data;
-    //     console.log(datas)
-    //     var dataperson = []
-    //     for(var i = 0; i<datas.length;i++){
-    //       dataperson.push({
-    //         nameperson: datas[i][1],
-    //         numperson: datas[i][0]
-    //       });
-    //     }
-    //     setdatas(dataperson)        
-    //   });
+    await axios.get("/interes_person")
+      .then(res => {
+        const datas4 = res.data;
+        console.log(datas4)
+        var dataperson = []
+        for(var i = 0; i<datas4.length;i++){
+          dataperson.push({
+            nameperson: datas4[i][1],
+            numperson: datas4[i][0]
+          });
+        }
+        setdatas4(dataperson)        
+      });
 
     // Graph solditem
-    // await axios.get("/solditem")
-    //   .then(res => {
-    //     const datas = res.data;
-    //     console.log(datas)
-    //     var datasolditem = []
-    //     for(var i = 0; i<datas.length;i++){
-    //       datasolditem.push({
-    //         nameitem: datas[i][0],
-    //         numitem: datas[i][1]
-    //       });
-    //     }
-    //     setdatas(datasolditem)  
-    //   }) 
+      await axios.get("/solditem")
+        .then(res => {
+          const datas5 = res.data;
+          console.log(datas5)
+          var datasolditem = []
+          for(var i = 0; i<datas5.length;i++){
+            datasolditem.push({
+              nameitem: datas5[i][0],
+              numitem: datas5[i][1]
+            });
+          }
+          setdatas5(datasolditem)  
+        }) 
 
   }, [])
 
   return (
     <div>
-      <h5>เพศสนใจของแว่นแต่ละประเภท</h5>
-        <BarChart width={1100} height={300} data={datas}>
-        <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="namegender" fontSize={12} angle={-30} />
-          <YAxis fontSize={12} />
-          <Bar dataKey="numgender" barSize={25} fill="#483D8B"/>
-        </BarChart>
-      <br></br>
-      <hr></hr>
-
+      
       <h5>ช่วงอายุสนใจของแว่นแต่ละประเภท</h5>
-        <BarChart width={1400} height={300} data={datas}>
+        <BarChart width={1400} height={300} data={datas2}>
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="nameage" fontSize={12} angle={-25} />
           <YAxis fontSize={12} />
@@ -117,8 +113,18 @@ function BarCharted() {
       <br></br>         
       <hr></hr>
 
+      <h5>เพศสนใจของแว่นแต่ละประเภท</h5>
+        <BarChart width={1100} height={300} data={datas1}>
+        <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="namegender" fontSize={12} angle={-30} />
+          <YAxis fontSize={12} />
+          <Bar dataKey="numgender" barSize={25} fill="#483D8B"/>
+        </BarChart>
+      <br></br>
+      <hr></hr>
+
       <h5>ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)</h5>
-        <BarChart width={800} height={300} data={datas}>
+        <BarChart width={800} height={300} data={datas3}>
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="datatime" fontSize={12} />
           <YAxis fontSize={12} />
@@ -128,17 +134,17 @@ function BarCharted() {
       <hr></hr>
 
       <h5>จำนวนยอดคนสนใจของแว่นแต่ละประเภท</h5>
-        <BarChart width={800} height={300} data={datas}>
+        <BarChart width={800} height={300} data={datas4}>
         <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="nameperson" fontSize={12} angle={-30} />
+          <XAxis dataKey="nameperson" fontSize={12} />
           <YAxis fontSize={12} />
-          <Bar dataKey="numperson" barSize={25} fill="#00688B"/>
+          <Bar dataKey="numperson" barSize={40} fill="#00688B"/>
         </BarChart> 
       <br></br>         
       <hr></hr>
 
       <h5>จำนวนยอดขายของแว่นแต่ละประเภท</h5>
-        <BarChart width={800} height={300} data={datas}>
+        <BarChart width={800} height={300} data={datas5}>
         <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="nameitem" fontSize={15}/>
           <YAxis fontSize={17} />
