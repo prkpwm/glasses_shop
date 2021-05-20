@@ -165,7 +165,8 @@ function RegisterHome() {
                         rules={[
                             { required: true, message: "Please input your E-Gender!" },
                         ]}
-                    > <Radio.Group  style={{marginLeft:"2%"}}>
+                    > 
+                    <Radio.Group  style={{marginLeft:"2%"}}>
                     <Radio id="male" value={"male"}>male</Radio >
                     <Radio id="female" value={"female"}>female</Radio >
                 </Radio.Group>
