@@ -53,6 +53,7 @@ export default class PersonList extends React.Component {
 
         let data = "";
         data += "<table>"
+        this.state.datas1.splice(0, 0,["","Category","Total","Gender"]);
         for (let i = 0; i < this.state.datas1.length; i++) {
             data += "<tr>"
             for (let j = 1; j < 4; j++) {
@@ -65,6 +66,7 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas2.splice(0, 0,["","Category","Total","Year"]);
         for (let i = 0; i < this.state.datas2.length; i++) {
             data += "<tr>"
             for (let j = 1; j < 4; j++) {
@@ -77,17 +79,24 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
+        this.state.datas3.splice(0, 0,["Time","Total"]);
         for (let i = 0; i < this.state.datas3.length; i++) {
-            data += "<th>" + this.state.datas3[i] + "<th>"
+            data += "<tr>"
+            for (let j = 0; j < 2; j++) {
+                data += "<th>" + this.state.datas3[i][j] + "<th>"
+
+            }
+            data += "</tr>"
         }
         data += "</table>"
         document.getElementById("table3").innerHTML = data;
 
         data = "";
         data += "<table>"
+        this.state.datas4.splice(0, 0,["Total","Category"]);
         for (let i = 0; i < this.state.datas4.length; i++) {
             data += "<tr>"
-            for (let j = 0; j < 2; j++) {
+            for (let j = 1; j >=0 ; j--) {
                 data += "<th>" + this.state.datas4[i][j] + "<th>"
             }
             data += "</tr>"
@@ -98,9 +107,14 @@ export default class PersonList extends React.Component {
 
         data = "";
         data += "<table>"
-        data += "<tr>"
-        data += "<th>" + this.state.datas5 + "<th>"
-        data += "</tr>"
+        this.state.datas5.splice(0, 0,["Category","Total"]);
+        for (let i = 0; i < this.state.datas5.length; i++) {
+            data += "<tr>"
+            for (let j = 0; j < 2; j++) {
+                data += "<th>" + this.state.datas5[i][j] + "<th>"
+            }
+            data += "</tr>"
+        }
         data += "</table>"
         document.getElementById("table5").innerHTML = data;
         
@@ -113,6 +127,7 @@ export default class PersonList extends React.Component {
     render() {
         return (
             <div>
+<<<<<<< HEAD
             <BarCharted/>
             เพศสนใจของแว่นแต่ละประเภท
                 <div id="table1"></div>
@@ -125,6 +140,20 @@ export default class PersonList extends React.Component {
             จำนวนยอดขายของแว่นแต่ละประเภท
                 <div id="table5"></div>
         </div>
+=======
+
+        เพศสนใจของแว่นแต่ละประเภท
+                <div id="table1"></div><br/>
+         ช่วงอายุสนใจของแว่นแต่ละประเภท
+                <div id="table2"></div><br/>
+         ช่วงเวลาที่คนเข้าชมสินคัา(กราฟ)
+                <div id="table3"></div><br/>
+         จำนวนยอดคนสนใจของแว่นแต่ละประเภท
+                <div id="table4"></div><br/>
+         จำนวนยอดขายของแว่นแต่ละประเภท
+                <div id="table5"></div><br/>
+            </div>
+>>>>>>> c6cda19959bd985f7a64558ccd0cc94bd1af54bc
 
         )
     }
