@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import axios from 'axios';
 
 function BarCharted() {
@@ -34,6 +34,11 @@ function BarCharted() {
             namegender: datas1[i][1] +" ("+ datas1[i][3][0] +") " ,
             numgender: datas1[i][2]
           })
+          // if(datas1[i][3][0] == "m"){
+          //   datagender[i].namegender = <span style={{color:"skyblue"}}> {datagender[i].namegender}</span>
+          // }else{
+          //   datagender[i].namegender =  <span style={{color:"pink"}}> {datagender[i].namegender}</span>
+          // }
         }
         setdatas1(datagender)
       })
@@ -46,7 +51,7 @@ function BarCharted() {
           var dataagerange = []
           for(var i = 0; i<datas2.length;i++){
             dataagerange.push({
-              nameage: datas2[i][1]+ " ("+ datas2[i][3]+ ") " ,
+              nameage: datas2[i][1]+ " ("+ (Number(new Date().getFullYear())-Number(datas2[i][3]))+ ") " ,
               numage: datas2[i][2]
             })
           }
