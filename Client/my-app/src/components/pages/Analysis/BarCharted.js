@@ -14,6 +14,20 @@ function BarCharted() {
 
   const barColors = ["#1f77b4", "#ff7f0e"]
   useEffect(async() => {
+    // Graph interes_time
+    await axios.get("/interes_time")
+    .then(res => {
+        const datas3 = res.data;
+
+        var datainterestime = []
+        for(var i = 0; i<datas3.length;i++){
+          datainterestime.push({
+          datatime: datas3[i][0],
+          numtime: datas3[i][1]
+        })
+      }
+      setdatas3(datainterestime)
+  })
 
   //Graph interes_gender
     await axios.get("/interes_gender")
@@ -32,6 +46,35 @@ function BarCharted() {
         }
         setdatas1(datagender)
       })
+  //Graph interes_person
+  await axios.get("/interes_person")
+  .then(res => {
+    const datas4 = res.data;
+
+    var dataperson = []
+    for(var i = 0; i<datas4.length;i++){
+      dataperson.push({
+        nameperson: datas4[i][1],
+        numperson: datas4[i][0]
+      });
+    }
+    setdatas4(dataperson)        
+  });
+  
+      // Graph solditem
+      await axios.get("/solditem")
+        .then(res => {
+          const datas5 = res.data;
+
+          var datasolditem = []
+          for(var i = 0; i<datas5.length;i++){
+            datasolditem.push({
+              nameitem: datas5[i][0],
+              numitem: datas5[i][1]
+            });
+          }
+          setdatas5(datasolditem)  
+        }) 
 
     // Graph interes_age_range
       await axios.get("/interes_age_range")
@@ -48,50 +91,11 @@ function BarCharted() {
           setdatas2(dataagerange)
         })
 
-    // Graph interes_time
-      await axios.get("/interes_time")
-        .then(res => {
-            const datas3 = res.data;
-   
-            var datainterestime = []
-            for(var i = 0; i<datas3.length;i++){
-              datainterestime.push({
-              datatime: datas3[i][0],
-              numtime: datas3[i][1]
-            })
-          }
-          setdatas3(datainterestime)
-      })
 
-  //Graph interes_person
-    await axios.get("/interes_person")
-      .then(res => {
-        const datas4 = res.data;
 
-        var dataperson = []
-        for(var i = 0; i<datas4.length;i++){
-          dataperson.push({
-            nameperson: datas4[i][1],
-            numperson: datas4[i][0]
-          });
-        }
-        setdatas4(dataperson)        
-      });
 
-    // Graph solditem
-      await axios.get("/solditem")
-        .then(res => {
-          const datas5 = res.data;
 
-          var datasolditem = []
-          for(var i = 0; i<datas5.length;i++){
-            datasolditem.push({
-              nameitem: datas5[i][0],
-              numitem: datas5[i][1]
-            });
-          }
-          setdatas5(datasolditem)  
-        }) 
+
 
   }, [])
   const demoUrl = 'https://codesandbox.io/s/two-simple-pie-chart-otx9h';

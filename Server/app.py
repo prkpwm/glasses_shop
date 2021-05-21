@@ -22,8 +22,13 @@ cors = CORS(app, resources={
 face_shapes = ['square', 'round', 'heart', 'oblong', 'oval']
 glasses_recomments = ["Oval, Round and Large", "Rectangle, Square and Oval", "Rectangle, Oval and Horn",
                       "Rectangle, Square and Oval", "Rectangle, Oval, Square, Round, Large and Horn"]
+"""
 con = mysql.connector.connect(user='sql6412381', password='hjYLTWwnfx',
                               host='sql6.freemysqlhosting.net', database='sql6412381')
+"""
+con = mysql.connector.connect(user='root', password='',
+                              host='127.0.0.1', database='glasses_shop')
+
 cursor = con.cursor()
 
 
@@ -432,6 +437,7 @@ def updateuserinfo():
 def interes_gender():
     cursor.execute("""select CONCAT(u.sex , i.category ) as c,i.category,COUNT(CONCAT(u.sex , i.category )) as Counter,u.sex from `statistics` s LEFT JOIN `userinfo` u ON u.id = s.uid LEFT JOIN `iteminfo` i ON i.GID = s.iid GROUP BY c""")
     confirm = cursor.fetchall()
+    time.sleep(0.2)
     if confirm is not None:
         return jsonify(confirm)
     else:
@@ -444,6 +450,7 @@ def interes_age_range():
 LEFT JOIN `userinfo` u ON u.id = s.uid 
 LEFT JOIN `iteminfo` i ON i.GID = s.iid 
 GROUP BY c""")
+    time.sleep(0.2)
     confirm = cursor.fetchall()
     if confirm is not None:
         return jsonify(confirm)
@@ -455,6 +462,7 @@ def interes_time():
     cursor.execute("""select Hour(s.dt),COUNT(Hour(s.dt))
 from `statistics` s
 GROUP by Hour(s.dt)""")
+    time.sleep(0.2)
     confirm = cursor.fetchall()
     if confirm is not None:
         return jsonify(confirm)
@@ -467,6 +475,7 @@ def interes_person():
 LEFT JOIN `iteminfo` i ON i.GID = s.iid
 GROUP BY i.category""")
     confirm = cursor.fetchall()
+    time.sleep(0.2)
     if confirm is not None:
         return jsonify(confirm)
     else:
@@ -477,6 +486,7 @@ def solditem():
     cursor.execute("""select i.category,sum(o.quanlity)  from `orderinfo` o LEFT JOIN `iteminfo` i ON i.GID = o.itemid GROUP BY i.category""")
     confirm = cursor.fetchall()
     str_con = []
+    time.sleep(0.2)
     for i in range(len(confirm)):
         str_con.append([str(confirm[i][0]),str(confirm[i][1])]) 
     print(str_con)
