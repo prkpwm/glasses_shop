@@ -45,6 +45,7 @@ function ShopHome() {
        await axios.get("/sortitem/iteminfo/price/asc/0")
             .then(res => {
                 const datas = res.data;
+                console.log(res)
                 setdatas(datas)
             })
             
